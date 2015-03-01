@@ -15,13 +15,13 @@ InterfacePreferencesWidget::InterfacePreferencesWidget(QWidget *parent, Qt::Wind
 }
 
 void InterfacePreferencesWidget::loadSettings() {
-    bool trayIconIsHidden = SETTINGS->getValue(QtGuiSettings::TrayIcon, QtGuiSettings::TrayIconIsHidden, false).toBool();
-    bool minimizeOnClose = SETTINGS->getValue(QtGuiSettings::MainWindow, QtGuiSettings::MinimizeOnClose, false).toBool();
-    bool showTrayTips = SETTINGS->getValue(QtGuiSettings::TrayIcon, QtGuiSettings::ShowTrayTips, false).toBool();
-    int refreshRate = SETTINGS->getValue(QtGuiSettings::MainWindow, QtGuiSettings::RefreshRate, 10).toInt();
-    QString titlebarPlaying = SETTINGS->getValue(QtGuiSettings::MainWindow, QtGuiSettings::TitlebarPlaying, "%a - %t - DeaDBeeF-%V").toString();
-    QString titlebarStopped = SETTINGS->getValue(QtGuiSettings::MainWindow, QtGuiSettings::TitlebarStopped, "DeaDBeeF-%V").toString();
-    QString messageFormat = SETTINGS->getValue(QtGuiSettings::TrayIcon, QtGuiSettings::MessageFormat, "%a - %t").toString();
+    bool trayIconIsHidden = SETTINGS->getTrayIconIsHidden();
+    bool minimizeOnClose = SETTINGS->getMinimizeOnClose();
+    bool showTrayTips = SETTINGS->getShowTrayTips();
+    int refreshRate = SETTINGS->getRefreshRate();
+    QString titlebarPlaying = SETTINGS->getTitlebarPlaying();
+    QString titlebarStopped = SETTINGS->getTitlebarStopped();
+    QString messageFormat = SETTINGS->getMessageFormat();
     
     ui->minimizeCheckBox->setChecked(minimizeOnClose);
     ui->hideTrayCheckBox->setChecked(trayIconIsHidden);
@@ -58,7 +58,7 @@ void InterfacePreferencesWidget::createConnections() {
 }
 
 void InterfacePreferencesWidget::saveTrayIconHidden(bool hidden) {
-    SETTINGS->setValue(QtGuiSettings::TrayIcon, QtGuiSettings::TrayIconIsHidden, hidden);
+    SETTINGS->setTrayIconIsHidden(hidden);
     ui->switchTrackInfoCheckBox->setVisible(!hidden);
     ui->trayIconMessageLabel->setVisible(ui->switchTrackInfoCheckBox->isChecked() && ui->switchTrackInfoCheckBox->isVisible());
     ui->trayIconMsgFormatLineEdit->setVisible(ui->switchTrackInfoCheckBox->isChecked() && ui->switchTrackInfoCheckBox->isVisible());
@@ -66,32 +66,32 @@ void InterfacePreferencesWidget::saveTrayIconHidden(bool hidden) {
 }
 
 void InterfacePreferencesWidget::saveTrackInfoOnSwitch(bool show) {
-    SETTINGS->setValue(QtGuiSettings::TrayIcon, QtGuiSettings::ShowTrayTips, show);
+    SETTINGS->setShowTrayTips(show);
     ui->trayIconMessageLabel->setVisible(show);
     ui->trayIconMsgFormatLineEdit->setVisible(show);
 }
 
 void InterfacePreferencesWidget::saveCloseOnMinimize(bool close) {
-    SETTINGS->setValue(QtGuiSettings::MainWindow, QtGuiSettings::MinimizeOnClose, close);
+    SETTINGS->setMinimizeOnClose(close);
     emit setCloseOnMinimize(close);
 }
 
 void InterfacePreferencesWidget::saveTitlePlaying() {
-    SETTINGS->setValue(QtGuiSettings::MainWindow, QtGuiSettings::TitlebarPlaying, ui->titlebarPlayingLineEdit->text());
+    SETTINGS->setTitlebarPlaying(ui->titlebarPlayingLineEdit->text());
     emit titlePlayingChanged();
 }
 
 void InterfacePreferencesWidget::saveTitleStopped() {
-    SETTINGS->setValue(QtGuiSettings::MainWindow, QtGuiSettings::TitlebarStopped, ui->titlebarStoppedLineEdit->text());
+    SETTINGS->setTitlebarStopped(ui->titlebarStoppedLineEdit->text());
     emit titleStoppedChanged();
 }
 
 void InterfacePreferencesWidget::saveTrayMessageFormat() {
-    SETTINGS->setValue(QtGuiSettings::TrayIcon, QtGuiSettings::MessageFormat, ui->trayIconMsgFormatLineEdit->text());
+    SETTINGS->setMessageFormat(ui->trayIconMsgFormatLineEdit->text());
 }
 
 void InterfacePreferencesWidget::saveRefreshRate(int refreshRate) {
-    SETTINGS->setValue(QtGuiSettings::MainWindow, QtGuiSettings::RefreshRate, refreshRate);
+    SETTINGS->setRefreshRate(refreshRate);
     GuiUpdater::Instance()->resetTimer(refreshRate);
     emit refreshRateChanged();
 }

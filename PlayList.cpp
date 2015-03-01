@@ -79,13 +79,11 @@ void PlayList::refresh() {
 }
 
 void PlayList::goToLastSelection() {
-    ddb_playlist_t *plt = DBAPI->plt_get_curr();
-    int cursor = DBAPI->plt_get_cursor(plt, PL_MAIN);
+    int cursor = DBAPI->plt_get_cursor(DBPltRef(), PL_MAIN);
     if (cursor < 0)
         restoreCursor();
     else
         setCurrentIndex(playListModel.index(cursor, 0, QModelIndex()));
-    DBAPI->plt_unref(plt);
 }
 
 void PlayList::restoreCursor() {
@@ -95,23 +93,22 @@ void PlayList::restoreCursor() {
 }
 
 void PlayList::storeCursor() {
-    ddb_playlist_t *plt = DBAPI->plt_get_curr();
+    DBPltRef plt;
     int cursor = DBAPI->plt_get_cursor(plt, PL_MAIN);
     DBAPI->conf_set_int(QString("playlist.cursor.%1").arg(DBAPI->plt_get_curr_idx()).toUtf8().constData(), cursor);
-    DBAPI->plt_unref(plt);
 }
 
 void PlayList::saveConfig() {
-    SETTINGS->setValue(QtGuiSettings::PlayList, QtGuiSettings::HeaderIsVisible,!header()->isHidden());
-    SETTINGS->setValue(QtGuiSettings::PlayList, QtGuiSettings::HeaderState, header()->saveState());
-    SETTINGS->setValue(QtGuiSettings::PlayList, QtGuiSettings::HeaderIsLocked, !header()->sectionsMovable() && header()->sectionResizeMode(1) == QHeaderView::Fixed);
+    SETTINGS->setHeaderIsVisible(!header()->isHidden());
+    SETTINGS->setHeaderState(header()->saveState());
+    SETTINGS->setHeaderIsLocked(!header()->sectionsMovable() && header()->sectionResizeMode(1) == QHeaderView::Fixed);
     playListModel.saveConfig();
 }
 
 void PlayList::loadConfig() {
-    bool isVisible = SETTINGS->getValue(QtGuiSettings::PlayList, QtGuiSettings::HeaderIsVisible,true).toBool();
-    bool isLocked = SETTINGS->getValue(QtGuiSettings::PlayList, QtGuiSettings::HeaderIsLocked, true).toBool();
-    headerState = SETTINGS->getValue(QtGuiSettings::PlayList, QtGuiSettings::HeaderState, QByteArray()).toByteArray();
+    bool isVisible = SETTINGS->getHeaderIsVisible();
+    bool isLocked = SETTINGS->getHeaderIsLocked();
+    headerState = SETTINGS->getHeaderState();
     header()->setHidden(!isVisible);
     header()->restoreState(headerState);
     header()->setSectionsMovable(!isLocked);
@@ -130,9 +127,7 @@ void PlayList::dragEnterEvent(QDragEnterEvent *event) {
 
 void PlayList::dropEvent(QDropEvent *event) {
     if (event->mimeData()->hasUrls()) {
-        ddb_playlist_t *plt = DBAPI->plt_get_curr();
-        int count = DBAPI->plt_get_item_count(plt, PL_MAIN);
-        DBAPI->plt_unref(plt);
+        int count = pltItemCount();;
         int row = indexAt(event->pos()).row();
         int before = (row >= 0) ? row - 1 : count - 1;
         foreach (QUrl url, event->mimeData()->urls()) {
@@ -143,9 +138,7 @@ void PlayList::dropEvent(QDropEvent *event) {
         event->accept();
     } else if (event->mimeData()->hasFormat("playlist/track")) {
         int row = indexAt(event->pos()).row();
-        ddb_playlist_t *plt = DBAPI->plt_get_curr();
-        int count = DBAPI->plt_get_item_count(plt, PL_MAIN);
-        DBAPI->plt_unref(plt);
+        int count = pltItemCount();
         row = (row >= 0) ? row : count;
         QByteArray encodedData = event->mimeData()->data("playlist/track");
         QDataStream stream(&encodedData, QIODevice::ReadOnly);
@@ -169,9 +162,8 @@ void PlayList::dropEvent(QDropEvent *event) {
 void PlayList::selectionChanged(const QItemSelection &selected, const QItemSelection &deselected) {
     if (selected == deselected)
         return;
-    ddb_playlist_t *plt = DBAPI->plt_get_curr();
-    DBAPI->plt_set_cursor(plt, PL_MAIN, selected.indexes().count() == 0 ? -1 : selected.indexes().last().row());
-    DBAPI->plt_unref(plt);
+
+    DBAPI->plt_set_cursor(DBPltRef(), PL_MAIN, selected.indexes().count() == 0 ? -1 : selected.indexes().last().row());
     storeCursor();
 
     QTreeView::selectionChanged(selected, deselected);
@@ -236,9 +228,7 @@ void PlayList::lockColumns(bool locked) {
 }
 
 void PlayList::onTrackChanged(DB_playItem_t *from, DB_playItem_t *to) {
-    ddb_playlist_t *plt = DBAPI->plt_get_curr();
-    int index = DBAPI->plt_get_item_idx(plt, to, PL_MAIN);
-    DBAPI->plt_unref(plt);
+    int index = DBAPI->plt_get_item_idx(DBPltRef(), to, PL_MAIN);
     setCurrentIndex(playListModel.index(index, 0, QModelIndex()));
 
     playListModel.index(index, 0, QModelIndex());

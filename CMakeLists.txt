@@ -3,6 +3,8 @@ cmake_minimum_required (VERSION 2.8.11)
 project (deadbeef-qt)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wextra -Wno-unused-parameter")
+
 add_definitions(-DDEADBEEF_PREFIX=\"${CMAKE_INSTALL_PREFIX}\")
 if(NOT DEADBEEF_PREFIX)
     set(DEADBEEF_PREFIX "/usr")

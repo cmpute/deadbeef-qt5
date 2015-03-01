@@ -8,7 +8,7 @@ class SystemTrayIcon : public QSystemTrayIcon {
     Q_OBJECT
 
 public:
-    explicit SystemTrayIcon(QObject *parent = 0);
+    explicit SystemTrayIcon(const QIcon &icon, QObject *parent = 0);
 
 protected:
     virtual bool event(QEvent *event);

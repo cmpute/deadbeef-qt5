@@ -23,7 +23,7 @@ GuiUpdater *GuiUpdater::Instance() {
 
 void GuiUpdater::startSpecificTimer(int newTimerTick) {
     if (newTimerTick == -1) {
-        int value = SETTINGS->getValue(QtGuiSettings::MainWindow, QtGuiSettings::RefreshRate, 10).toInt();
+        int value = SETTINGS->getRefreshRate();
         startTimer(1000 / value);
     } else {
         startTimer(newTimerTick);

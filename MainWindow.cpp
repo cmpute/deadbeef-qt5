@@ -91,8 +91,8 @@ void MainWindow::loadActions() {
 }
 
 void MainWindow::createTray() {
-    trayIcon = new SystemTrayIcon(this);
-    trayMenu = new QMenu(this);
+    trayIcon = new SystemTrayIcon(windowIcon(), this);
+    trayMenu = new QMenu();
     trayMenu->addAction(ui->actionPlay);
     trayMenu->addAction(ui->actionPause);
     trayMenu->addAction(ui->actionStop);
@@ -101,13 +101,10 @@ void MainWindow::createTray() {
     trayMenu->addSeparator();
     trayMenu->addAction(ui->actionExit);
     trayIcon->setContextMenu(trayMenu);
-
-    trayIcon->setIcon(windowIcon());
+    trayIcon->show();
 
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIcon_activated(QSystemTrayIcon::ActivationReason)));
     connect(trayIcon, SIGNAL(wheeled(int)), this, SLOT(trayIcon_wheeled(int)));
-    
-    trayIcon->setVisible(SETTINGS->getValue(QtGuiSettings::MainWindow, QtGuiSettings::MinimizeOnClose, false).toBool());
 }
 
 void MainWindow::titleSettingChanged() {
@@ -124,9 +121,9 @@ void MainWindow::updateTitle(DB_playItem_t *it) {
         DBAPI->pl_item_ref(it);
 
     if (it)
-        fmt = SETTINGS->getValue(QtGuiSettings::MainWindow, QtGuiSettings::TitlebarPlaying, "%a - %t - DeaDBeeF-%V").toString().toUtf8().constData();
+        fmt = SETTINGS->getTitlebarPlaying().toUtf8().constData();
     else
-        fmt = SETTINGS->getValue(QtGuiSettings::MainWindow, QtGuiSettings::TitlebarStopped, "DeaDBeeF-%V").toString().toUtf8().constData();
+        fmt = SETTINGS->getTitlebarStopped().toUtf8().constData();
 
     DBAPI->pl_format_title(it, -1, str, sizeof(str), -1, fmt);
 
@@ -234,10 +231,10 @@ void MainWindow::trayIcon_wheeled(int delta) {
 void MainWindow::trackChanged(DB_playItem_t *from, DB_playItem_t *to) {
     if (to != NULL) {
         char str[1024];
-        const char *fmt = SETTINGS->getValue(QtGuiSettings::TrayIcon, QtGuiSettings::MessageFormat, "%a - %t").toString().toUtf8().constData();
+        const char *fmt = SETTINGS->getMessageFormat().toUtf8().constData();
         DBAPI->pl_item_ref(to);
         DBAPI->pl_format_title(to, 0, str, sizeof(str), -1, fmt);
-        bool showTrayTips = SETTINGS->getValue(QtGuiSettings::TrayIcon, QtGuiSettings::ShowTrayTips, false).toBool();
+        bool showTrayTips = SETTINGS->getShowTrayTips();
         if (trayIcon && showTrayTips) {
             trayIcon->showMessage("DeaDBeeF", QString::fromUtf8(str), QSystemTrayIcon::Information, 2000);
         }
@@ -342,10 +339,8 @@ void MainWindow::createToolBars() {
 }
 
 QMenu *MainWindow::createPopupMenu() {
-    QMenu *popupMenu = new QMenu();
+    QMenu *popupMenu = new QMenu(this);
     popupMenu->addAction(ui->actionHideMenuBar);
-    popupMenu->addSeparator();
-    popupMenu->addSeparator();
     popupMenu->addSeparator();
     popupMenu->addAction(ui->actionBlockToolbarChanges);
     return popupMenu;
@@ -385,11 +380,12 @@ void MainWindow::on_actionSaveAsPlaylist_triggered() {
     if (fileNames.isEmpty())
         return;
     
-    ddb_playlist_t *plt = deadbeef->plt_get_curr();
-    if (plt) {
-        int res = deadbeef->plt_save(plt, NULL, NULL, fileNames.last().toUtf8().constData(), NULL, NULL, NULL);
-        deadbeef->plt_unref(plt);
-    }
+    QString destPath = fileNames.last();
+    DBPltRef plt;
+    if (plt && deadbeef->plt_save(plt, NULL, NULL, destPath.toUtf8().constData(), NULL, NULL, NULL))
+        QMessageBox::warning(this,
+                             tr("Save playlist as..."),
+                             tr("Failed to save playlist to %1: %2").arg(destPath).arg(qt_error_string(errno)));
 }
 
 void MainWindow::on_actionLoadPlaylist_triggered() {
@@ -424,14 +420,22 @@ void MainWindow::onCoverartClose() {
 #endif
 
 void MainWindow::setCloseOnMinimized(bool minimizeOnClose) {
-    bool trayIconIsHidden = SETTINGS->getValue(QtGuiSettings::TrayIcon, QtGuiSettings::TrayIconIsHidden, false).toBool();
+    bool trayIconIsHidden = SETTINGS->getTrayIconIsHidden();
     configureActionOnClose(minimizeOnClose, trayIconIsHidden);
 }
 
 void MainWindow::setTrayIconHidden(bool hideTrayIcon) {
-    trayIcon->setVisible(!hideTrayIcon);
+    // FIXME: crashes when changing from hidden to visible. System bug?
+    // trayIcon->setVisible(!hideTrayIcon);
+    if (hideTrayIcon) {
+        delete trayIcon;
+        trayIcon = nullptr;
+    } else {
+        createTray();
+    }
+    // FIXME: it still crashes in ~MainWindow() after toggling tray icon
     
-    bool minimizeOnClose = SETTINGS->getValue(QtGuiSettings::MainWindow, QtGuiSettings::MinimizeOnClose, false).toBool();
+    bool minimizeOnClose = SETTINGS->getMinimizeOnClose();
     configureActionOnClose(minimizeOnClose, hideTrayIcon);
 }
 
@@ -446,15 +450,15 @@ void MainWindow::configureActionOnClose(bool minimizeOnClose, bool hideTrayIcon)
 }
 
 void MainWindow::loadConfig() {
-    QSize size       = SETTINGS->getValue(QtGuiSettings::MainWindow, QtGuiSettings::WindowSize, QSize(640, 480)).toSize();
-    QPoint point     = SETTINGS->getValue(QtGuiSettings::MainWindow, QtGuiSettings::WindowPosition, QPoint(0, 0)).toPoint();
-    QByteArray state = SETTINGS->getValue(QtGuiSettings::MainWindow, QtGuiSettings::WindowState, QByteArray()).toByteArray();
-    bool tbIsLocked  = SETTINGS->getValue(QtGuiSettings::MainWindow, QtGuiSettings::ToolbarsIsLocked, false).toBool();
-    bool mmIsHidden  = SETTINGS->getValue(QtGuiSettings::MainWindow, QtGuiSettings::MainMenuIsHidden, false).toBool();
-    bool trayIconIsHidden = SETTINGS->getValue(QtGuiSettings::TrayIcon, QtGuiSettings::TrayIconIsHidden, false).toBool();
-    bool minimizeOnClose = SETTINGS->getValue(QtGuiSettings::MainWindow, QtGuiSettings::MinimizeOnClose, false).toBool();
-    bool headerIsVisible = SETTINGS->getValue(QtGuiSettings::PlayList, QtGuiSettings::HeaderIsVisible,true).toBool();
-    bool tbIsVisible = SETTINGS->getValue(QtGuiSettings::MainWindow,QtGuiSettings::TabBarIsVisible,true).toBool();
+    QSize size       = SETTINGS->getWindowSize();
+    QPoint point     = SETTINGS->getWindowPosition();
+    QByteArray state = SETTINGS->getWindowState();
+    bool tbIsLocked  = SETTINGS->getToolbarsIsLocked();
+    bool mmIsHidden  = SETTINGS->getMainMenuIsHidden();
+    bool trayIconIsHidden = SETTINGS->getTrayIconIsHidden();
+    bool minimizeOnClose = SETTINGS->getMinimizeOnClose();
+    bool headerIsVisible = SETTINGS->getHeaderIsVisible();
+    bool tbIsVisible = SETTINGS->getTabBarIsVisible();
 
     resize(size);
     move(point);
@@ -468,9 +472,8 @@ void MainWindow::loadConfig() {
     if (!trayIconIsHidden) {
         createTray();
     }
-    
 #ifdef ARTWORK_ENABLED
-    bool caIsHidden  = SETTINGS->getValue(QtGuiSettings::MainWindow, QtGuiSettings::CoverartIsHidden, false).toBool();
+    bool caIsHidden  = SETTINGS->getCoverartIsHidden();
     ui->actionHideCoverArt->setChecked(!caIsHidden);
     if (ui->actionHideCoverArt->isChecked()) {
         addDockWidget(Qt::LeftDockWidgetArea, &coverArtWidget);
@@ -513,13 +516,13 @@ void MainWindow::loadConfig() {
 }
 
 void MainWindow::saveConfig() {
-    SETTINGS->setValue(QtGuiSettings::MainWindow, QtGuiSettings::WindowSize, size());
-    SETTINGS->setValue(QtGuiSettings::MainWindow, QtGuiSettings::WindowPosition, pos());
-    SETTINGS->setValue(QtGuiSettings::MainWindow, QtGuiSettings::WindowState, saveState());
-    SETTINGS->setValue(QtGuiSettings::MainWindow, QtGuiSettings::ToolbarsIsLocked, ui->actionBlockToolbarChanges->isChecked());
-    SETTINGS->setValue(QtGuiSettings::MainWindow, QtGuiSettings::MainMenuIsHidden, menuBar()->isHidden());
+    SETTINGS->setWindowSize(size());
+    SETTINGS->setWindowPosition(pos());
+    SETTINGS->setWindowState(saveState());
+    SETTINGS->setToolbarsIsLocked(ui->actionBlockToolbarChanges->isChecked());
+    SETTINGS->setMainMenuIsHidden(menuBar()->isHidden());
 #ifdef ARTWORK_ENABLED
-    SETTINGS->setValue(QtGuiSettings::MainWindow, QtGuiSettings::CoverartIsHidden, !ui->actionHideCoverArt->isChecked());
+    SETTINGS->setCoverartIsHidden(!ui->actionHideCoverArt->isChecked());
 #endif
     ui->playList->saveConfig();
 }

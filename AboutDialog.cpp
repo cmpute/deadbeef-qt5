@@ -26,10 +26,10 @@ AboutDialog::AboutDialog(QWidget *parent) :
     else
         ui->deadbeefAboutText->setText(tr("Unable to read file with about information"));
 
-    QString qtguiAbout = QString::fromUtf8("QtGui - user interface for DeaDBeeF player based on Qt library\n\n©") + \
-                         QString::fromUtf8("2010 Anton Novikov <tonn.post@gmail.com>\n©") + \
-                         QString::fromUtf8("2011 Semen Minyushov <semikmsv@gmail.com>\n©") + \
-                         QString::fromUtf8("2013 Karjavin Roman <redpunk231@gmail.com>");
+    QString qtguiAbout = QString::fromUtf8("QtGui - user interface for DeaDBeeF player based on Qt library\n\n"
+                                           "© 2010 Anton Novikov <tonn.post@gmail.com>\n"
+                                           "© 2011 Semen Minyushov <semikmsv@gmail.com>\n"
+                                           "© 2013 Karjavin Roman <redpunk231@gmail.com>");
 
     ui->qtguiAboutText->setText(qtguiAbout);
 }

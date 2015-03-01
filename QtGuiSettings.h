@@ -6,8 +6,23 @@
 #include "config.h"
 
 #include <QVariant>
+#include <QSize>
 #include <QString>
 #include <QSettings>
+#include <QPoint>
+
+#define Var(Type, ToType, ValType, Name, Default)  \
+    static const QString Name;                          \
+    Type get##Name() { return getValue(CUR_GROUP, Name, Default).to##ToType(); }   \
+    void set##Name(ValType val) { setValue(CUR_GROUP, Name, val); }
+
+#define VarQ(Type, Name, Default) Var(Q##Type, Type, const Q##Type &, Name, Default)
+
+#define VarBool(Name)   Var(bool, Bool, bool, Name, false)
+#define VarTrue(Name)   Var(bool, Bool, bool, Name, true)
+#define VarInt(Name, Default)    Var(int,  Int,  int,  Name, Default)
+#define VarString(Name, Default) VarQ(String,    Name, Default)
+#define VarByteArray(Name)       VarQ(ByteArray, Name, QByteArray())
 
 class QtGuiSettings : public QObject {
     Q_OBJECT
@@ -20,47 +35,43 @@ public:
 
 //     MainWindow Group
     static const QString MainWindow;
-    
-    static const QString WindowSize;
-    static const QString WindowPosition;
-    static const QString WindowState;
-    static const QString ToolbarsIsLocked;
-    static const QString MainMenuIsHidden;
-    static const QString StatusbarIsHidden;
-    static const QString MinimizeOnClose;
-    static const QString RefreshRate;
-    static const QString TitlebarPlaying;
-    static const QString TitlebarStopped;
-    static const QString TabBarPosition;
-    static const QString TabBarIsVisible;
+
+#define CUR_GROUP MainWindow
+    VarQ(Size,   WindowSize, QSize(640, 480));
+    VarQ(Point,  WindowPosition, QPoint(0, 0));
+    VarByteArray(WindowState);
+
+    VarBool(ToolbarsIsLocked);
+    VarBool(MainMenuIsHidden);
+    VarBool(StatusbarIsHidden);
+    VarBool(MinimizeOnClose);
+    VarInt (RefreshRate, 10);
+    VarString(TitlebarPlaying, "%a - %t - DeaDBeeF-%V");
+    VarString(TitlebarStopped, "DeaDBeeF-%V");
+    VarInt (TabBarPosition, 0); // TabBar::Top
+    VarTrue(TabBarIsVisible);
 #ifdef ARTWORK_ENABLED
-    static const QString CoverartIsHidden;
+    VarBool(CoverartIsHidden);
 #endif
+#undef CUR_GROUP
 
     //TrayIcon Group
     static const QString TrayIcon;
 
-    static const QString TrayIconIsHidden;
-    static const QString ShowTrayTips;
-    static const QString MessageFormat;
-
-    //VolumeBar & SeekSlider Groups
-    static const QString VolumeBar;
-    static const QString SeekSlider;
-
-    //StatusBar Group
-    static const QString StatusBar;
-    
-    static const QString PlayingFormat;
-    static const QString PausedFormat;
-    static const QString StoppedFormat;
+#define CUR_GROUP TrayIcon
+    VarBool(TrayIconIsHidden);
+    VarBool(ShowTrayTips);
+    VarString(MessageFormat, "%a - %t");
+#undef CUR_GROUP
 
     //PlayList Group
     static const QString PlayList;
-    
-    static const QString HeaderState;
-    static const QString HeaderIsLocked;
-    static const QString HeaderIsVisible;
+
+#define CUR_GROUP PlayList
+    VarByteArray(HeaderState);
+    VarBool(HeaderIsLocked);
+    VarTrue(HeaderIsVisible);
+#undef CUR_GROUP
 
 private:
     QtGuiSettings();
@@ -68,5 +79,12 @@ private:
 
     QSettings settings;
 };
+
+#undef VarString
+#undef VarTrue
+#undef VarBool
+#undef VarByteArray
+#undef VarQ
+#undef Var
 
 #endif // QTGUISETTINGS_H

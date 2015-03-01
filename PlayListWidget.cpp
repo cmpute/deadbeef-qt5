@@ -31,10 +31,10 @@ void PlayListWidget::configureLayout() {
 }
 
 void PlayListWidget::loadConfig() {
-    bool isVisible = SETTINGS->getValue(QtGuiSettings::MainWindow,QtGuiSettings::TabBarIsVisible,true).toBool();
+    bool isVisible = SETTINGS->getTabBarIsVisible();
     tabBar.setHidden(!isVisible);
 
-    int pos = SETTINGS->getValue(QtGuiSettings::MainWindow, QtGuiSettings::TabBarPosition, TabBar::Top).toInt();
+    int pos = SETTINGS->getTabBarPosition();
     switch (pos) {
         case TabBar::Left:
             tabBar.setShape(QTabBar::RoundedWest);
@@ -65,9 +65,8 @@ void PlayListWidget::loadConfig() {
 }
 
 void PlayListWidget::saveConfig() {
-    SETTINGS->setValue(QtGuiSettings::MainWindow, QtGuiSettings::TabBarIsVisible, !tabBar.isHidden());
-
-    SETTINGS->setValue(QtGuiSettings::MainWindow, QtGuiSettings::TabBarPosition, tabBarPosition);
+    SETTINGS->setTabBarIsVisible(!tabBar.isHidden());
+    SETTINGS->setTabBarPosition (tabBarPosition);
     playList.saveConfig();
 }
 

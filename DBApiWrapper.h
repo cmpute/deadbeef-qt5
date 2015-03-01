@@ -40,4 +40,19 @@ signals:
     void deadbeefActivated();
 };
 
+extern DB_functions_t *deadbeef;
+
+class DBPltRef {
+public:
+    DBPltRef() : plt(deadbeef->plt_get_curr()) {}
+    ~DBPltRef() { if (plt) deadbeef->plt_unref(plt); }
+    int itemCount() const { return deadbeef->plt_get_item_count(plt, PL_MAIN); }
+
+    operator ddb_playlist_t*() { return plt; }
+private:
+    ddb_playlist_t *plt;
+};
+
+static inline int pltItemCount() { DBPltRef plt; return plt.itemCount(); }
+
 #endif // DBAPIWRAPPER_H

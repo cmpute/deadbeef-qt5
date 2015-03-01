@@ -1,6 +1,7 @@
 #include "SystemTrayIcon.h"
 
-SystemTrayIcon::SystemTrayIcon(QObject *parent) : QSystemTrayIcon(parent) {
+SystemTrayIcon::SystemTrayIcon(const QIcon &icon, QObject *parent) :
+    QSystemTrayIcon(icon, parent) {
 }
 
 bool SystemTrayIcon::event(QEvent *event) {

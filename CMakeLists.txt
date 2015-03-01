@@ -1,7 +1,8 @@
-cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required (VERSION 2.8.11)
 
 project (deadbeef-qt)
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall")
 add_definitions(-DDEADBEEF_PREFIX=\"${CMAKE_INSTALL_PREFIX}\")
 if(NOT DEADBEEF_PREFIX)
     set(DEADBEEF_PREFIX "/usr")
@@ -19,9 +20,12 @@ endif(NOT DEADBEEF_API)
 
 include_directories(BEFORE SYSTEM ${CMAKE_INSTALL_PREFIX}/include)
 
-find_package(Qt4 4.4 COMPONENTS QtCore QtGui REQUIRED)
+find_package(Qt5Widgets)
+find_package(Qt5LinguistTools)
 
-include(${QT_USE_FILE})
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -107,16 +111,13 @@ include(${CMAKE_SOURCE_DIR}/plugins/CoverArt/CoverArt.cmake)
 include(${CMAKE_SOURCE_DIR}/plugins/Hotkeys/Hotkeys.cmake)
 configure_file(${CMAKE_SOURCE_DIR}/config.h.cmake ${CMAKE_SOURCE_DIR}/config.h)
 
-qt4_wrap_cpp(MOC_SRCS ${QT_HEADERS})
-qt4_wrap_ui(UIS_H ${FORMS})
-qt4_add_resources(RCC ${RESOURCES})
-qt4_add_translation(COMPILED_TRANSLATIONS ${TRANSLATIONS})
+qt5_add_translation(COMPILED_TRANSLATIONS ${TRANSLATIONS})
 
-add_library(ddb_gui_Qt SHARED ${SOURCES} ${QT_HEADERS} ${HEADERS} ${MOC_SRCS} ${UIS_H} ${RCC} ${COMPILED_TRANSLATIONS})
+add_library(Qt SHARED ${SOURCES} ${QT_HEADERS} ${HEADERS} ${FORMS} ${RESOURCES} ${COMPILED_TRANSLATIONS})
 
-set_target_properties(ddb_gui_Qt PROPERTIES PREFIX "")
+set_target_properties(Qt PROPERTIES PREFIX "ddb_gui_")
 
-target_link_libraries(ddb_gui_Qt ${QT_LIBRARIES})
+target_link_libraries(Qt Qt5::Widgets)
 
-install(TARGETS ddb_gui_Qt LIBRARY DESTINATION lib/deadbeef/)
+install(TARGETS Qt LIBRARY DESTINATION lib${LIB_SUFFIX}/deadbeef/)
 install(FILES ${COMPILED_TRANSLATIONS} DESTINATION share/deadbeef/translations)

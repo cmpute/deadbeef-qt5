@@ -5,9 +5,10 @@
 
 PlayListWidget::PlayListWidget(QWidget *parent) :
         QWidget(parent),
-        playList(this),
+        layout(QBoxLayout::TopToBottom, this),
         tabBar(this),
-        layout(QBoxLayout::TopToBottom, this) {
+        playList(this)
+{
     loadConfig();
     configureLayout();
     playList.restoreCursor();

@@ -5,10 +5,10 @@
 
 HotkeyReadDialog::HotkeyReadDialog(const QString &actionTitle, QWidget *parent):
         QDialog(parent, Qt::Dialog),
+        vbox(this),
         message(this),
-        hotkey(this),
-        vbox(this) {
-
+        hotkey(this)
+{
     setModal(true);
     setWindowTitle(tr("Hotkey for action \"%1\"").arg(actionTitle));
     message.setText(tr("Press the new keys for action \"%1\"").arg(actionTitle));

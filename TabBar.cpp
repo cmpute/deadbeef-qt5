@@ -239,15 +239,19 @@ void TabBar::setTopPosition() {
 void TabBar::setShape(QTabBar::Shape shape) {
     switch (shape) {
         case QTabBar::RoundedNorth:
+        case QTabBar::TriangularNorth:
             top->setChecked(true);
             break;
         case QTabBar::RoundedSouth:
+        case QTabBar::TriangularSouth:
             bottom->setChecked(true);
             break;
         case QTabBar::RoundedWest:
+        case QTabBar::TriangularWest:
             left->setChecked(true);
             break;
         case QTabBar::RoundedEast:
+        case QTabBar::TriangularEast:
             right->setChecked(true);
             break;
     }

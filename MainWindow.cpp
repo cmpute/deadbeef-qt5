@@ -15,33 +15,34 @@
 #include "PlayList.h"
 #include "PreferencesDialog.h"
 
-#define SIGNUM(x) ((x > 0) - (x < 0))
-
 #include <include/callbacks.h>
-#include <QtConcurrentRun>
+#include <QtConcurrent/QtConcurrentRun>
 #include <QFutureWatcher>
 #include "DBFileDialog.h"
+
+template <typename T>
+int signum(T val) {
+    return (T(0) < val) - (val < T(0));
+}
 
 MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent),
         ui(new Ui::MainWindow),
-        orderGroup(this),
+        trayIcon(nullptr),
+        trayMenu(nullptr),
+        volumeSlider(this),
+        progressBar(this),
 #ifdef ARTWORK_ENABLED
         coverArtWidget(this),
 #endif
-        loopingGroup(this),
-        volumeSlider(this),
-        progressBar(this) {
-
+        orderGroup(this),
+        loopingGroup(this)
+{
     ui->setupUi(this);
     
     loadActions();
     loadIcons();
     createToolBars();
-    
-    trayIcon = NULL;
-    trayMenu = NULL;
-    
     createConnections();
 
     loadConfig();
@@ -50,7 +51,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow() {
     saveConfig();
-    delete trayIcon;
     delete ui;
 }
 
@@ -102,14 +102,12 @@ void MainWindow::createTray() {
     trayMenu->addAction(ui->actionExit);
     trayIcon->setContextMenu(trayMenu);
 
-    QIcon icon;
-    icon.addFile(QString::fromUtf8(":/root/images/scalable.svg"), QSize(), QIcon::Normal, QIcon::On);
-    trayIcon->setIcon(icon);
+    trayIcon->setIcon(windowIcon());
 
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIcon_activated(QSystemTrayIcon::ActivationReason)));
     connect(trayIcon, SIGNAL(wheeled(int)), this, SLOT(trayIcon_wheeled(int)));
     
-    trayIcon->setVisible(true);
+    trayIcon->setVisible(SETTINGS->getValue(QtGuiSettings::MainWindow, QtGuiSettings::MinimizeOnClose, false).toBool());
 }
 
 void MainWindow::titleSettingChanged() {
@@ -171,41 +169,43 @@ void MainWindow::closeEvent(QCloseEvent *e) {
     }
 }
 
-void MainWindow::on_actionAddFolder_activated() {
+void MainWindow::on_actionAddFolder_triggered() {
     DBFileDialog fileDialog(this,
                             tr("Add folder(s) to playlist..."),
                             QStringList(),
                             QFileDialog::DirectoryOnly,
                             QFileDialog::DontUseNativeDialog | QFileDialog::ShowDirsOnly | QFileDialog::ReadOnly);
-    QStringList fileNames = fileDialog.exec();
+    if (!fileDialog.exec())
+        return;
+    QStringList fileNames = fileDialog.selectedFiles();
     if (fileNames.isEmpty())
         return;
     foreach (QString localFile, fileNames)
         ui->playList->insertByURLAtPosition(QUrl::fromLocalFile(localFile), DBAPI->pl_getcount(PL_MAIN) - 1);
 }
 
-void MainWindow::on_actionClearAll_activated() {
+void MainWindow::on_actionClearAll_triggered() {
     ui->playList->clearPlayList();
 }
 
-void MainWindow::on_actionPlay_activated() {
+void MainWindow::on_actionPlay_triggered() {
     DBApiWrapper::Instance()->sendPlayMessage(DB_EV_PLAY_CURRENT);
 }
 
-void MainWindow::on_actionStop_activated() {
+void MainWindow::on_actionStop_triggered() {
     DBAPI->sendmessage(DB_EV_STOP, 0, 0, 0);
     updateTitle();
 }
 
-void MainWindow::on_actionNext_activated() {
+void MainWindow::on_actionNext_triggered() {
     DBApiWrapper::Instance()->sendPlayMessage(DB_EV_NEXT);
 }
 
-void MainWindow::on_actionPrev_activated() {
+void MainWindow::on_actionPrev_triggered() {
     DBApiWrapper::Instance()->sendPlayMessage(DB_EV_PREV);
 }
 
-void MainWindow::on_actionPause_activated() {
+void MainWindow::on_actionPause_triggered() {
     DBAPI->sendmessage(DB_EV_TOGGLE_PAUSE, 0, 0, 0);
 }
 
@@ -222,13 +222,13 @@ void MainWindow::trayIcon_activated(QSystemTrayIcon::ActivationReason reason) {
 
 }
 
-void MainWindow::on_actionExit_activated() {
+void MainWindow::on_actionExit_triggered() {
     actionOnClose = Exit;
     close();
 }
 
 void MainWindow::trayIcon_wheeled(int delta) {
-    volumeSlider.setValue(volumeSlider.value() + SIGNUM(delta));
+    volumeSlider.setValue(volumeSlider.value() + signum(delta));
 }
 
 void MainWindow::trackChanged(DB_playItem_t *from, DB_playItem_t *to) {
@@ -291,38 +291,40 @@ void MainWindow::on_actionPreferences_triggered() {
     delete prefDialog;
 }
 
-void MainWindow::on_actionSelectAll_activated() {
+void MainWindow::on_actionSelectAll_triggered() {
     ui->playList->selectAll();
 }
 
-void MainWindow::on_actionDeselectAll_activated() {
+void MainWindow::on_actionDeselectAll_triggered() {
     ui->playList->deselectAll();
 }
 
-void MainWindow::on_actionRemove_activated() {
+void MainWindow::on_actionRemove_triggered() {
     ui->playList->deleteSelectedTracks();
 }
 
-void MainWindow::on_actionAddFiles_activated() {
+void MainWindow::on_actionAddFiles_triggered() {
     DBFileDialog fileDialog(this,
                             tr("Add file(s) to playlist..."),
                             QStringList(),
                             QFileDialog::ExistingFiles,
                             QFileDialog::DontUseNativeDialog | QFileDialog::ReadOnly);
-    QStringList fileNames = fileDialog.exec();
+    if (!fileDialog.exec())
+        return;
+    QStringList fileNames = fileDialog.selectedFiles();
     if (fileNames.isEmpty())
         return;
     foreach (QString localFile, fileNames)
         ui->playList->insertByURLAtPosition(QUrl::fromLocalFile(localFile), DBAPI->pl_getcount(PL_MAIN) - 1);
 }
 
-void MainWindow::on_actionAddAudioCD_activated() {
+void MainWindow::on_actionAddAudioCD_triggered() {
     QFutureWatcher<void> *watcher = new QFutureWatcher<void>(this);
     connect(watcher, SIGNAL(finished()), ui->playList, SLOT(refresh()));
     watcher->setFuture(QtConcurrent::run(loadAudioCD));
 }
 
-void MainWindow::on_actionAddURL_activated() {
+void MainWindow::on_actionAddURL_triggered() {
     ui->playList->insertByURLAtPosition(QUrl::fromUserInput(QInputDialog::getText(this, tr("Enter URL..."), tr("URL: "), QLineEdit::Normal)));
 }
 
@@ -349,16 +351,16 @@ QMenu *MainWindow::createPopupMenu() {
     return popupMenu;
 }
 
-void MainWindow::on_actionHideMenuBar_activated() {
+void MainWindow::on_actionHideMenuBar_triggered() {
     ui->menuBar->setHidden(!ui->menuBar->isHidden());
     ui->actionHideMenuBar->setChecked(!ui->menuBar->isHidden());
 }
 
-void MainWindow::on_actionBlockToolbarChanges_activated() {
+void MainWindow::on_actionBlockToolbarChanges_triggered() {
     ui->PlayBackToolBar->setMovable(!ui->actionBlockToolbarChanges->isChecked());
 }
 
-void MainWindow::on_actionSaveAsPlaylist_activated() {
+void MainWindow::on_actionSaveAsPlaylist_triggered() {
     QStringList filters;
     filters << tr("DeaDBeeF playlist files (*.dbpl)");
     DB_playlist_t **plug = deadbeef->plug_get_playlist_list();
@@ -377,7 +379,9 @@ void MainWindow::on_actionSaveAsPlaylist_activated() {
                             QFileDialog::DontUseNativeDialog);
     fileDialog.setAcceptMode(QFileDialog::AcceptSave);
     
-    QStringList fileNames = fileDialog.exec();
+    if (!fileDialog.exec())
+        return;
+    QStringList fileNames = fileDialog.selectedFiles();
     if (fileNames.isEmpty())
         return;
     
@@ -388,7 +392,7 @@ void MainWindow::on_actionSaveAsPlaylist_activated() {
     }
 }
 
-void MainWindow::on_actionLoadPlaylist_activated() {
+void MainWindow::on_actionLoadPlaylist_triggered() {
     QStringList filters;
     filters << tr("Supported playlist formats (*.dbpl)");
     filters << tr("Other files (*)");
@@ -397,7 +401,9 @@ void MainWindow::on_actionLoadPlaylist_activated() {
                             filters,
                             QFileDialog::ExistingFile,
                             QFileDialog::DontUseNativeDialog | QFileDialog::ReadOnly);
-    QStringList fileNames = fileDialog.exec();
+    if (!fileDialog.exec())
+        return;
+    QStringList fileNames = fileDialog.selectedFiles();
     if (fileNames.isEmpty())
         return;
 
@@ -407,7 +413,7 @@ void MainWindow::on_actionLoadPlaylist_activated() {
 }
 
 #ifdef ARTWORK_ENABLED
-void MainWindow::on_actionHideCoverArt_activated() {
+void MainWindow::on_actionHideCoverArt_triggered() {
     coverArtWidget.setHidden(!coverArtWidget.isHidden());
 }
 
@@ -423,14 +429,7 @@ void MainWindow::setCloseOnMinimized(bool minimizeOnClose) {
 }
 
 void MainWindow::setTrayIconHidden(bool hideTrayIcon) {
-    if (hideTrayIcon) {
-        trayIcon->setVisible(false);
-        delete trayIcon;
-        delete trayMenu;
-    }
-    else {
-        createTray();
-    }
+    trayIcon->setVisible(!hideTrayIcon);
     
     bool minimizeOnClose = SETTINGS->getValue(QtGuiSettings::MainWindow, QtGuiSettings::MinimizeOnClose, false).toBool();
     configureActionOnClose(minimizeOnClose, hideTrayIcon);

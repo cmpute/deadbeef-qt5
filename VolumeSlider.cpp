@@ -3,14 +3,12 @@
 #include "QtGuiSettings.h"
 #include "QtGui.h"
 
-#define SIGNUM(x) ((x > 0) - (x < 0))
-
 VolumeSlider::VolumeSlider(QWidget *parent) : QSlider(parent) {
     setRange(-50, 0);
     setOrientation(Qt::Horizontal);
     setFixedWidth(80);
     setValue(DBAPI->volume_get_db());
-    connect(this, SIGNAL(valueChanged(int)), this, SLOT(onValueChanged(int)));
+    connect(this, SIGNAL(valueChanged(int)), this, SLOT(setValue(int)));
 }
 
 

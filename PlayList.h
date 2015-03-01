@@ -15,7 +15,6 @@ class PlayList : public QTreeView {
 
 public:
     PlayList(QWidget *parent = 0);
-    ~PlayList();
     
     void saveConfig();
     void loadConfig();

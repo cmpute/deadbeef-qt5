@@ -72,7 +72,7 @@ static int pluginStart() {
 }
 
 static int pluginStop() {
-    QApplication::instance()->quit();
+    QApplication::quit();
     qDebug() << "waiting for Qt thread to finish";
     deadbeef->thread_join(thread);
     qDebug() << "Qt thread finished";
@@ -99,7 +99,10 @@ static int pluginConnect() {
 
 
 void MainThreadRun(void *) {
-    QApplication app(0, 0);
+    int argc = 1;
+    char name[] = "deadbeef";
+    char *argv[] = { name, nullptr };
+    QApplication app(argc, argv);
     QApplication::setOrganizationName("deadbeef");
     QApplication::setApplicationName("deadbeef-qt");
 
@@ -118,8 +121,6 @@ void MainThreadRun(void *) {
     QTranslator translator;
     translator.load(QString::fromUtf8(DEADBEEF_PREFIX) + QString("/share/deadbeef/translations/QtGui_") + locale);
     app.installTranslator(&translator);
-
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("utf8"));
 
     MainWindow w;
     w.show();

@@ -1,5 +1,6 @@
 #include "DBApiWrapper.h"
 
+#include <QUrl>
 #include <QDebug>
 #include "QtGui.h"
 

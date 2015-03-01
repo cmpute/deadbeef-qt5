@@ -10,11 +10,11 @@ PreferencesDialog::PreferencesDialog(QWidget *parent) :
         interfaceWidget(this),
         soundWidget(this),
         networkWidget(this),
-        #ifdef HOTKEYS_ENABLED
-        hotkeysWidget(this),
-        #endif
-        pluginsWidget(this) {
-
+        pluginsWidget(this),
+#ifdef HOTKEYS_ENABLED
+        hotkeysWidget(this)
+#endif
+{
     setModal(true);
     setWindowTitle(tr("Preferences"));
     setWindowIcon(getStockIcon(this, "preferences-system", QStyle::SP_CustomBase));

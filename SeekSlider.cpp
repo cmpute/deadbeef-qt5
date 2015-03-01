@@ -32,6 +32,8 @@ void SeekSlider::onFrameUpdate() {
     if (activateNow) return;
     if (isHidden() || parentWidget()->isHidden())
         return;
+    if (!DBAPI->get_output())
+        return;
     if (DBAPI->get_output()->state() == OUTPUT_STATE_PLAYING || DBAPI->get_output()->state() == OUTPUT_STATE_PAUSED)
         setValue(DBAPI->playback_get_pos() * SEEK_SCALE);
 }

@@ -49,10 +49,7 @@ void loadPlaylist(const QString &fname) {
     if (plt) {
         DBAPI->plt_clear(plt);
         int abort = 0;
-        DB_playItem_t *it = DBAPI->plt_load(plt, NULL, fname.toUtf8().constData(), &abort, NULL, NULL);
-        if (it) {
-            DBAPI->pl_item_unref(it);
-        }
+        DBAPI->plt_load(plt, NULL, fname.toUtf8().constData(), &abort, NULL, NULL);
     }
 }
 

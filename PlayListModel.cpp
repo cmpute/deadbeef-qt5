@@ -44,31 +44,22 @@ Qt::ItemFlags PlayListModel::flags(const QModelIndex &index) const {
 QVariant PlayListModel::data(const QModelIndex &index, int role = Qt::DisplayRole) const {
     switch (role) {
     case Qt::DisplayRole: {
-        DBPltRef plt;
-        DB_playItem_t *currentDBItem = DBAPI->plt_get_item_for_idx(plt, index.row(), PL_MAIN);
         char title[1024];
-        if (index.column() == status_column) {
-            DBAPI->pl_format_title(currentDBItem, 0, title, sizeof(title), DB_COLUMN_PLAYING, NULL);
-            DBAPI->pl_item_unref(currentDBItem);
-            return QString::fromUtf8(title);
-        }
-        DBAPI->pl_format_title(currentDBItem, 0, title, sizeof(title), -1, columns[index.column()].toUtf8().data());
-        DBAPI->pl_item_unref(currentDBItem);
+        DBItemRef track(DBPltRef().at(index.row()));
+        if (index.column() == status_column)
+            DBAPI->pl_format_title(track, 0, title, sizeof(title), DB_COLUMN_PLAYING, NULL);
+        else
+            DBAPI->pl_format_title(track, 0, title, sizeof(title), -1, columns[index.column()].toUtf8().data());
         return QString::fromUtf8(title);
     }
     case Qt::DecorationRole: {
         if (index.column() == status_column) {
-            DBPltRef plt;
-            DB_playItem_t *currentDBItem = DBAPI->streamer_get_playing_track();
-            if (DBAPI->plt_get_item_idx(plt, currentDBItem, PL_MAIN) == index.row()) {
-                DBAPI->pl_item_unref(currentDBItem);
+            if (playingItemIndex() == index.row()) {
                 if (DBApiWrapper::Instance()->isPaused)
                     return pauseIcon;
                 else
                     return playIcon;
             }
-            if (currentDBItem)
-                DBAPI->pl_item_unref(currentDBItem);
         }
         break;
     }
@@ -118,11 +109,8 @@ void PlayListModel::trackChanged(DB_playItem_t *from, DB_playItem_t *to) {
 }
 
 void PlayListModel::playerPaused() {
-    DB_playItem_t *track = DBAPI->streamer_get_playing_track();
-    DBPltRef plt;
-    QModelIndex index = createIndex(DBAPI->plt_get_item_idx(plt, track, PL_MAIN), status_column, nullptr);
+    QModelIndex index = createIndex(playingItemIndex(), status_column, nullptr);
     emit dataChanged(index, index);
-    DBAPI->pl_item_unref(track);
 }
 
 void PlayListModel::deleteTracks(const QModelIndexList &tracks) {
@@ -133,7 +121,7 @@ void PlayListModel::deleteTracks(const QModelIndexList &tracks) {
     QModelIndex index;
     DBPltRef plt;
     foreach(index, tracks) {
-        DBAPI->pl_set_selected(DBAPI->plt_get_item_for_idx(plt, index.row(), PL_MAIN), 1);
+        DBAPI->pl_set_selected(plt.at(index.row()), 1);
     }
 
     DBAPI->plt_delete_selected(plt);
@@ -177,19 +165,13 @@ static int moveItems(const QList<int> &indices, int before) {
 
     DBPltRef plt;
     int lastItem = plt.itemCount() - 1;
-    DB_playItem_t *bef;
-    if (before > lastItem) {
-        DB_playItem_t *last = DBAPI->plt_get_item_for_idx(plt, lastItem, PL_MAIN);
-        bef = DBAPI->pl_get_next(last, PL_MAIN);
-        DBAPI->pl_item_unref(last);
-    } else {
-        bef = DBAPI->plt_get_item_for_idx(plt, before, PL_MAIN);
-    }
+    DBItemRef bef(before > lastItem
+                  ? plt.at(lastItem).next()
+                  : plt.at(before));
+
     DBAPI->pl_lock();
     DBAPI->plt_move_items(plt, PL_MAIN, plt, bef, inds, indices.length());
     DBAPI->pl_unlock();
-    if (bef)
-        DBAPI->pl_item_unref(bef);
 
     return lastItem;
 }

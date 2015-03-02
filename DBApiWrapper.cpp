@@ -48,12 +48,10 @@ int DBApiWrapper::onDeadbeefActivated() {
 
 void DBApiWrapper::addTracksByUrl(const QUrl &url, int position) {
     int pabort = 0;
-    DB_playItem_t *track = (position > -1) ? DBAPI->pl_get_for_idx(position) : NULL;
-    if (DBAPI->plt_insert_dir(DBAPI->plt_get_curr(), track, url.toString().toUtf8().data(), &pabort, 0, 0) == NULL) {
+    DBItemRef track ((position > -1) ? DBAPI->pl_get_for_idx(position) : NULL);
+    if (DBAPI->plt_insert_dir (DBAPI->plt_get_curr(), track, url.toString().toUtf8().data(), &pabort, 0, 0) == NULL) {
         DBAPI->plt_insert_file(DBAPI->plt_get_curr(), track, url.toString().toUtf8().data(), &pabort, 0, 0);
     }
-    if (track)
-        DBAPI->pl_item_unref(track);
 }
 
 void DBApiWrapper::sendPlayMessage(uint32_t id) {

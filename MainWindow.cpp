@@ -91,7 +91,8 @@ void MainWindow::loadActions() {
 }
 
 void MainWindow::createTray() {
-    trayIcon = new SystemTrayIcon(windowIcon(), this);
+    //trayIcon = new SystemTrayIcon(windowIcon(), this);
+    trayIcon = new SystemTrayIcon(QIcon(":/root/images/bitmap.png"), this);
     trayMenu = new QMenu();
     trayMenu->addAction(ui->actionPlay);
     trayMenu->addAction(ui->actionPause);

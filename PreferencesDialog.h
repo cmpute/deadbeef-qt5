@@ -5,6 +5,8 @@
 #include <QTabWidget>
 #include <QDialogButtonBox>
 
+#include <QStyle>
+
 #include "QtGui.h"
 
 #include "preferencesWidgets/InterfacePreferencesWidget.h"

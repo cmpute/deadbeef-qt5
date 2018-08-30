@@ -10,10 +10,10 @@ PreferencesDialog::PreferencesDialog(QWidget *parent) :
         interfaceWidget(this),
         soundWidget(this),
         networkWidget(this),
-        pluginsWidget(this),
 #ifdef HOTKEYS_ENABLED
-        hotkeysWidget(this)
+        hotkeysWidget(this),
 #endif
+        pluginsWidget(this)
 {
     setModal(true);
     setWindowTitle(tr("Preferences"));

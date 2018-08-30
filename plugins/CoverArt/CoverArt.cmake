@@ -1,4 +1,4 @@
-option(ARTWORK_ENABLED "Enable artwork support" OFF)
+option(ARTWORK_ENABLED "Enable artwork support" ON)
 
 if (ARTWORK_ENABLED)
     find_file(DEADBEEF_ARTWORK artwork.so PATHS ${DEADBEEF_PREFIX}/lib/deadbeef)

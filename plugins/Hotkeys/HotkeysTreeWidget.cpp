@@ -20,10 +20,16 @@ void HotkeysTreeWidget::loadHotkeys(DB_plugin_s **plugins) {
         DB_plugin_t *p = plugins[i];
         if (p->get_actions) {
             DB_plugin_action_t *actions = p->get_actions(NULL);
-            QTreeWidgetItem *pluginItem;
+            QTreeWidgetItem *pluginItem = NULL;
             if (actions) {
                 pluginItem = new QTreeWidgetItem(this);
                 pluginItem->setText(0, QString::fromUtf8(p->name));
+            }
+            else
+            {
+                if (pluginItem != NULL)
+                    delete pluginItem;
+                continue;
             }
             while (actions) {
                 if (actions->name && actions->title) {
@@ -55,7 +61,7 @@ void HotkeysTreeWidget::loadHotkeys(DB_plugin_s **plugins) {
                 }
                 actions = actions->next;
             }
-            if (pluginItem->childCount() == 0)
+            if (pluginItem->childCount() == 0 and pluginItem != NULL)
                 delete pluginItem;
         }
     }

@@ -2,7 +2,7 @@
 #define COVERARTWIDGET_H
 
 #include <QDockWidget>
-#include <QLabel>
+#include "QPictureLabel.h"
 
 #include "DBApiWrapper.h"
 #include <QAction>
@@ -17,7 +17,7 @@ public:
     void updateCover(DB_playItem_t *track = NULL);
 
 private:
-    QLabel label;
+    QPictureLabel label;
     QAction updateCoverAction;
 
 protected:

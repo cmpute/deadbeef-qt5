@@ -16,7 +16,9 @@ CoverArtWrapper::CoverArtWrapper(QObject *parent) : coverLoadWatcher(this) {
 void CoverArtWrapper::loadSettings() {
     QSettings settings;
     settings.beginGroup("CoverArt");
-    defaultWidth = settings.value("maximum_width", 100).toInt();
+    //defaultWidth = settings.value("maximum_width", 100).toInt();
+    QScreen *srn = QApplication::screens().at(0);
+    defaultWidth = qCeil(srn->physicalDotsPerInch() * 4);
     settings.endGroup();
 }
 

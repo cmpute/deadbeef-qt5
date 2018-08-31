@@ -3,6 +3,9 @@
 
 #include <QImage>
 #include <QFutureWatcher>
+#include <QApplication>
+#include <QScreen>
+#include <QtMath>
 
 class CoverArtWrapper : public QObject {
     Q_OBJECT

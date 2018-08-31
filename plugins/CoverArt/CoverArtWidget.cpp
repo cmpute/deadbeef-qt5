@@ -37,8 +37,8 @@ void CoverArtWidget::trackChanged(DB_playItem_t *, DB_playItem_t *to) {
 
 void CoverArtWidget::setCover(const QImage &aCover) {
     label.setPixmap(QPixmap::fromImage(aCover));
-    setMaximumWidth(aCover.width() + 5);
-    setMaximumHeight(aCover.height() + 25);
+    //setMaximumWidth(aCover.width() + 5);
+    //setMaximumHeight(aCover.height() + 25);
 }
 
 void CoverArtWidget::reloadCover() {

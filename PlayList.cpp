@@ -175,10 +175,16 @@ void PlayList::trackDoubleClicked(QModelIndex index) {
 
 void PlayList::createContextMenu() {
     setContextMenuPolicy(Qt::CustomContextMenu);
+    //delete tracks
     QAction *delTrack = new QAction(tr("Remove track(s)"), this);
     delTrack->setShortcut(Qt::Key_Delete);
     connect(delTrack, SIGNAL(triggered()), this, SLOT(delSelectedTracks()));
     addAction(delTrack);
+    //delete from disk
+    QAction *delFile = new QAction(tr("Remove track(s) from disk"), this);
+    connect(delFile, SIGNAL(triggered()), this, SLOT(delSelectedFiles()));
+    addAction(delFile);
+    
     connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 }
 
@@ -235,7 +241,11 @@ void PlayList::onTrackChanged(DB_playItem_t *from, DB_playItem_t *to) {
 }
 
 void PlayList::delSelectedTracks() {
-    playListModel.deleteTracks(selectionModel()->selectedRows());
+    playListModel.deleteTracks(selectionModel()->selectedRows(), false);
+}
+
+void PlayList::delSelectedFiles() {
+    playListModel.deleteTracks(selectionModel()->selectedRows(), true);
 }
 
 void PlayList::clearPlayList() {

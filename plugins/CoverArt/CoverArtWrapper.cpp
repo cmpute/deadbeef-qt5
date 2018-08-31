@@ -53,6 +53,8 @@ void CoverArtWrapper::getCoverArt(const char *fname, const char *artist, const c
     if (image_fname) {
         coverLoadWatcher.setFuture(QtConcurrent::run(scale, image_fname));
     }
+    else
+        this->getDefaultCoverArt();
 }
 
 void CoverArtWrapper::getDefaultCoverArt() {

@@ -4,6 +4,8 @@
 #include <QAbstractItemModel>
 #include <QIcon>
 #include <QMimeData>
+#include <QMessageBox>
+#include <QFile>
 
 #include "DBApiWrapper.h"
 
@@ -23,7 +25,7 @@ public:
     void moveItems(QList<int> indices, int before);
     
     void clearPlayList();
-    void deleteTracks(const QModelIndexList &tracks);
+    void deleteTracks(const QModelIndexList &tracks, bool delFile = false);
 
     QStringList columns;
     QHash<QString, QString> columnNames;

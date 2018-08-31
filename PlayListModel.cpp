@@ -113,18 +113,49 @@ void PlayListModel::playerPaused() {
     emit dataChanged(index, index);
 }
 
-void PlayListModel::deleteTracks(const QModelIndexList &tracks) {
+void PlayListModel::deleteTracks(const QModelIndexList &tracks, bool delFile) {
     if (tracks.length() == 0)
         return;
+    if (delFile && QMessageBox::question(nullptr, "DeaDBeeF",
+        tr("Selected tracks will be deleted from disk, proceed?"),
+        QMessageBox::Ok|QMessageBox::Cancel,
+        QMessageBox::Cancel) == QMessageBox::Cancel)
+            return;
     beginRemoveRows(QModelIndex(), tracks.first().row(), tracks.last().row());
 
     QModelIndex index;
     DBPltRef plt;
+    char fPath[PATH_MAX];
+    QStringList failedList;
     foreach(index, tracks) {
-        DBAPI->pl_set_selected(plt.at(index.row()), 1);
+        if (delFile)
+        {
+            if (DBAPI->streamer_get_playing_track() == plt.at(index.row()))
+                DBAPI->sendmessage(DB_EV_STOP, 0, 0, 0);
+            DBAPI->pl_format_title(plt.at(index.row()), -1, fPath, sizeof (fPath), -1, "%F");
+            if (!QFile::remove(fPath))
+                failedList << fPath;
+            else
+                DBAPI->pl_set_selected(plt.at(index.row()), 1);
+        }
+        else
+            DBAPI->pl_set_selected(plt.at(index.row()), 1);
     }
-
+    
     DBAPI->plt_delete_selected(plt);
+    
+    if (failedList.count() != 0)
+    {
+        //QMessageBox::warning(nullptr, "DeaDBeeF",
+        //tr("Some files cannot be deleted:\n") + failedList.join("\n"),
+        //QMessageBox::Ok);
+        
+        QMessageBox errorDeleteMsgBox(QMessageBox::Warning, "DeaDBeeF",
+                                        tr("Some files cannot be deleted!\n"), QMessageBox::Ok);
+        errorDeleteMsgBox.setDetailedText(failedList.join("\n"));
+        errorDeleteMsgBox.exec();
+    }
+    //free(fPath);
     endRemoveRows();
 }
 

@@ -54,6 +54,7 @@ protected:
 
 public Q_SLOTS:
     void delSelectedTracks();
+    void delSelectedFiles();
     void refresh();
 
 private Q_SLOTS:

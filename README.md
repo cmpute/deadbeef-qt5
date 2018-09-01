@@ -2,7 +2,7 @@
 This plugin provides a Qt interface for [deadbeef](http://deadbeef.sourceforge.net/)
 
 ##Install
-For installation requires Qt 4.4 or greater and DeaDBeeF 0.5.6.
+For installation requires Qt 5 and DeaDBeeF 0.5.6.
 
 Get deadbeef-qt sources from repository:
 ```bash

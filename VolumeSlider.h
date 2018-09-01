@@ -15,6 +15,7 @@ public:
 protected slots:
     void mousePressEvent(QMouseEvent *ev);
     void mouseMoveEvent(QMouseEvent *ev);
+    void wheelEvent(QWheelEvent *ev);
 };
 
 #endif // VOLUMESLIDER_H

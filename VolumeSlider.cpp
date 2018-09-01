@@ -12,6 +12,11 @@ VolumeSlider::VolumeSlider(QWidget *parent) : QSlider(parent) {
 }
 
 
+void VolumeSlider::wheelEvent(QWheelEvent *ev) {
+    ev->accept();
+    setValue( value() + ev->delta()/20);
+}
+
 void VolumeSlider::mousePressEvent(QMouseEvent *ev) {
     mouseMoveEvent(ev);
 }

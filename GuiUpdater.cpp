@@ -2,14 +2,15 @@
 
 #include <QtGuiSettings.h>
 
-GuiUpdater *GuiUpdater::instance;
+GuiUpdater *GuiUpdater::instance = NULL;
 
 GuiUpdater::GuiUpdater(QObject *parent) {
     startSpecificTimer();
 }
 
 void GuiUpdater::Destroy() {
-    delete instance;
+    if (instance != NULL)
+        delete instance;
     instance = NULL;
 }
 

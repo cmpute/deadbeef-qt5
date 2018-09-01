@@ -14,9 +14,8 @@ CoverArtWidget::CoverArtWidget(QWidget *parent):
         updateCoverAction(tr("Update cover"), &label) {
     setObjectName("CoverArt Widget");
     setWidget(&label);
-
-
-
+    
+    setFeatures(QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable);
     label.setContextMenuPolicy(Qt::ActionsContextMenu);
     label.addAction(&updateCoverAction);
     updateCoverAction.setIcon(getStockIcon(&label, "view-refresh", QStyle::SP_MediaPlay));

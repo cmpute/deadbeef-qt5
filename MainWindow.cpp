@@ -354,6 +354,12 @@ void MainWindow::on_actionHideMenuBar_triggered() {
 
 void MainWindow::on_actionBlockToolbarChanges_triggered() {
     ui->PlayBackToolBar->setMovable(!ui->actionBlockToolbarChanges->isChecked());
+#ifdef ARTWORK_ENABLED
+    if (ui->actionBlockToolbarChanges->isChecked())
+        coverArtWidget.setTitleBarWidget(new QWidget());
+    else
+        coverArtWidget.setTitleBarWidget(0);
+#endif
 }
 
 void MainWindow::on_actionSaveAsPlaylist_triggered() {
@@ -488,6 +494,13 @@ void MainWindow::loadConfig() {
     configureActionOnClose(minimizeOnClose, trayIconIsHidden);
 
     ui->PlayBackToolBar->setMovable(!ui->actionBlockToolbarChanges->isChecked());
+
+#ifdef ARTWORK_ENABLED
+    if (ui->actionBlockToolbarChanges->isChecked())
+        coverArtWidget.setTitleBarWidget(new QWidget());
+    else
+        coverArtWidget.setTitleBarWidget(0);
+#endif
 
     switch (DBAPI->conf_get_int("playback.order", PLAYBACK_ORDER_LINEAR)) {
     case PLAYBACK_ORDER_LINEAR:

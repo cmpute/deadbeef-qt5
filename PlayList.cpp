@@ -227,7 +227,9 @@ void PlayList::showContextMenu(QPoint point) {
         return;
     QMenu menu(this);
     menu.addActions(actions());
-    menu.exec(mapToGlobal(point));
+    //move the menu a bit down
+    double scaleFactor = this->devicePixelRatioF();
+    menu.exec(mapToGlobal(point)+QPoint(0,17*scaleFactor));
 }
 
 void PlayList::headerContextMenuRequested(QPoint pos) {

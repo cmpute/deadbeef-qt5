@@ -42,5 +42,14 @@ void GuiUpdater::timerEvent(QTimerEvent *event) {
         killTimer(event->timerId());
         startSpecificTimer(timerTick);
     }
+    newPlayingState = DBAPI->get_output()->state();
+    if (newPlayingState != oldPlayingState)
+    {
+        if (newPlayingState == OUTPUT_STATE_STOPPED)
+            emit GuiUpdater::Instance()->isPlaying(false);
+        else
+            emit GuiUpdater::Instance()->isPlaying(true);
+    }
+    oldPlayingState = newPlayingState;
     emit GuiUpdater::Instance()->frameUpdate();
 }

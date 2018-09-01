@@ -8,6 +8,7 @@ SeekSlider::SeekSlider(QWidget *parent) : QSlider(parent) {
     setRange(0, 100 * SEEK_SCALE);
     setOrientation(Qt::Horizontal);
     connect(GuiUpdater::Instance(), SIGNAL(frameUpdate()), this, SLOT(onFrameUpdate()));
+    connect(GuiUpdater::Instance(), SIGNAL(isPlaying(bool)), this, SLOT(setEnabled(bool)));
 }
 
 SeekSlider::~SeekSlider() {
@@ -26,6 +27,10 @@ void SeekSlider::mousePressEvent(QMouseEvent *ev) {
 
 void SeekSlider::mouseMoveEvent(QMouseEvent *ev) {
     setValue(pos(ev));
+}
+
+void SeekSlider::wheelEvent(QWheelEvent *ev) {
+    ev->ignore();
 }
 
 void SeekSlider::onFrameUpdate() {

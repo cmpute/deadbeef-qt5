@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QTimerEvent>
 
+#include "QtGui.h"
+
 class GuiUpdater : public QObject {
     Q_OBJECT
 public:
@@ -19,11 +21,14 @@ private:
     bool killTimerAtNextTick;
     void startSpecificTimer(int newTimerTick = -1);
     int timerTick;
+    int newPlayingState;
+    int oldPlayingState;
     
 protected:
     void timerEvent(QTimerEvent *event);
 signals:
     void frameUpdate();
+    void isPlaying(bool);
 };
 
 #endif // GUIUPDATER_H

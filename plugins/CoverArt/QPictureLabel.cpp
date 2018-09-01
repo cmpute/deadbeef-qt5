@@ -35,7 +35,9 @@ void QPictureLabel::_displayImage()
         )
         _qpCurrent = _qpSource.scaledToHeight(ch, Qt::TransformationMode::FastTransformation);
 
-    int x = (cw - _qpCurrent.width())/2, y = (ch - _qpCurrent.height())/2;
+    int x = (cw - _qpCurrent.width())/2;
+    //int y = (ch - _qpCurrent.height())/2;
+    int y = 0;
 
     QPainter paint(this);
     paint.drawPixmap(x, y, _qpCurrent);

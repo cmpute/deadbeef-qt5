@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/root">
-        <file>images/scalable.svg</file>
         <file>images/bitmap.png</file>
         <file>images/play_16.png</file>
         <file>images/pause_16.png</file>

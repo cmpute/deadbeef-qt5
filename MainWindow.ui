@@ -18,7 +18,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="Resources.qrc">
-    <normaloff>:/root/images/scalable.svg</normaloff>:/root/images/scalable.svg</iconset>
+    <normaloff>:/root/images/bitmap.png</normaloff>:/root/images/bitmap.png</iconset>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>

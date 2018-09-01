@@ -5,7 +5,6 @@
 
 #include "QtGui.h"
 #include "DBApiWrapper.h"
-#include "qticonloader.h"
 
 #ifdef ARTWORK_ENABLED
 #include <plugins/CoverArt/CoverArtWrapper.h>
@@ -41,7 +40,7 @@ QIcon getStockIcon(QWidget *widget, const QString &freedesktop_name, int fallbac
     QIcon fallbackIcon;
     if (fallback > 0)
         fallbackIcon = widget->style()->standardIcon(QStyle::StandardPixmap(fallback), 0, widget);
-    return QtIconLoader::icon(freedesktop_name, fallbackIcon);
+    return QIcon::fromTheme(freedesktop_name, fallbackIcon);
 }
 
 void loadPlaylist(const QString &fname) {

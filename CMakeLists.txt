@@ -34,7 +34,6 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
 set(SOURCES
     include/callbacks.cpp
     include/parser.cpp
-    include/qticonloader.cpp
     
     preferencesWidgets/InterfacePreferencesWidget.cpp
     preferencesWidgets/NetworkPreferencesWidget.cpp
@@ -86,7 +85,6 @@ set(QT_HEADERS
 set(HEADERS
     include/callbacks.h
     include/parser.h
-    include/qticonloader.h
     
     QtGui.h
     )

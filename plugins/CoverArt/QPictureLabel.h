@@ -12,6 +12,7 @@ private:
     QPixmap _qpCurrent;
 
     void _displayImage();
+    double scaleFactor = 1;
 
 public:
     QPictureLabel(QWidget *aParent) : QLabel(aParent) { }

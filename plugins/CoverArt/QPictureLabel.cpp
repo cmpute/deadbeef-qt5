@@ -7,6 +7,9 @@
 void QPictureLabel::paintEvent(QPaintEvent *aEvent)
 {
     QLabel::paintEvent(aEvent);
+    scaleFactor = this->devicePixelRatioF();
+    _qpSource.setDevicePixelRatio(scaleFactor);
+    _qpCurrent.setDevicePixelRatio(scaleFactor);
     _displayImage();
 }
 
@@ -21,7 +24,7 @@ void QPictureLabel::_displayImage()
     if (_qpSource.isNull()) //no image was set, don't draw anything
         return;
 
-    float cw = width(), ch = height();
+    float cw = width()*scaleFactor, ch = height()*scaleFactor;
     float pw = _qpCurrent.width(), ph = _qpCurrent.height();
 
     if (pw > cw && ph > ch && pw/cw > ph/ch || //both width and high are bigger, ratio at high is bigger or

@@ -53,6 +53,7 @@ protected:
     PlayListModel playListModel;
 
 public Q_SLOTS:
+    void reloadMetadata();
     void delSelectedTracks();
     void delSelectedFiles();
     void refresh();

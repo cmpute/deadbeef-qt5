@@ -26,6 +26,7 @@ public:
     
     void clearPlayList();
     void deleteTracks(const QModelIndexList &tracks, bool delFile = false);
+    void reloadMetadata(const QModelIndexList &tracks);
 
     QStringList columns;
     QHash<QString, QString> columnNames;

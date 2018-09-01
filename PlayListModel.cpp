@@ -2,6 +2,8 @@
 
 #include "QtGui.h"
 
+#include <QDebug>
+
 PlayListModel::PlayListModel(QObject *parent) : QAbstractItemModel(parent),
     playIcon(":/root/images/play_16.png"),
     pauseIcon(":/root/images/pause_16.png") {
@@ -113,6 +115,43 @@ void PlayListModel::playerPaused() {
     emit dataChanged(index, index);
 }
 
+void PlayListModel::reloadMetadata(const QModelIndexList &tracks) {
+    if (tracks.length() == 0)
+        return;
+    DB_playItem_t *it;
+    DBPltRef plt;
+    QModelIndex index;
+    foreach(index, tracks) {
+        it = plt.at(index.row());
+        DBAPI->pl_lock();
+        QString decoder_id(DBAPI->pl_find_meta(it, ":DECODER"));
+        //qDebug() << DBAPI->pl_is_selected(it);
+        int match = DBAPI->is_local_file(DBAPI->pl_find_meta(it, ":URI")) && !decoder_id.isEmpty();
+        DBAPI->pl_unlock();
+        if (match) {
+            uint32_t f = DBAPI->pl_get_item_flags(it);
+            if (!(f & DDB_IS_SUBTRACK)) {
+                f &= ~DDB_TAG_MASK;
+                DBAPI->pl_set_item_flags(it, f);
+                DB_decoder_t **decoders = DBAPI->plug_get_decoder_list();
+                for (int i = 0; decoders[i]; i++) {
+                    if (decoder_id.compare(QString(decoders[i]->plugin.id)) != 0)
+                    {
+                        if (decoders[i]->read_metadata)
+                        {
+                            decoders[i]->read_metadata(it);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        //DBAPI->pl_item_unref(it);
+    }
+    DBAPI->pl_save_current();
+    DBAPI->sendmessage(DB_EV_PLAYLISTCHANGED, 0, DDB_PLAYLIST_CHANGE_CONTENT, 0);
+}
+
 void PlayListModel::deleteTracks(const QModelIndexList &tracks, bool delFile) {
     if (tracks.length() == 0)
         return;
@@ -128,18 +167,19 @@ void PlayListModel::deleteTracks(const QModelIndexList &tracks, bool delFile) {
     char fPath[PATH_MAX];
     QStringList failedList;
     foreach(index, tracks) {
+        DB_playItem_t *it = plt.at(index.row());
         if (delFile)
         {
-            if (DBAPI->streamer_get_playing_track() == plt.at(index.row()))
+            if (DBAPI->streamer_get_playing_track() == it)
                 DBAPI->sendmessage(DB_EV_STOP, 0, 0, 0);
-            DBAPI->pl_format_title(plt.at(index.row()), -1, fPath, sizeof (fPath), -1, "%F");
+            DBAPI->pl_format_title(it, -1, fPath, sizeof (fPath), -1, "%F");
             if (!QFile::remove(fPath))
                 failedList << fPath;
             else
-                DBAPI->pl_set_selected(plt.at(index.row()), 1);
+                DBAPI->pl_set_selected(it, 1);
         }
         else
-            DBAPI->pl_set_selected(plt.at(index.row()), 1);
+            DBAPI->pl_set_selected(it, 1);
     }
     
     DBAPI->plt_delete_selected(plt);

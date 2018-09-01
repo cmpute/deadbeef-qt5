@@ -175,6 +175,14 @@ void PlayList::trackDoubleClicked(QModelIndex index) {
 
 void PlayList::createContextMenu() {
     setContextMenuPolicy(Qt::CustomContextMenu);
+    //refresh metadata
+    QAction *reloadMeta = new QAction(tr("Reload Metadata"), this);
+    connect(reloadMeta, SIGNAL(triggered()), this, SLOT(reloadMetadata()));
+    addAction(reloadMeta);
+    //separator
+    QAction *separator1 = new QAction(this);
+    separator1->setSeparator(true);
+    addAction(separator1);
     //delete tracks
     QAction *delTrack = new QAction(tr("Remove track(s)"), this);
     delTrack->setShortcut(Qt::Key_Delete);
@@ -238,6 +246,10 @@ void PlayList::onTrackChanged(DB_playItem_t *from, DB_playItem_t *to) {
     setCurrentIndex(playListModel.index(index, 0, QModelIndex()));
 
     playListModel.index(index, 0, QModelIndex());
+}
+
+void PlayList::reloadMetadata() {
+    playListModel.reloadMetadata(selectionModel()->selectedRows());
 }
 
 void PlayList::delSelectedTracks() {

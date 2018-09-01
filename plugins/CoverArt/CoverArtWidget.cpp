@@ -15,6 +15,9 @@ CoverArtWidget::CoverArtWidget(QWidget *parent):
     setObjectName("CoverArt Widget");
     setWidget(&label);
     
+    double scaleFactor = this->devicePixelRatioF();
+    setMinimumWidth(40*scaleFactor);
+    setMinimumHeight(40*scaleFactor);
     setFeatures(QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable);
     label.setContextMenuPolicy(Qt::ActionsContextMenu);
     label.addAction(&updateCoverAction);

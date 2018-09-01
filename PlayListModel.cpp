@@ -2,8 +2,6 @@
 
 #include "QtGui.h"
 
-#include <QDebug>
-
 PlayListModel::PlayListModel(QObject *parent) : QAbstractItemModel(parent),
     playIcon(":/root/images/play_16.png"),
     pauseIcon(":/root/images/pause_16.png") {

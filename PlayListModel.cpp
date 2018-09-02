@@ -2,6 +2,8 @@
 
 #include "QtGui.h"
 
+#include <QDebug>
+
 PlayListModel::PlayListModel(QObject *parent) : QAbstractItemModel(parent),
     playIcon(":/root/images/play_16.png"),
     pauseIcon(":/root/images/pause_16.png") {
@@ -15,6 +17,22 @@ PlayListModel::PlayListModel(QObject *parent) : QAbstractItemModel(parent),
     columnNames.insert("%b", tr("Album"));
     columnNames.insert("%y", tr("Year"));
     columnNames.insert("%l", tr("Duration"));
+    //fill standart metadata keys
+    metaDataKeys << "artist" << "title" << "album" << "year" << "genre" << "composer" \
+        << "album artist" << "track" << "numtracks" << "disc" << "numdiscs" << "comment";
+    metaDataNames.insert("artist", tr("Artist"));
+    metaDataNames.insert("title", tr("Title"));
+    metaDataNames.insert("album", tr("Album"));
+    metaDataNames.insert("year", tr("Year"));
+    metaDataNames.insert("genre", tr("Genre"));
+    metaDataNames.insert("composer", tr("Composer"));
+    metaDataNames.insert("album artist", tr("Album Artist"));
+    metaDataNames.insert("track", tr("Track"));
+    metaDataNames.insert("numtracks", tr("Total Tracks"));
+    metaDataNames.insert("disc", tr("Disc Number"));
+    metaDataNames.insert("numdiscs", tr("Total Discs"));
+    metaDataNames.insert("comment", tr("Comment"));
+    
     loadConfig();
 }
 
@@ -111,6 +129,40 @@ void PlayListModel::trackChanged(DB_playItem_t *from, DB_playItem_t *to) {
 void PlayListModel::playerPaused() {
     QModelIndex index = createIndex(playingItemIndex(), status_column, nullptr);
     emit dataChanged(index, index);
+}
+
+void PlayListModel::trackProps(const QModelIndexList &tracks) {
+    DBPltRef plt;
+    DB_playItem_t *it = plt.at(tracks[0].row());
+    DBAPI->pl_lock();
+    DB_metaInfo_t *meta = deadbeef->pl_get_metadata_head(it);
+    QStringList metaDataCustomKeys;
+    QHash<QString, QString> metaDataStd = metaDataNames;
+    QHash<QString, QString> metaDataCustom;
+    while (meta) {
+        DB_metaInfo_t *next = meta->next;
+        if (meta->key[0] != ':' && meta->key[0] != '!' && meta->key[0] != '_') {
+            //qDebug() << meta->key << meta->value;
+            if (metaDataStd.contains(meta->key))
+                metaDataStd[meta->key] = meta->value;
+            else
+            {
+                metaDataCustom[meta->key] = meta->value;
+                metaDataCustomKeys << meta->key;
+            }
+        }
+        meta = next;
+    }
+    DBAPI->pl_unlock();
+    //TODO: display metadata
+    qDebug() << "===Standard keys===";
+    foreach (QString key,metaDataKeys){
+        qDebug() << key << metaDataStd[key];
+    }
+    qDebug() << "===Custom keys===";
+    foreach (QString key,metaDataCustomKeys){
+        qDebug() << key << metaDataCustom[key];
+    }
 }
 
 void PlayListModel::reloadMetadata(const QModelIndexList &tracks) {

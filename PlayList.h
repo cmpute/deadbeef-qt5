@@ -56,6 +56,7 @@ public Q_SLOTS:
     void reloadMetadata();
     void delSelectedTracks();
     void delSelectedFiles();
+    void viewTrackProps();
     void refresh();
 
 private Q_SLOTS:

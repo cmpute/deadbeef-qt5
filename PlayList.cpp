@@ -192,6 +192,15 @@ void PlayList::createContextMenu() {
     QAction *delFile = new QAction(tr("Remove track(s) from disk"), this);
     connect(delFile, SIGNAL(triggered()), this, SLOT(delSelectedFiles()));
     addAction(delFile);
+    //separator
+    QAction *separator2 = new QAction(this);
+    separator2->setSeparator(true);
+    addAction(separator2);
+    //view properties
+    QAction *viewProp = new QAction(tr("View track properties"), this);
+    connect(viewProp, SIGNAL(triggered()), this, SLOT(viewTrackProps()));
+    addAction(viewProp);
+    
     
     connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 }
@@ -260,6 +269,10 @@ void PlayList::delSelectedTracks() {
 
 void PlayList::delSelectedFiles() {
     playListModel.deleteTracks(selectionModel()->selectedRows(), true);
+}
+
+void PlayList::viewTrackProps() {
+    playListModel.trackProps(selectionModel()->selectedRows());
 }
 
 void PlayList::clearPlayList() {

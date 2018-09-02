@@ -249,6 +249,7 @@ void PlayListModel::trackProps(const QModelIndexList &tracks) {
         QStandardItem *keyname = new QStandardItem(metaDataNames[metaDataKeys.at(i)]);
         keyname->setFlags(keyname->flags()^Qt::ItemIsEditable);
         QStandardItem *value = new QStandardItem(metaDataStd[metaDataKeys.at(i)]);
+        //value->setFlags(value->flags()^Qt::ItemIsEditable);
         modelMetaHeader->setItem(i,0,key);
         modelMetaHeader->setItem(i,1,keyname);
         modelMetaHeader->setItem(i,2,value);
@@ -264,7 +265,17 @@ void PlayListModel::trackProps(const QModelIndexList &tracks) {
         keyfont.setItalic(true);
         keyfont.setUnderline(true);
         keyname->setFont(keyfont);
-        QStandardItem *value = new QStandardItem(metaDataCustom[metaDataCustomKeys.at(i)]);
+        QString valueStr = QString(metaDataCustom[metaDataCustomKeys.at(i)]);
+        QStandardItem *value;
+        if (valueStr.contains(QChar(10)))
+        {
+            value = new QStandardItem(valueStr.split(QChar(10))[0] + QString("(...)"));
+            value->setData(valueStr);
+            value->setFlags(value->flags()^Qt::ItemIsEditable);
+        }
+        else
+            value = new QStandardItem(valueStr);
+        //value->setFlags(value->flags()^Qt::ItemIsEditable);
         modelMetaHeader->setItem(i+j,0,key);
         modelMetaHeader->setItem(i+j,1,keyname);
         modelMetaHeader->setItem(i+j,2,value);

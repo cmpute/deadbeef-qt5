@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include <QTableView>
+#include <QStandardItem>
+#include <QStandardItemModel>
 
 namespace Ui {
 class MetadataDialog;
@@ -18,12 +20,17 @@ public:
     QTableView *tableViewMeta();
     QTableView *tableViewProps();
     QLineEdit *lineEditPath();
+    
 private slots:
     void on_btnClose_clicked();
 
     void on_btnSettings_clicked();
     
     void on_btnApply_clicked();
+    
+    void Metadata_doubleClicked(const QModelIndex &index);
+    
+    void editValueInDialog(QStandardItem *item, QString title = tr("Edit Metadata"));
 
 private:
     Ui::MetadataDialog *ui;

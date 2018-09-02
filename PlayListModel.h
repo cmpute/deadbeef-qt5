@@ -44,6 +44,9 @@ private:
     QStringList metaDataKeys;
     QHash<QString, QString> metaDataNames;
     
+    QStringList propsKeys;
+    QHash<QString, QString> propsNames;
+    
     QMimeData *mimeData(const QModelIndexList &indexes) const;
     QStringList mimeTypes() const;
     

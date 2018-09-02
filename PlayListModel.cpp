@@ -32,6 +32,14 @@ PlayListModel::PlayListModel(QObject *parent) : QAbstractItemModel(parent),
     metaDataNames.insert("disc", tr("Disc Number"));
     metaDataNames.insert("numdiscs", tr("Total Discs"));
     metaDataNames.insert("comment", tr("Comment"));
+    //fill standard properties keys
+    propsKeys << ":URI" << ":TRACKNUM" << ":DURATION" << ":TAGS" << ":HAS_EMBEDDED_CUESHEET" << ":FILETYPE";
+    propsNames.insert(":URI", tr("Location"));
+    propsNames.insert(":TRACKNUM", tr("Subtrack Index"));
+    propsNames.insert(":DURATION", tr("Duration"));
+    propsNames.insert(":TAGS", tr("Tag Type(s)"));
+    propsNames.insert(":HAS_EMBEDDED_CUESHEET", tr("Embedded Cuesheet"));
+    propsNames.insert(":FILETYPE", tr("Codec"));
     
     loadConfig();
 }
@@ -135,27 +143,42 @@ void PlayListModel::trackProps(const QModelIndexList &tracks) {
     DBPltRef plt;
     DB_playItem_t *it = plt.at(tracks[0].row());
     DBAPI->pl_lock();
-    DB_metaInfo_t *metainfo = DBAPI->pl_get_metadata_head(it);
+    DB_metaInfo_t *meta = DBAPI->pl_get_metadata_head(it);
+    
     QStringList metaDataCustomKeys;
-    //QHash<QString, QString> metaDataStd = metaDataNames;
     QHash<QString, QString> metaDataStd;
     foreach (QString v,metaDataKeys){
         metaDataStd[v] = QString("");
     }
     QHash<QString, QString> metaDataCustom;
-    while (metainfo) {
-        DB_metaInfo_t *next = metainfo->next;
-        if (metainfo->key[0] != ':' && metainfo->key[0] != '!' && metainfo->key[0] != '_') {
-            //qDebug() << metainfo->key << metainfo->value;
-            if (metaDataStd.contains(metainfo->key))
-                metaDataStd[metainfo->key] = metainfo->value;
+    
+    QStringList propsCustomKeys;
+    QHash<QString, QString> propsStd;
+    foreach (QString v,propsKeys){
+        propsStd[v] = QString("");
+    }
+    QHash<QString, QString> propsCustom;
+    
+    while (meta) {
+        DB_metaInfo_t *next = meta->next;
+        if (meta->key[0] != ':' && meta->key[0] != '!' && meta->key[0] != '_') {
+            if (metaDataStd.contains(meta->key))
+                metaDataStd[meta->key] = meta->value;
             else
             {
-                metaDataCustom[metainfo->key] = metainfo->value;
-                metaDataCustomKeys << metainfo->key;
+                metaDataCustom[meta->key] = meta->value;
+                metaDataCustomKeys << meta->key;
+            }
+        } else if (meta->key[0] == ':') {
+            if (propsStd.contains(meta->key))
+                propsStd[meta->key] = meta->value;
+            else
+            {
+                propsCustom[meta->key] = meta->value;
+                propsCustomKeys << meta->key;
             }
         }
-        metainfo = next;
+        meta = next;
     }
     DBAPI->pl_unlock();
     /*
@@ -168,12 +191,49 @@ void PlayListModel::trackProps(const QModelIndexList &tracks) {
         qDebug() << key << metaDataCustom[key];
     }
     */
-    //TODO: edit metadata
+    //TODO: metadata editor
+    int j;
     MetadataDialog *metaDlg = new MetadataDialog(0);
     char fPath[PATH_MAX];
     DBAPI->pl_format_title(it, -1, fPath, sizeof (fPath), -1, "%F");
     metaDlg->lineEditPath()->setText(fPath);
     metaDlg->lineEditPath()->setReadOnly(true);
+    
+    QTableView *tableViewProps = metaDlg->tableViewProps();
+    QStandardItemModel *modelPropsHeader = new QStandardItemModel(0,1,this);
+    modelPropsHeader->setHorizontalHeaderItem(0, new QStandardItem(tr("Key")));
+    modelPropsHeader->setHorizontalHeaderItem(1, new QStandardItem(tr("Value")));
+    tableViewProps->setModel(modelPropsHeader);
+    //write properties to table
+    for (int i=0; i<propsKeys.count(); i++)
+    {
+        QStandardItem *keyname = new QStandardItem(propsNames[propsKeys.at(i)]);
+        keyname->setFlags(keyname->flags()^Qt::ItemIsEditable);
+        QStandardItem *value = new QStandardItem(propsStd[propsKeys.at(i)]);
+        value->setFlags(value->flags()^Qt::ItemIsEditable);
+        modelPropsHeader->setItem(i,0,keyname);
+        modelPropsHeader->setItem(i,1,value);
+    }
+    j = propsKeys.count();
+    for (int i=0; i<propsCustomKeys.count(); i++)
+    {
+        QStandardItem *keyname = new QStandardItem(QString(propsCustomKeys.at(i)).remove(0,1));
+        keyname->setFlags(keyname->flags()^Qt::ItemIsEditable);
+        QFont keyfont = keyname->font();
+        keyfont.setItalic(true);
+        keyfont.setUnderline(true);
+        keyname->setFont(keyfont);
+        QStandardItem *value = new QStandardItem(propsCustom[propsCustomKeys.at(i)]);
+        value->setFlags(value->flags()^Qt::ItemIsEditable);
+        modelPropsHeader->setItem(i+j,0,keyname);
+        modelPropsHeader->setItem(i+j,1,value);
+    }
+    //tableViewProps->resizeColumnsToContents();
+    tableViewProps->resizeColumnToContents(0);
+    tableViewProps->horizontalHeader()->setStretchLastSection(true);
+    tableViewProps->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
+    tableViewProps->verticalHeader()->hide();
+    
     
     QTableView *tableViewMeta = metaDlg->tableViewMeta();
     QStandardItemModel *modelMetaHeader = new QStandardItemModel(0,2,this);
@@ -193,7 +253,7 @@ void PlayListModel::trackProps(const QModelIndexList &tracks) {
         modelMetaHeader->setItem(i,1,keyname);
         modelMetaHeader->setItem(i,2,value);
     }
-    int j = metaDataKeys.count();
+    j = metaDataKeys.count();
     for (int i=0; i<metaDataCustomKeys.count(); i++)
     {
         QStandardItem *key = new QStandardItem(metaDataCustomKeys.at(i));

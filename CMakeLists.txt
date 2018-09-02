@@ -50,6 +50,8 @@ set(SOURCES
     PlayList.cpp
     PlayListModel.cpp
     PlayListWidget.cpp
+    MetadataDialog.cpp
+    MetadataPrefsDialog.cpp
     
     PreferencesDialog.cpp
     QtGui.cpp
@@ -82,6 +84,8 @@ set(QT_HEADERS
     SystemTrayIcon.h
     TabBar.h
     VolumeSlider.h
+    MetadataDialog.h
+    MetadataPrefsDialog.h
     )
 
 set(HEADERS
@@ -99,6 +103,8 @@ set(FORMS
     
     AboutDialog.ui
     MainWindow.ui
+    MetadataDialog.ui
+    MetadataPrefsDialog.ui
     )
 
 set(RESOURCES

@@ -7,7 +7,13 @@
 #include <QMessageBox>
 #include <QFile>
 
+#include <QStandardItemModel>
+#include <QLineEdit>
+#include <QHeaderView>
+#include <QFont>
+
 #include "DBApiWrapper.h"
+#include "MetadataDialog.h"
 
 class PlayListModel : public QAbstractItemModel {
     Q_OBJECT

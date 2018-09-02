@@ -154,7 +154,7 @@ void PlayListModel::trackProps(const QModelIndexList &tracks) {
         meta = next;
     }
     DBAPI->pl_unlock();
-    //TODO: display metadata
+    /*
     qDebug() << "===Standard keys===";
     foreach (QString key,metaDataKeys){
         qDebug() << key << metaDataStd[key];
@@ -163,6 +163,58 @@ void PlayListModel::trackProps(const QModelIndexList &tracks) {
     foreach (QString key,metaDataCustomKeys){
         qDebug() << key << metaDataCustom[key];
     }
+    */
+    //TODO: edit metadata
+    MetadataDialog *metaDlg = new MetadataDialog(0);
+    char fPath[PATH_MAX];
+    DBAPI->pl_format_title(it, -1, fPath, sizeof (fPath), -1, "%F");
+    metaDlg->lineEditPath()->setText(fPath);
+    metaDlg->lineEditPath()->setReadOnly(true);
+    
+    QTableView *tableViewMeta = metaDlg->tableViewMeta();
+    QStandardItemModel *modelMetaHeader = new QStandardItemModel(0,2,this);
+    modelMetaHeader->setHorizontalHeaderItem(0, new QStandardItem(QLatin1String("")));
+    modelMetaHeader->setHorizontalHeaderItem(1, new QStandardItem(tr("Key")));
+    modelMetaHeader->setHorizontalHeaderItem(2, new QStandardItem(tr("Value")));
+    tableViewMeta->setModel(modelMetaHeader);
+    //write metadata to table
+    for (int i=0; i<metaDataKeys.count(); i++)
+    {
+        QStandardItem *key = new QStandardItem(metaDataKeys.at(i));
+        key->setFlags(key->flags()^Qt::ItemIsEditable);
+        QStandardItem *keyname = new QStandardItem(metaDataNames[metaDataKeys.at(i)]);
+        keyname->setFlags(keyname->flags()^Qt::ItemIsEditable);
+        QStandardItem *value = new QStandardItem(metaDataStd[metaDataKeys.at(i)]);
+        modelMetaHeader->setItem(i,0,key);
+        modelMetaHeader->setItem(i,1,keyname);
+        modelMetaHeader->setItem(i,2,value);
+    }
+    int j = metaDataKeys.count();
+    for (int i=0; i<metaDataCustomKeys.count(); i++)
+    {
+        QStandardItem *key = new QStandardItem(metaDataCustomKeys.at(i));
+        key->setFlags(key->flags()^Qt::ItemIsEditable);
+        QStandardItem *keyname = new QStandardItem(metaDataCustomKeys.at(i));
+        //keyname->setFlags(keyname->flags()^Qt::ItemIsEditable);
+        QFont keyfont = keyname->font();
+        keyfont.setItalic(true);
+        keyfont.setUnderline(true);
+        keyname->setFont(keyfont);
+        QStandardItem *value = new QStandardItem(metaDataCustom[metaDataCustomKeys.at(i)]);
+        modelMetaHeader->setItem(i+j,0,key);
+        modelMetaHeader->setItem(i+j,1,keyname);
+        modelMetaHeader->setItem(i+j,2,value);
+    }
+    
+    tableViewMeta->setColumnHidden(0, true);
+    //tableViewMeta->resizeColumnsToContents();
+    tableViewMeta->resizeColumnToContents(1);
+    tableViewMeta->horizontalHeader()->setStretchLastSection(true);
+    tableViewMeta->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
+    tableViewMeta->verticalHeader()->hide();
+    
+    metaDlg->exec();
+    delete metaDlg;
 }
 
 void PlayListModel::reloadMetadata(const QModelIndexList &tracks) {

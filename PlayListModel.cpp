@@ -135,7 +135,7 @@ void PlayListModel::trackProps(const QModelIndexList &tracks) {
     DBPltRef plt;
     DB_playItem_t *it = plt.at(tracks[0].row());
     DBAPI->pl_lock();
-    DB_metaInfo_t *meta = deadbeef->pl_get_metadata_head(it);
+    DB_metaInfo_t *metainfo = DBAPI->pl_get_metadata_head(it);
     QStringList metaDataCustomKeys;
     //QHash<QString, QString> metaDataStd = metaDataNames;
     QHash<QString, QString> metaDataStd;
@@ -143,19 +143,19 @@ void PlayListModel::trackProps(const QModelIndexList &tracks) {
         metaDataStd[v] = QString("");
     }
     QHash<QString, QString> metaDataCustom;
-    while (meta) {
-        DB_metaInfo_t *next = meta->next;
-        if (meta->key[0] != ':' && meta->key[0] != '!' && meta->key[0] != '_') {
-            //qDebug() << meta->key << meta->value;
-            if (metaDataStd.contains(meta->key))
-                metaDataStd[meta->key] = meta->value;
+    while (metainfo) {
+        DB_metaInfo_t *next = metainfo->next;
+        if (metainfo->key[0] != ':' && metainfo->key[0] != '!' && metainfo->key[0] != '_') {
+            //qDebug() << metainfo->key << metainfo->value;
+            if (metaDataStd.contains(metainfo->key))
+                metaDataStd[metainfo->key] = metainfo->value;
             else
             {
-                metaDataCustom[meta->key] = meta->value;
-                metaDataCustomKeys << meta->key;
+                metaDataCustom[metainfo->key] = metainfo->value;
+                metaDataCustomKeys << metainfo->key;
             }
         }
-        meta = next;
+        metainfo = next;
     }
     DBAPI->pl_unlock();
     /*

@@ -10,6 +10,7 @@
 #include <QComboBox>
 
 #include "include/parser.h"
+#include "QFileRequester.h"
 
 PluginSettingsWidget::PluginSettingsWidget(ddb_dialog_t *conf, QWidget *parent):
         QGroupBox(parent),
@@ -83,6 +84,7 @@ void PluginSettingsWidget::configureWidgets() {
             connect(checkBox, SIGNAL(toggled(bool)), SLOT(saveProperty()));
         } else if (!strcmp(type, "file")) {
             label = new QLabel(tr(labeltext), this);
+            /*
             prop = new QLineEdit(value, this);
             prop->setEnabled(false);
             //connect((QCheckBox *)prop, SIGNAL(toggled(bool)), ...);
@@ -92,6 +94,11 @@ void PluginSettingsWidget::configureWidgets() {
             hbox->addWidget(prop);
             hbox->addWidget(btn);
             layout->addRow(label, hbox);
+            */
+            prop = new QFileRequester(QString(value), this);
+            layout->addRow(label, prop);
+            connect(prop, SIGNAL(changed()), SLOT(saveProperty()));
+            
         } else if (!strncmp(type, "select[", 7)) {
             int n;
             if (1 != sscanf(type+6, "[%d]", &n))
@@ -179,7 +186,9 @@ void PluginSettingsWidget::saveProperty() {
             val = QString("%1").arg(spinBox->value());
         else if (QSlider *slider = qobject_cast<QSlider *>(widget))
             val = QString("%1").arg(slider->value());
-
+        else if (QFileRequester *fileRequester = qobject_cast<QFileRequester *>(widget))
+            val = QString("%1").arg(fileRequester->text());
+        
         DBAPI->conf_set_str(keys.value(widget).toUtf8().constData(), val.toUtf8().constData());
 		DBAPI->sendmessage(DB_EV_CONFIGCHANGED, 0, 0, 0);
     }

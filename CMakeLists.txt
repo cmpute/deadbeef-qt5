@@ -40,6 +40,7 @@ set(SOURCES
     preferencesWidgets/PluginsPreferencesWidget.cpp
     preferencesWidgets/PluginSettingsWidget.cpp
     preferencesWidgets/SoundPreferencesWidget.cpp
+    preferencesWidgets/QFileRequester.cpp
     
     AboutDialog.cpp
     DBApiWrapper.cpp
@@ -65,6 +66,7 @@ set(QT_HEADERS
     preferencesWidgets/PluginsPreferencesWidget.h
     preferencesWidgets/PluginSettingsWidget.h
     preferencesWidgets/SoundPreferencesWidget.h
+    preferencesWidgets/QFileRequester.h
     
     AboutDialog.h
     DBApiWrapper.h

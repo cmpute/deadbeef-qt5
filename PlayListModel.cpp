@@ -137,7 +137,11 @@ void PlayListModel::trackProps(const QModelIndexList &tracks) {
     DBAPI->pl_lock();
     DB_metaInfo_t *meta = deadbeef->pl_get_metadata_head(it);
     QStringList metaDataCustomKeys;
-    QHash<QString, QString> metaDataStd = metaDataNames;
+    //QHash<QString, QString> metaDataStd = metaDataNames;
+    QHash<QString, QString> metaDataStd;
+    foreach (QString v,metaDataKeys){
+        metaDataStd[v] = QString("");
+    }
     QHash<QString, QString> metaDataCustom;
     while (meta) {
         DB_metaInfo_t *next = meta->next;

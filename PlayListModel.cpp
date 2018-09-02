@@ -259,7 +259,7 @@ void PlayListModel::trackProps(const QModelIndexList &tracks) {
         QStandardItem *key = new QStandardItem(metaDataCustomKeys.at(i));
         key->setFlags(key->flags()^Qt::ItemIsEditable);
         QStandardItem *keyname = new QStandardItem(metaDataCustomKeys.at(i));
-        //keyname->setFlags(keyname->flags()^Qt::ItemIsEditable);
+        keyname->setFlags(keyname->flags()^Qt::ItemIsEditable);
         QFont keyfont = keyname->font();
         keyfont.setItalic(true);
         keyfont.setUnderline(true);

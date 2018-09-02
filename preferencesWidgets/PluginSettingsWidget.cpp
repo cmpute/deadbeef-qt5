@@ -84,6 +84,8 @@ void PluginSettingsWidget::configureWidgets() {
             connect(checkBox, SIGNAL(toggled(bool)), SLOT(saveProperty()));
         } else if (!strcmp(type, "file")) {
             label = new QLabel(tr(labeltext), this);
+            //label->setWordWrap(true);
+            //label->setMaximumWidth(400);
             /*
             prop = new QLineEdit(value, this);
             prop->setEnabled(false);

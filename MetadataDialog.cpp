@@ -23,10 +23,20 @@ void MetadataDialog::on_btnClose_clicked()
     this->close();
 }
 
+void MetadataDialog::on_btnApply_clicked()
+{
+    
+}
+
 void MetadataDialog::on_btnSettings_clicked()
 {
-    MetadataPrefsDialog *settingsdlg = new MetadataPrefsDialog(this);
-    settingsdlg->exec();
+    //MetadataPrefsDialog *settingsdlg = new MetadataPrefsDialog(this);
+    //settingsdlg->exec();
+}
+
+QTableView * MetadataDialog::tableViewProps()
+{
+    return ui->tableViewProps;
 }
 
 QTableView * MetadataDialog::tableViewMeta()

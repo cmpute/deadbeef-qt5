@@ -63,6 +63,9 @@
     <layout class="QHBoxLayout" name="DialogButtonBox">
      <item>
       <widget class="QPushButton" name="btnSettings">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>&amp;Settings</string>
        </property>
@@ -88,7 +91,7 @@
      <item>
       <widget class="QPushButton" name="btnApply">
        <property name="enabled">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <property name="text">
         <string>&amp;Apply</string>

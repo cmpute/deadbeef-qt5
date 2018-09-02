@@ -7,6 +7,7 @@ QWidget(aParent)
 {
     hbox = new QHBoxLayout(this);
     btn = new QPushButton("...", this);
+    btn->setMaximumWidth(30);
     prop = new QLineEdit(str, this);
     hbox->addWidget(prop);
     hbox->addWidget(btn);

@@ -22,6 +22,7 @@ PreferencesDialog::PreferencesDialog(QWidget *parent) :
     configureTabs();
     configureLayout();
     configureConnections();
+    this->resize(800, 600);
 }
 
 void PreferencesDialog::configureTabs() {
@@ -32,6 +33,7 @@ void PreferencesDialog::configureTabs() {
 #ifdef HOTKEYS_ENABLED
     tabWidget.addTab(&hotkeysWidget, tr("Hotkeys"));
 #endif
+    this->adjustSize();
 }
 
 void PreferencesDialog::configureLayout() {

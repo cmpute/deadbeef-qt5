@@ -28,6 +28,7 @@ void InterfacePreferencesWidget::loadSettings() {
     ui->switchTrackInfoCheckBox->setChecked(showTrayTips);
     ui->trayIconMsgFormatLineEdit->setText(messageFormat);
     ui->refreshRateSlider->setValue(refreshRate);
+    ui->refreshRateValueLabel->setText(QString::number(refreshRate));
     ui->titlebarPlayingLineEdit->setText(titlebarPlaying);
     ui->titlebarStoppedLineEdit->setText(titlebarStopped);
     
@@ -55,6 +56,8 @@ void InterfacePreferencesWidget::createConnections() {
     connect(ui->trayIconMsgFormatLineEdit, SIGNAL(editingFinished()), SLOT(saveTrayMessageFormat()));
     connect(ui->refreshRateSlider, SIGNAL(valueChanged(int)), SLOT(saveRefreshRate(int)));
     connect(ui->guiPluginComboBox, SIGNAL(currentIndexChanged(QString)), SLOT(saveGuiPlugin(QString)));
+    connect(this, SIGNAL(refreshRateChanged(const QString &)), ui->refreshRateValueLabel, SLOT(setText(const QString &)));
+    
 }
 
 void InterfacePreferencesWidget::saveTrayIconHidden(bool hidden) {
@@ -93,7 +96,7 @@ void InterfacePreferencesWidget::saveTrayMessageFormat() {
 void InterfacePreferencesWidget::saveRefreshRate(int refreshRate) {
     SETTINGS->setRefreshRate(refreshRate);
     GuiUpdater::Instance()->resetTimer(refreshRate);
-    emit refreshRateChanged();
+    emit refreshRateChanged(QString::number(refreshRate));
 }
 
 void InterfacePreferencesWidget::saveGuiPlugin(const QString &plugin) {

@@ -31,7 +31,7 @@ Q_SIGNALS:
     void setCloseOnMinimize(bool);
     void titlePlayingChanged();
     void titleStoppedChanged();
-    void refreshRateChanged();
+    void refreshRateChanged(const QString &);
 };
 
 #endif // INTERFACEPREFERENCESWIDGET_H

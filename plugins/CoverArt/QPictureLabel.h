@@ -13,6 +13,9 @@ private:
 
     void _displayImage();
     double scaleFactor = 1;
+    float cw_old = 0;
+    float ch_old = 0;
+    int scaleTo = 0;
 
 public:
     QPictureLabel(QWidget *aParent) : QLabel(aParent) { }

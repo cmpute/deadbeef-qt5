@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Tag Writer Settings</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_1">
+  <layout class="QGridLayout" name="gridLayout_13">
    <item row="2" column="0">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
@@ -31,7 +31,7 @@
        <property name="title">
         <string>MP3</string>
        </property>
-       <layout class="QGridLayout" name="gridLayout_1">
+       <layout class="QGridLayout" name="gridLayout_11">
         <item row="0" column="0">
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
@@ -137,7 +137,7 @@
          <property name="title">
           <string>APE</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout_1">
+         <layout class="QGridLayout" name="gridLayout_12">
           <item row="0" column="0">
            <widget class="QCheckBox" name="apeWriteID3v24">
             <property name="text">

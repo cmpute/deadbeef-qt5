@@ -233,6 +233,8 @@ void PlayListModel::trackProps(const QModelIndexList &tracks) {
     tableViewProps->horizontalHeader()->setStretchLastSection(true);
     tableViewProps->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
     tableViewProps->verticalHeader()->hide();
+    tableViewProps->setSelectionBehavior(QAbstractItemView::SelectRows);
+    tableViewProps->setSelectionMode(QAbstractItemView::SingleSelection);
     
     
     QTableView *tableViewMeta = metaDlg->tableViewMeta();
@@ -287,6 +289,8 @@ void PlayListModel::trackProps(const QModelIndexList &tracks) {
     tableViewMeta->horizontalHeader()->setStretchLastSection(true);
     tableViewMeta->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
     tableViewMeta->verticalHeader()->hide();
+    tableViewMeta->setSelectionBehavior(QAbstractItemView::SelectRows);
+    tableViewMeta->setSelectionMode(QAbstractItemView::SingleSelection);
     
     metaDlg->exec();
     delete metaDlg;

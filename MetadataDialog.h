@@ -30,7 +30,7 @@ private slots:
     
     void Metadata_doubleClicked(const QModelIndex &index);
     
-    void editValueInDialog(QStandardItem *item, QString title = tr("Edit Metadata"));
+    void editValueInDialog(QStandardItem *item, QString title = tr("Edit Metadata: "));
 
 private:
     Ui::MetadataDialog *ui;

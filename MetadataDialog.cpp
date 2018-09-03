@@ -71,11 +71,18 @@ void MetadataDialog::editValueInDialog(QStandardItem *item, QString title)
 void MetadataDialog::Metadata_doubleClicked(const QModelIndex &index)
 {
     QStandardItemModel *sModel = dynamic_cast < QStandardItemModel* >(ui->tableViewMeta->model());
-    QStandardItem *item = sModel->itemFromIndex(index);
+    QModelIndex keyname_index = ui->tableViewMeta->model()->index(index.row(), 1);
+    QModelIndex value_index = ui->tableViewMeta->model()->index(index.row(), 2);
+    QStandardItem *keyname = sModel->itemFromIndex(keyname_index);
+    QStandardItem *item = sModel->itemFromIndex(value_index);
     
     if (item->data().isValid() && static_cast<QMetaType::Type>(item->data().type()) == QMetaType::QString)
     {
-        editValueInDialog(item);
+        editValueInDialog(item, tr("Edit Metadata: ") + keyname->text());
+    }
+    else
+    {
+        ui->tableViewMeta->edit(value_index);
     }
         
 }

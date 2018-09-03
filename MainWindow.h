@@ -100,7 +100,7 @@ private slots:
     void on_actionBlockToolbarChanges_triggered();
 
 #ifdef ARTWORK_ENABLED
-    void on_actionHideCoverArt_triggered();
+    void on_actionHideCoverArt_triggered(bool checked);
     void onCoverartClose();
 #endif
 

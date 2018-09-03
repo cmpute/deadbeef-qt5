@@ -105,6 +105,9 @@ void MainThreadRun(void *) {
     QApplication app(argc, argv);
     QApplication::setOrganizationName("deadbeef");
     QApplication::setApplicationName("deadbeef-qt");
+    
+    if (app.devicePixelRatio() > 1)
+        QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 
     QString locale = QLocale::system().name();
     

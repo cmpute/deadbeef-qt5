@@ -416,8 +416,8 @@ void MainWindow::on_actionLoadPlaylist_triggered() {
 }
 
 #ifdef ARTWORK_ENABLED
-void MainWindow::on_actionHideCoverArt_triggered() {
-    coverArtWidget.setHidden(!coverArtWidget.isHidden());
+void MainWindow::on_actionHideCoverArt_triggered(bool checked) {
+    coverArtWidget.setHidden(!checked);
 }
 
 void MainWindow::onCoverartClose() {

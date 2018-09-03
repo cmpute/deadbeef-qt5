@@ -5,6 +5,7 @@
 
 #include <QDialogButtonBox>
 #include <QPlainTextEdit>
+#include <QVariant>
 
 MetadataDialog::MetadataDialog(QWidget *parent) :
     QDialog(parent),
@@ -52,8 +53,17 @@ void MetadataDialog::editValueInDialog(QStandardItem *item, QString title)
         if (editDialog->exec())
         {
             QString valueStr = editField->toPlainText();
-            item->setText(valueStr.split(QChar(10))[0] + QString("(...)"));
-            item->setData(valueStr);
+            if (valueStr.contains(QChar(10)))
+            {
+                item->setText(valueStr.split(QChar(10))[0] + QString("(...)"));
+                item->setData(valueStr);
+            }
+            else
+            {
+                item->setText(valueStr);
+                item->setData(QVariant());
+                item->setFlags(item->flags()|Qt::ItemIsEditable);
+            }
         }
         delete editDialog;
 }
@@ -63,7 +73,7 @@ void MetadataDialog::Metadata_doubleClicked(const QModelIndex &index)
     QStandardItemModel *sModel = dynamic_cast < QStandardItemModel* >(ui->tableViewMeta->model());
     QStandardItem *item = sModel->itemFromIndex(index);
     
-    if (item->data().isValid() && item->data().type() == QMetaType::QString)
+    if (item->data().isValid() && static_cast<QMetaType::Type>(item->data().type()) == QMetaType::QString)
     {
         editValueInDialog(item);
     }

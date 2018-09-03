@@ -261,6 +261,7 @@ void PlayListModel::trackProps(const QModelIndexList &tracks) {
     {
         QStandardItem *key = new QStandardItem(metaDataCustomKeys.at(i));
         key->setFlags(key->flags()^Qt::ItemIsEditable);
+        key->setData(true);
         QStandardItem *keyname = new QStandardItem(metaDataCustomKeys.at(i));
         keyname->setFlags(keyname->flags()^Qt::ItemIsEditable);
         QFont keyfont = keyname->font();

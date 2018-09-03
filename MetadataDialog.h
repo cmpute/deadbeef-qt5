@@ -1,6 +1,7 @@
 #ifndef METADATADIALOG_H
 #define METADATADIALOG_H
 
+#include <QMenu>
 #include <QDialog>
 #include <QTableView>
 #include <QStandardItem>
@@ -30,9 +31,12 @@ private slots:
     
     void Metadata_doubleClicked(const QModelIndex &index);
     
-    void editValueInDialog(QStandardItem *item, QString title = tr("Edit Metadata: "));
-
+    void metaDataMenuRequested(QPoint p);
+    
+    void editValueInDialog(QStandardItem *item);
+    
 private:
+    
     Ui::MetadataDialog *ui;
 };
 

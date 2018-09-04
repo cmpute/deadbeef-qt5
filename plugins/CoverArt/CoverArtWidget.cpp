@@ -1,4 +1,5 @@
 #include "CoverArtWidget.h"
+#include "CoverArtWrapper.h"
 
 #include <QStyle>
 #include <QPixmap>
@@ -7,17 +8,29 @@
 #include "CoverArtCache.h"
 #include <include/callbacks.h>
 #include <QEvent>
+#include <QVBoxLayout>
 
 CoverArtWidget::CoverArtWidget(QWidget *parent):
         QDockWidget(parent),
         label(this),
         updateCoverAction(tr("Update cover"), &label) {
     setObjectName("CoverArt Widget");
-    setWidget(&label);
     
-    double scaleFactor = this->devicePixelRatioF();
-    setMinimumWidth(40*scaleFactor);
-    setMinimumHeight(40*scaleFactor);
+    //label.setFrameStyle(QFrame::StyledPanel|QFrame::Raised);
+    
+    QVBoxLayout *verticalLayout = new QVBoxLayout(this);
+    verticalLayout->setContentsMargins(0, 3, 0, 0);
+    verticalLayout->addWidget(&label);
+    QWidget *parentWidget = new QWidget(this);
+    parentWidget->setLayout(verticalLayout);
+    setWidget(parentWidget);
+    
+    //setWidget(&label);
+    
+    //double scaleFactor = this->devicePixelRatioF();
+    setMinimumWidth(120);
+    setMinimumHeight(120);
+    setMaximumWidth(CoverArtWrapper::Instance()->defaultWidth);
     setFeatures(QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable);
     label.setContextMenuPolicy(Qt::ActionsContextMenu);
     label.addAction(&updateCoverAction);
@@ -38,7 +51,14 @@ void CoverArtWidget::trackChanged(DB_playItem_t *, DB_playItem_t *to) {
 }
 
 void CoverArtWidget::setCover(const QImage &aCover) {
+    label.setBorder((((aCover.pixel(0, 0) & 0xFF000000) >> 24) > 0x40) ? this->devicePixelRatioF() : 0, QBrush(Qt::lightGray));
+    label.setAlignment(1, -1);
     label.setPixmap(QPixmap::fromImage(aCover));
+    
+    //QPixmap coverPixmap = QPixmap::fromImage(aCover);
+    //int length = std::min(coverPixmap.width(), coverPixmap.height());
+    //label.setPixmap(coverPixmap.copy(QRect((coverPixmap.width()-length)/2, (coverPixmap.height()-length)/2, length, length)));
+    
     //setMaximumWidth(aCover.width() + 5);
     //setMaximumHeight(aCover.height() + 25);
 }

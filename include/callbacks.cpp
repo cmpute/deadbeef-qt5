@@ -25,7 +25,10 @@ QImage *scale(const char *fname) {
         delete pm;
         pm = new QImage(QString::fromUtf8(COVERART->get_default_cover()));
     }
-    QImage *scaledImage = new QImage(pm->scaled(CoverArtWrapper::Instance()->defaultWidth, CoverArtWrapper::Instance()->defaultWidth, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    int length = std::min(pm->width(), pm->height());
+    QImage croppedImage = pm->copy(QRect((pm->width()-length)/2, (pm->height()-length)/2, length, length));
+    QImage *scaledImage = new QImage(croppedImage.scaled(CoverArtWrapper::Instance()->defaultWidth, CoverArtWrapper::Instance()->defaultWidth, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    //QImage *scaledImage = new QImage(pm->scaled(CoverArtWrapper::Instance()->defaultWidth, CoverArtWrapper::Instance()->defaultWidth, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     delete pm;
     return scaledImage;
 }

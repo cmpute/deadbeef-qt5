@@ -25,7 +25,7 @@ void CoverArtWrapper::loadSettings() {
 void CoverArtWrapper::saveSettings() {
     QSettings settings;
     settings.beginGroup("CoverArt");
-    settings.setValue("maximum_width", defaultWidth);
+    //settings.setValue("maximum_width", defaultWidth);
     settings.endGroup();
 }
 

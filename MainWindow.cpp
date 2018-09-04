@@ -47,6 +47,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     loadConfig();
     updateTitle();
+    
+    ui->PlayBackToolBar->show();
 }
 
 MainWindow::~MainWindow() {

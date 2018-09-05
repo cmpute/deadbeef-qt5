@@ -148,8 +148,8 @@ void MetadataDialog::Metadata_doubleClicked(const QModelIndex &index)
 
 void MetadataDialog::on_btnSettings_clicked()
 {
-    //MetadataPrefsDialog *settingsdlg = new MetadataPrefsDialog(this);
-    //settingsdlg->exec();
+    MetadataPrefsDialog *settingsdlg = new MetadataPrefsDialog(this);
+    settingsdlg->exec();
 }
 
 QTableView * MetadataDialog::tableViewProps()

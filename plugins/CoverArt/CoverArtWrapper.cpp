@@ -17,8 +17,9 @@ void CoverArtWrapper::loadSettings() {
     QSettings settings;
     settings.beginGroup("CoverArt");
     //defaultWidth = settings.value("maximum_width", 100).toInt();
-    QScreen *srn = QApplication::screens().at(0);
-    defaultWidth = qCeil(srn->physicalDotsPerInch() * 4);
+    defaultWidth = qApp->desktop()->logicalDpiX() * 3;
+    defaultWidthPixel = defaultWidth * qApp->desktop()->devicePixelRatio();
+    //qDebug() << defaultWidthPixel << defaultWidth;
     settings.endGroup();
 }
 
@@ -45,7 +46,7 @@ CoverArtWrapper *CoverArtWrapper::Instance(QObject *parent) {
 }
 
 void CoverArtWrapper::onImageLoaded(int num) {
-    emit coverIsReady(*coverLoadWatcher.resultAt(num));
+    emit coverIsReady(coverLoadWatcher.resultAt(num));
 }
 
 void CoverArtWrapper::getCoverArt(const char *fname, const char *artist, const char *album) {

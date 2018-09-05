@@ -18,7 +18,7 @@ CoverArtCache *CoverArtCache::Instance(QObject *parent) {
 }
 
 CoverArtCache::CoverArtCache(QObject *parent) {
-    connect(CoverArtWrapper::Instance(), SIGNAL(coverIsReady(const QImage &)), this, SLOT(putCover(const QImage &)));
+    connect(CoverArtWrapper::Instance(), SIGNAL(coverIsReady(const QImage *)), this, SLOT(putCover(const QImage *)));
 }
 
 void CoverArtCache::getCoverArt(const char *fname, const char *artist, const char *album) {
@@ -35,14 +35,18 @@ void CoverArtCache::getDefaultCoverArt() {
 }
 
 
-void CoverArtCache::putCover(const QImage &cover) {
+void CoverArtCache::putCover(const QImage *cover) {
     if (cache.size() == CACHE_SIZE)
+    {
+        delete cache[cache.keys().first()];
         cache.remove(cache.keys().first());
+    }
     cache.insert(currentName, cover);
     emit coverIsReady(cover);
 }
 
 void CoverArtCache::removeCoverArt(const char *artist, const char *album) {
+    delete cache[QString::fromUtf8(album)];
     cache.remove(QString::fromUtf8(album));
 }
 

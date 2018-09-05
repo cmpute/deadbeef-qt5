@@ -29,6 +29,14 @@ void QPictureLabel::setPixmap(QPixmap aPicture)
     repaint();
 }
 
+void QPictureLabel::setImage(const QImage *aImage)
+{
+    _qpSource = _qpCurrent = QPixmap::fromImage(*aImage);
+    cw_old = 0;
+    ch_old = 0;
+    repaint();
+}
+
 void QPictureLabel::setBorder(float bWidth)
 {
     borderWidth = bWidth;

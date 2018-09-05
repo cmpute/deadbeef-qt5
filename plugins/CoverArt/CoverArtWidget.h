@@ -26,7 +26,7 @@ protected:
     
 private Q_SLOTS:
     void trackChanged(DB_playItem_t *, DB_playItem_t *);
-    void setCover(const QImage &);
+    void setCover(const QImage *);
     void reloadCover();
 
 Q_SIGNALS:

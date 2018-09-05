@@ -25,6 +25,7 @@ private:
 public:
     QPictureLabel(QWidget *aParent) : QLabel(aParent) { }
     void setPixmap(QPixmap aPicture);
+    void setImage(const QImage *aImage);
     void paintEvent(QPaintEvent *aEvent);
     void setBorder(float bWidth);
     void setBorder(float bWidth, QBrush bBrush);

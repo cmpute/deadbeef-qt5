@@ -4,8 +4,7 @@
 #include <QImage>
 #include <QFutureWatcher>
 #include <QApplication>
-#include <QScreen>
-#include <QtMath>
+#include <QDesktopWidget>
 
 class CoverArtWrapper : public QObject {
     Q_OBJECT
@@ -18,6 +17,7 @@ public:
     void openAndScaleCover(const char *fname);
 
     int defaultWidth;
+    int defaultWidthPixel;
 
 private:
     CoverArtWrapper(QObject *parent = 0);
@@ -29,7 +29,7 @@ private:
     void saveSettings();
 
 signals:
-    void coverIsReady(const QImage &);
+    void coverIsReady(const QImage *);
 
 private slots:
     void onImageLoaded(int);

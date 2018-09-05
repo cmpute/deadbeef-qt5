@@ -13,6 +13,7 @@ MetadataDialog::MetadataDialog(QWidget *parent) :
     ui(new Ui::MetadataDialog)
 {
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    this->setAttribute(Qt::WA_DeleteOnClose);
     ui->setupUi(this);
     connect(ui->tableViewMeta, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(Metadata_doubleClicked(const QModelIndex &)));
     ui->tableViewMeta->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -42,10 +43,8 @@ void MetadataDialog::metaDataMenuRequested(QPoint p)
     QModelIndex index = ui->tableViewMeta->indexAt(p);
     QStandardItemModel *sModel = dynamic_cast < QStandardItemModel* >(ui->tableViewMeta->model());
     QModelIndex key_index = sModel->index(index.row(), 0);
-    QModelIndex keyname_index = sModel->index(index.row(), 1);
     QModelIndex value_index = sModel->index(index.row(), 2);
     QStandardItem *key = sModel->itemFromIndex(key_index);
-    QStandardItem *keyname = sModel->itemFromIndex(keyname_index);
     QStandardItem *item = sModel->itemFromIndex(value_index);
     //qDebug() << key->data().toBool();
     QAction *editInDlgAction = new QAction(tr("Edit"), this);
@@ -133,9 +132,7 @@ void MetadataDialog::editValueInDialog(QStandardItem *item)
 void MetadataDialog::Metadata_doubleClicked(const QModelIndex &index)
 {
     QStandardItemModel *sModel = dynamic_cast < QStandardItemModel* >(ui->tableViewMeta->model());
-    QModelIndex keyname_index = ui->tableViewMeta->model()->index(index.row(), 1);
     QModelIndex value_index = ui->tableViewMeta->model()->index(index.row(), 2);
-    QStandardItem *keyname = sModel->itemFromIndex(keyname_index);
     QStandardItem *item = sModel->itemFromIndex(value_index);
     
     if (item->data().isValid() && static_cast<QMetaType::Type>(item->data().type()) == QMetaType::QString)

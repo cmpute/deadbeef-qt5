@@ -16,14 +16,13 @@ CoverArtWidget::CoverArtWidget(QWidget *parent):
         updateCoverAction(tr("Update cover"), &label) {
     setObjectName("CoverArt Widget");
     
-    //label.setFrameStyle(QFrame::StyledPanel|QFrame::Raised);
-    
-    QVBoxLayout *verticalLayout = new QVBoxLayout(this);
+    QWidget *thisWidget = new QWidget(this);
+    QVBoxLayout *verticalLayout = new QVBoxLayout(thisWidget);
+    verticalLayout->setObjectName("CoverArtLayout");
     verticalLayout->setContentsMargins(0, 3, 0, 0);
     verticalLayout->addWidget(&label);
-    QWidget *parentWidget = new QWidget(this);
-    parentWidget->setLayout(verticalLayout);
-    setWidget(parentWidget);
+    thisWidget->setLayout(verticalLayout);
+    setWidget(thisWidget);
     
     //setWidget(&label);
     
@@ -36,7 +35,7 @@ CoverArtWidget::CoverArtWidget(QWidget *parent):
     label.addAction(&updateCoverAction);
     updateCoverAction.setIcon(getStockIcon(&label, "view-refresh", QStyle::SP_MediaPlay));
     connect(DBApiWrapper::Instance(), SIGNAL(trackChanged(DB_playItem_t *, DB_playItem_t *)), SLOT(trackChanged(DB_playItem_t *, DB_playItem_t *)));
-    connect(CoverArtCache::Instance(this), SIGNAL(coverIsReady(const QImage &)), SLOT(setCover(const QImage &)));
+    connect(CoverArtCache::Instance(this), SIGNAL(coverIsReady(const QImage *)), SLOT(setCover(const QImage *)));
     connect(&updateCoverAction, SIGNAL(triggered(bool)), SLOT(reloadCover()));
     CACHE->getDefaultCoverArt();
 }
@@ -50,10 +49,12 @@ void CoverArtWidget::trackChanged(DB_playItem_t *, DB_playItem_t *to) {
         updateCover(to);
 }
 
-void CoverArtWidget::setCover(const QImage &aCover) {
-    label.setBorder((((aCover.pixel(0, 0) & 0xFF000000) >> 24) > 0x40) ? this->devicePixelRatioF() : 0, QBrush(Qt::lightGray));
+void CoverArtWidget::setCover(const QImage *aCover) {
+    label.setBorder((((aCover->pixel(0, 0) & 0xFF000000) >> 24) > 0x40) ? this->devicePixelRatioF() : 0, QBrush(Qt::lightGray));
     label.setAlignment(1, -1);
-    label.setPixmap(QPixmap::fromImage(aCover));
+    //label.setPixmap(QPixmap::fromImage(*aCover));
+    label.setImage(aCover);
+    
     
     //QPixmap coverPixmap = QPixmap::fromImage(aCover);
     //int length = std::min(coverPixmap.width(), coverPixmap.height());

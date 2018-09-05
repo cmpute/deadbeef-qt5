@@ -200,7 +200,7 @@ void PlayListModel::trackProps(const QModelIndexList &tracks) {
     metaDlg->lineEditPath()->setReadOnly(true);
     
     QTableView *tableViewProps = metaDlg->tableViewProps();
-    QStandardItemModel *modelPropsHeader = new QStandardItemModel(0,1,this);
+    QStandardItemModel *modelPropsHeader = new QStandardItemModel(0,1,metaDlg);
     modelPropsHeader->setHorizontalHeaderItem(0, new QStandardItem(tr("Key")));
     modelPropsHeader->setHorizontalHeaderItem(1, new QStandardItem(tr("Value")));
     tableViewProps->setModel(modelPropsHeader);
@@ -238,7 +238,7 @@ void PlayListModel::trackProps(const QModelIndexList &tracks) {
     
     
     QTableView *tableViewMeta = metaDlg->tableViewMeta();
-    QStandardItemModel *modelMetaHeader = new QStandardItemModel(0,2,this);
+    QStandardItemModel *modelMetaHeader = new QStandardItemModel(0,2,metaDlg);
     modelMetaHeader->setHorizontalHeaderItem(0, new QStandardItem(QLatin1String("")));
     modelMetaHeader->setHorizontalHeaderItem(1, new QStandardItem(tr("Key")));
     modelMetaHeader->setHorizontalHeaderItem(2, new QStandardItem(tr("Value")));
@@ -294,7 +294,7 @@ void PlayListModel::trackProps(const QModelIndexList &tracks) {
     tableViewMeta->setSelectionMode(QAbstractItemView::SingleSelection);
     
     metaDlg->exec();
-    delete metaDlg;
+    //delete metaDlg;
 }
 
 void PlayListModel::reloadMetadata(const QModelIndexList &tracks) {

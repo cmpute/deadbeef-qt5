@@ -26,14 +26,14 @@ private:
     CoverArtCache(QObject *parent = 0);
     static CoverArtCache *instance;
 
-    QHash<QString, QImage> cache;
+    QHash<QString, const QImage *> cache;
     QString currentName;
 
 public Q_SLOTS:
-    void putCover(const QImage &);
+    void putCover(const QImage *);
 
 Q_SIGNALS:
-    void coverIsReady(const QImage &);
+    void coverIsReady(const QImage *);
 };
 
 #endif // COVERARTCACHE_H

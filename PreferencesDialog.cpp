@@ -44,6 +44,7 @@ void PreferencesDialog::configureLayout() {
 void PreferencesDialog::configureConnections() {
     connect(&interfaceWidget, SIGNAL(setCloseOnMinimize(bool)), SIGNAL(setCloseOnMinimize(bool)));
     connect(&interfaceWidget, SIGNAL(setTrayIconHidden(bool)), SIGNAL(setTrayIconHidden(bool)));
+    connect(&interfaceWidget, SIGNAL(setTrayIconTheme(const QString &)), SIGNAL(setTrayIconTheme(const QString &)));
     connect(&interfaceWidget, SIGNAL(titlePlayingChanged()), SIGNAL(titlePlayingChanged()));
     connect(&interfaceWidget, SIGNAL(titleStoppedChanged()), SIGNAL(titleStoppedChanged()));
     connect(&buttonBox, SIGNAL(accepted()), SLOT(on_buttonBox_accepted()));

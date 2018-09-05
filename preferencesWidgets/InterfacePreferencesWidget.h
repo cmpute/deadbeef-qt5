@@ -26,8 +26,10 @@ private Q_SLOTS:
     void saveRefreshRate(int);
     void saveTrayMessageFormat();
     void saveGuiPlugin(const QString &);
+    void saveTrayIconTheme(const QString &);
 Q_SIGNALS:
     void setTrayIconHidden(bool);
+    void setTrayIconTheme(const QString &);
     void setCloseOnMinimize(bool);
     void titlePlayingChanged();
     void titleStoppedChanged();

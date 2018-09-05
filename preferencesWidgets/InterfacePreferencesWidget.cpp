@@ -4,6 +4,8 @@
 #include "QtGuiSettings.h"
 #include "QtGui.h"
 #include "GuiUpdater.h"
+#include "MainWindow.h"
+#include <QDebug>
 
 InterfacePreferencesWidget::InterfacePreferencesWidget(QWidget *parent, Qt::WindowFlags f):
         QWidget(parent, f),
@@ -22,6 +24,7 @@ void InterfacePreferencesWidget::loadSettings() {
     QString titlebarPlaying = SETTINGS->getTitlebarPlaying();
     QString titlebarStopped = SETTINGS->getTitlebarStopped();
     QString messageFormat = SETTINGS->getMessageFormat();
+    QString TrayIconTheme = SETTINGS->getTrayIconTheme();
     
     ui->minimizeCheckBox->setChecked(minimizeOnClose);
     ui->hideTrayCheckBox->setChecked(trayIconIsHidden);
@@ -31,6 +34,21 @@ void InterfacePreferencesWidget::loadSettings() {
     ui->refreshRateValueLabel->setText(QString::number(refreshRate));
     ui->titlebarPlayingLineEdit->setText(titlebarPlaying);
     ui->titlebarStoppedLineEdit->setText(titlebarStopped);
+    
+    ui->TrayIconThemeLabel->setVisible(!trayIconIsHidden);
+    ui->TrayIconThemeComboBox->setVisible(!trayIconIsHidden);
+    QStringList trayIconTheme = MainWindow::Instance()->trayIconTheme.keys();
+    trayIconTheme.sort();
+    if (trayIconTheme.contains(tr("Default")))
+    {
+        trayIconTheme.move(trayIconTheme.indexOf(tr("Default")), 0);
+    }
+    ui->TrayIconThemeComboBox->addItems(trayIconTheme);
+    int trayIconThemeIndex = ui->TrayIconThemeComboBox->findText(TrayIconTheme);
+    if ( trayIconThemeIndex != -1 )
+        ui->TrayIconThemeComboBox->setCurrentIndex(trayIconThemeIndex);
+    else
+        ui->TrayIconThemeComboBox->setCurrentIndex(0);
     
     ui->switchTrackInfoCheckBox->setVisible(!trayIconIsHidden);
     ui->trayIconMessageLabel->setVisible(ui->switchTrackInfoCheckBox->isChecked() && ui->switchTrackInfoCheckBox->isVisible());
@@ -55,6 +73,7 @@ void InterfacePreferencesWidget::createConnections() {
     connect(ui->titlebarStoppedLineEdit, SIGNAL(editingFinished()), SLOT(saveTitleStopped()));
     connect(ui->trayIconMsgFormatLineEdit, SIGNAL(editingFinished()), SLOT(saveTrayMessageFormat()));
     connect(ui->refreshRateSlider, SIGNAL(valueChanged(int)), SLOT(saveRefreshRate(int)));
+    connect(ui->TrayIconThemeComboBox, SIGNAL(currentIndexChanged(QString)), SLOT(saveTrayIconTheme(QString)));
     connect(ui->guiPluginComboBox, SIGNAL(currentIndexChanged(QString)), SLOT(saveGuiPlugin(QString)));
     connect(this, SIGNAL(refreshRateChanged(const QString &)), ui->refreshRateValueLabel, SLOT(setText(const QString &)));
     
@@ -62,10 +81,17 @@ void InterfacePreferencesWidget::createConnections() {
 
 void InterfacePreferencesWidget::saveTrayIconHidden(bool hidden) {
     SETTINGS->setTrayIconIsHidden(hidden);
+    ui->TrayIconThemeLabel->setVisible(!hidden);
+    ui->TrayIconThemeComboBox->setVisible(!hidden);
     ui->switchTrackInfoCheckBox->setVisible(!hidden);
     ui->trayIconMessageLabel->setVisible(ui->switchTrackInfoCheckBox->isChecked() && ui->switchTrackInfoCheckBox->isVisible());
     ui->trayIconMsgFormatLineEdit->setVisible(ui->switchTrackInfoCheckBox->isChecked() && ui->switchTrackInfoCheckBox->isVisible());
     emit setTrayIconHidden(hidden);
+}
+
+void InterfacePreferencesWidget::saveTrayIconTheme(const QString &variant) {
+    SETTINGS->setTrayIconTheme(variant);
+    emit setTrayIconTheme(variant);
 }
 
 void InterfacePreferencesWidget::saveTrackInfoOnSwitch(bool show) {

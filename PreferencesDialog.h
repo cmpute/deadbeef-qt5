@@ -49,6 +49,7 @@ private Q_SLOTS:
 
 Q_SIGNALS:
     void setTrayIconHidden(bool);
+    void setTrayIconTheme(const QString &);
     void setCloseOnMinimize(bool);
     void titlePlayingChanged();
     void titleStoppedChanged();

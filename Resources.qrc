@@ -1,6 +1,8 @@
 <RCC>
     <qresource prefix="/root">
         <file>images/bitmap.png</file>
+        <file>images/tray_dark.png</file>
+        <file>images/tray_light.png</file>
         <file>images/play_16.png</file>
         <file>images/pause_16.png</file>
     </qresource>

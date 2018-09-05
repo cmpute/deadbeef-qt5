@@ -62,6 +62,7 @@ public:
     VarBool(TrayIconIsHidden);
     VarBool(ShowTrayTips);
     VarString(MessageFormat, "%a - %t");
+    VarString(TrayIconTheme, "Default");
 #undef CUR_GROUP
 
     //PlayList Group

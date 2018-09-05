@@ -125,7 +125,10 @@ void MainThreadRun(void *) {
     translator.load(QString::fromUtf8(DEADBEEF_PREFIX) + QString("/share/deadbeef/translations/QtGui_") + locale);
     app.installTranslator(&translator);
 
-    MainWindow w;
-    w.show();
+    //MainWindow w;
+    //w.show();
+    
+    qDebug() << MainWindow::Instance();
+    MainWindow::Instance()->show();
     app.exec();
 }

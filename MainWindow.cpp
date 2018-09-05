@@ -20,6 +20,8 @@
 #include <QFutureWatcher>
 #include "DBFileDialog.h"
 
+MainWindow *MainWindow::instance = NULL;
+
 template <typename T>
 int signum(T val) {
     return (T(0) < val) - (val < T(0));
@@ -38,6 +40,11 @@ MainWindow::MainWindow(QWidget *parent) :
         orderGroup(this),
         loopingGroup(this)
 {
+    defaultTrayIcon = QIcon(":/root/images/bitmap.png");
+    trayIconTheme[tr("Default")] = defaultTrayIcon;
+    trayIconTheme[tr("Dark")] = QIcon(":/root/images/tray_dark.png");
+    trayIconTheme[tr("Light")] = QIcon(":/root/images/tray_light.png");
+    
     ui->setupUi(this);
     
     loadActions();
@@ -49,6 +56,20 @@ MainWindow::MainWindow(QWidget *parent) :
     updateTitle();
     
     ui->PlayBackToolBar->show();
+}
+
+void MainWindow::Destroy() {
+    if (instance != NULL)
+        delete instance;
+    instance = NULL;
+}
+
+MainWindow *MainWindow::Instance() {
+    if (instance == NULL) {
+        instance = new MainWindow();
+    }
+    
+    return instance;
 }
 
 MainWindow::~MainWindow() {
@@ -94,7 +115,13 @@ void MainWindow::loadActions() {
 
 void MainWindow::createTray() {
     //trayIcon = new SystemTrayIcon(windowIcon(), this);
-    trayIcon = new SystemTrayIcon(QIcon(":/root/images/bitmap.png"), this);
+    QString variant(SETTINGS->getTrayIconTheme());
+    if (trayIconTheme.contains(variant))
+        trayIcon = new SystemTrayIcon(trayIconTheme[variant], this);
+    else
+        trayIcon = new SystemTrayIcon(defaultTrayIcon, this);
+    
+    
     trayMenu = new QMenu();
     trayMenu->addAction(ui->actionPlay);
     trayMenu->addAction(ui->actionPause);
@@ -285,6 +312,7 @@ void MainWindow::on_actionPreferences_triggered() {
     PreferencesDialog *prefDialog = new PreferencesDialog(this);
     connect(prefDialog, SIGNAL(setCloseOnMinimize(bool)), this, SLOT(setCloseOnMinimized(bool)));
     connect(prefDialog, SIGNAL(setTrayIconHidden(bool)), this, SLOT(setTrayIconHidden(bool)));
+    connect(prefDialog, SIGNAL(setTrayIconTheme(const QString &)), this, SLOT(setTrayIconTheme(const QString &)));
     connect(prefDialog, SIGNAL(titlePlayingChanged()), this, SLOT(titleSettingChanged()));
     connect(prefDialog, SIGNAL(titleStoppedChanged()), this, SLOT(titleSettingChanged()));
     prefDialog->exec();
@@ -433,15 +461,22 @@ void MainWindow::setCloseOnMinimized(bool minimizeOnClose) {
     configureActionOnClose(minimizeOnClose, trayIconIsHidden);
 }
 
+void MainWindow::setTrayIconTheme(const QString &variant) {
+    if (trayIconTheme.contains(variant))
+        trayIcon->setIcon(trayIconTheme[variant]);
+    else
+        trayIcon->setIcon(defaultTrayIcon);
+}
+
 void MainWindow::setTrayIconHidden(bool hideTrayIcon) {
     // FIXME: crashes when changing from hidden to visible. System bug?
-    // trayIcon->setVisible(!hideTrayIcon);
-    if (hideTrayIcon) {
-        delete trayIcon;
-        trayIcon = nullptr;
-    } else {
-        createTray();
-    }
+    trayIcon->setVisible(!hideTrayIcon);
+    //if (hideTrayIcon) {
+    //    delete trayIcon;
+    //    trayIcon = nullptr;
+    //} else {
+    //    createTray();
+    //}
     // FIXME: it still crashes in ~MainWindow() after toggling tray icon
     
     bool minimizeOnClose = SETTINGS->getMinimizeOnClose();
@@ -528,7 +563,7 @@ void MainWindow::loadConfig() {
         break;
     }
 
-    qDebug() << QString::fromUtf8(DEADBEEF_PREFIX);
+    //qDebug() << QString::fromUtf8(DEADBEEF_PREFIX);
 }
 
 void MainWindow::saveConfig() {

@@ -18,6 +18,7 @@ const QString QtGuiSettings::CoverartIsHidden = QString("CoverartIsHidden");
 #endif
 const QString QtGuiSettings::TrayIcon = QString("TrayIcon");
 const QString QtGuiSettings::TrayIconIsHidden = QString("TrayIconIsHidden");
+const QString QtGuiSettings::TrayIconTheme = QString("TrayIconTheme");
 const QString QtGuiSettings::ShowTrayTips = QString("ShowTrayTips");
 const QString QtGuiSettings::MessageFormat = QString("MessageFormat");
 const QString QtGuiSettings::TabBarPosition = QString("TabBarPosition");

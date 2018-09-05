@@ -23,7 +23,9 @@ class MainWindow : public QMainWindow {
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
-
+    static MainWindow *Instance();
+    static void Destroy();
+    QMap<QString, QIcon> trayIconTheme;
 
 protected:
     void changeEvent(QEvent *);
@@ -32,6 +34,7 @@ protected:
     void loadIcons();
 
 private:
+    static MainWindow *instance;
     enum ActionOnClose {
         Exit = 0,
         Hide = 1,
@@ -57,6 +60,8 @@ private:
 
     QActionGroup orderGroup;
     QActionGroup loopingGroup;
+    
+    QIcon defaultTrayIcon;
 
     void createConnections();
 
@@ -111,6 +116,7 @@ private slots:
 
     void setCloseOnMinimized(bool);
     void setTrayIconHidden(bool);
+    void setTrayIconTheme(const QString &variant);
     void titleSettingChanged();
     void on_actionPlayListHeader_triggered();
     void on_actionHideTabBar_triggered();

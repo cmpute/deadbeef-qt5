@@ -29,7 +29,8 @@ AboutDialog::AboutDialog(QWidget *parent) :
     QString qtguiAbout = QString::fromUtf8("QtGui - user interface for DeaDBeeF player based on Qt library\n\n"
                                            "© 2010 Anton Novikov <tonn.post@gmail.com>\n"
                                            "© 2011 Semen Minyushov <semikmsv@gmail.com>\n"
-                                           "© 2013 Karjavin Roman <redpunk231@gmail.com>");
+                                           "© 2013 Karjavin Roman <redpunk231@gmail.com>\n"
+                                           "© 2018 Ziyun Ling <ohmygod19993@gmail.com>");
 
     ui->qtguiAboutText->setText(qtguiAbout);
 }

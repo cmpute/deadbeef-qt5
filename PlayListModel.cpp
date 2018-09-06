@@ -5,8 +5,8 @@
 #include <QDebug>
 
 PlayListModel::PlayListModel(QObject *parent) : QAbstractItemModel(parent),
-    playIcon(":/root/images/play_16.png"),
-    pauseIcon(":/root/images/pause_16.png") {
+    playIcon(":/root/images/play_64.png"),
+    pauseIcon(":/root/images/pause_64.png") {
     connect(DBApiWrapper::Instance(), SIGNAL(trackChanged(DB_playItem_t *, DB_playItem_t *)),
             this, SLOT(trackChanged(DB_playItem_t*,DB_playItem_t*)));
     connect(DBApiWrapper::Instance(), SIGNAL(playbackPaused()), this, SLOT(playerPaused()));

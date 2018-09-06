@@ -3,6 +3,7 @@
 
 #include "QtGui.h"
 #include "DBApiWrapper.h"
+#include <include/callbacks.h>
 
 #include <QMessageBox>
 
@@ -11,6 +12,7 @@ MetadataPrefsDialog::MetadataPrefsDialog(QWidget *parent) :
     ui(new Ui::MetadataPrefsDialog)
 {
     this->setAttribute(Qt::WA_DeleteOnClose);
+    this->setWindowIcon(getStockIcon(this, "preferences-system", QStyle::SP_CustomBase));
     ui->setupUi(this);
     dirtyBit = false;
     //qDebug() << DBAPI->conf_get_int("mp3.id3v2_version", 3);

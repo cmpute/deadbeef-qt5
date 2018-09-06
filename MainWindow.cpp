@@ -216,7 +216,13 @@ void MainWindow::on_actionClearAll_triggered() {
 }
 
 void MainWindow::on_actionPlay_triggered() {
-    DBApiWrapper::Instance()->sendPlayMessage(DB_EV_PLAY_CURRENT);
+    if (DBApiWrapper::Instance()->isPaused)
+        DBAPI->sendmessage(DB_EV_TOGGLE_PAUSE, 0, 0, 0);
+    else
+    {
+        emit DBApiWrapper::Instance()->playbackPaused();
+        DBApiWrapper::Instance()->sendPlayMessage(DB_EV_PLAY_CURRENT);
+    }
 }
 
 void MainWindow::on_actionStop_triggered() {

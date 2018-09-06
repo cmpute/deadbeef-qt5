@@ -11,7 +11,6 @@ VolumeSlider::VolumeSlider(QWidget *parent) : QSlider(parent) {
     //setTickPosition(QSlider::TicksBothSides);
     //setTickInterval(5);
     tickColor = this->palette().color(QPalette::Mid);
-    this->setToolTip(QString::number(int(DBAPI->volume_get_db())) + QString("dB"));
     //connect(this, SIGNAL(valueChanged(int)), this, SLOT(setVolumeText()));
 }
 
@@ -35,7 +34,7 @@ void VolumeSlider::mouseMoveEvent(QMouseEvent *ev) {
 void VolumeSlider::setValue(int value) {
     QSlider::setValue(value);
     DBAPI->volume_set_db(value);
-    this->setToolTip(QString::number(int(value)) + QString("dB"));
+    this->setToolTip(QString::number(int(DBAPI->volume_get_db())) + QString("dB"));
 }
 
 void VolumeSlider::paintEvent(QPaintEvent *e)

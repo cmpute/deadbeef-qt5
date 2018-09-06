@@ -128,7 +128,7 @@ void MainThreadRun(void *) {
     //MainWindow w;
     //w.show();
     
-    qDebug() << MainWindow::Instance();
+    //qDebug() << MainWindow::Instance();
     MainWindow::Instance()->show();
     app.exec();
 }

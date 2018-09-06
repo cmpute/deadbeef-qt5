@@ -2,10 +2,15 @@
 #define METADATADIALOG_H
 
 #include <QMenu>
+#include <QFont>
 #include <QDialog>
+#include <QLineEdit>
 #include <QTableView>
+#include <QHeaderView>
 #include <QStandardItem>
 #include <QStandardItemModel>
+#include "QtGui.h"
+#include "DBApiWrapper.h"
 
 namespace Ui {
 class MetadataDialog;
@@ -16,11 +21,8 @@ class MetadataDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit MetadataDialog(QWidget *parent = nullptr);
+    explicit MetadataDialog(DB_playItem_t *it, QWidget *parent = nullptr);
     ~MetadataDialog();
-    QTableView *tableViewMeta();
-    QTableView *tableViewProps();
-    QLineEdit *lineEditPath();
     
 private slots:
     void on_btnClose_clicked();
@@ -36,8 +38,18 @@ private slots:
     void editValueInDialog(QStandardItem *item);
     
 private:
-    
+    QStandardItemModel *modelMetaHeader;
+    QStandardItemModel *modelPropsHeader;
     Ui::MetadataDialog *ui;
+    
+    QStringList metaDataKeys;
+    QStringList metaDataCustomKeys;
+    QHash<QString, QString> metaDataNames;
+    
+    QStringList propsKeys;
+    QHash<QString, QString> propsNames;
+    
+    DB_playItem_t *DBItem;
 };
 
 #endif // METADATADIALOG_H

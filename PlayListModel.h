@@ -7,11 +7,6 @@
 #include <QMessageBox>
 #include <QFile>
 
-#include <QStandardItemModel>
-#include <QLineEdit>
-#include <QHeaderView>
-#include <QFont>
-
 #include "DBApiWrapper.h"
 #include "MetadataDialog.h"
 
@@ -40,12 +35,6 @@ public:
 
 private:
     QVariant data(const QModelIndex &index, int role) const;
-    
-    QStringList metaDataKeys;
-    QHash<QString, QString> metaDataNames;
-    
-    QStringList propsKeys;
-    QHash<QString, QString> propsNames;
     
     QMimeData *mimeData(const QModelIndexList &indexes) const;
     QStringList mimeTypes() const;

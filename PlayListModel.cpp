@@ -17,29 +17,6 @@ PlayListModel::PlayListModel(QObject *parent) : QAbstractItemModel(parent),
     columnNames.insert("%b", tr("Album"));
     columnNames.insert("%y", tr("Year"));
     columnNames.insert("%l", tr("Duration"));
-    //fill standart metadata keys
-    metaDataKeys << "artist" << "title" << "album" << "year" << "genre" << "composer" \
-        << "album artist" << "track" << "numtracks" << "disc" << "numdiscs" << "comment";
-    metaDataNames.insert("artist", tr("Artist"));
-    metaDataNames.insert("title", tr("Title"));
-    metaDataNames.insert("album", tr("Album"));
-    metaDataNames.insert("year", tr("Year"));
-    metaDataNames.insert("genre", tr("Genre"));
-    metaDataNames.insert("composer", tr("Composer"));
-    metaDataNames.insert("album artist", tr("Album Artist"));
-    metaDataNames.insert("track", tr("Track"));
-    metaDataNames.insert("numtracks", tr("Total Tracks"));
-    metaDataNames.insert("disc", tr("Disc Number"));
-    metaDataNames.insert("numdiscs", tr("Total Discs"));
-    metaDataNames.insert("comment", tr("Comment"));
-    //fill standard properties keys
-    propsKeys << ":URI" << ":TRACKNUM" << ":DURATION" << ":TAGS" << ":HAS_EMBEDDED_CUESHEET" << ":FILETYPE";
-    propsNames.insert(":URI", tr("Location"));
-    propsNames.insert(":TRACKNUM", tr("Subtrack Index"));
-    propsNames.insert(":DURATION", tr("Duration"));
-    propsNames.insert(":TAGS", tr("Tag Type(s)"));
-    propsNames.insert(":HAS_EMBEDDED_CUESHEET", tr("Embedded Cuesheet"));
-    propsNames.insert(":FILETYPE", tr("Codec"));
     
     loadConfig();
 }
@@ -142,159 +119,12 @@ void PlayListModel::playerPaused() {
 void PlayListModel::trackProps(const QModelIndexList &tracks) {
     DBPltRef plt;
     DB_playItem_t *it = plt.at(tracks[0].row());
-    DBAPI->pl_lock();
-    DB_metaInfo_t *meta = DBAPI->pl_get_metadata_head(it);
-    
-    QStringList metaDataCustomKeys;
-    QHash<QString, QString> metaDataStd;
-    foreach (QString v,metaDataKeys){
-        metaDataStd[v] = QString("");
-    }
-    QHash<QString, QString> metaDataCustom;
-    
-    QStringList propsCustomKeys;
-    QHash<QString, QString> propsStd;
-    foreach (QString v,propsKeys){
-        propsStd[v] = QString("");
-    }
-    QHash<QString, QString> propsCustom;
-    
-    while (meta) {
-        DB_metaInfo_t *next = meta->next;
-        if (meta->key[0] != ':' && meta->key[0] != '!' && meta->key[0] != '_') {
-            if (metaDataStd.contains(meta->key))
-                metaDataStd[meta->key] = meta->value;
-            else
-            {
-                metaDataCustom[meta->key] = meta->value;
-                metaDataCustomKeys << meta->key;
-            }
-        } else if (meta->key[0] == ':') {
-            if (propsStd.contains(meta->key))
-                propsStd[meta->key] = meta->value;
-            else
-            {
-                propsCustom[meta->key] = meta->value;
-                propsCustomKeys << meta->key;
-            }
-        }
-        meta = next;
-    }
-    DBAPI->pl_unlock();
-    /*
-    qDebug() << "===Standard keys===";
-    foreach (QString key,metaDataKeys){
-        qDebug() << key << metaDataStd[key];
-    }
-    qDebug() << "===Custom keys===";
-    foreach (QString key,metaDataCustomKeys){
-        qDebug() << key << metaDataCustom[key];
-    }
-    */
-    //TODO: metadata editor
-    int j;
-    MetadataDialog *metaDlg = new MetadataDialog(0);
-    char fPath[PATH_MAX];
-    DBAPI->pl_format_title(it, -1, fPath, sizeof (fPath), -1, "%F");
-    metaDlg->lineEditPath()->setText(fPath);
-    metaDlg->lineEditPath()->setReadOnly(true);
-    
-    QTableView *tableViewProps = metaDlg->tableViewProps();
-    QStandardItemModel *modelPropsHeader = new QStandardItemModel(0,1,metaDlg);
-    modelPropsHeader->setHorizontalHeaderItem(0, new QStandardItem(tr("Key")));
-    modelPropsHeader->setHorizontalHeaderItem(1, new QStandardItem(tr("Value")));
-    tableViewProps->setModel(modelPropsHeader);
-    //write properties to table
-    for (int i=0; i<propsKeys.count(); i++)
+    if (DBAPI->is_local_file(DBAPI->pl_find_meta(it, ":URI")))
     {
-        QStandardItem *keyname = new QStandardItem(propsNames[propsKeys.at(i)]);
-        keyname->setFlags(keyname->flags()^Qt::ItemIsEditable);
-        QStandardItem *value = new QStandardItem(propsStd[propsKeys.at(i)]);
-        value->setFlags(value->flags()^Qt::ItemIsEditable);
-        modelPropsHeader->setItem(i,0,keyname);
-        modelPropsHeader->setItem(i,1,value);
+        MetadataDialog *metaDlg = new MetadataDialog(it, 0);
+        metaDlg->exec();
+        //delete metaDlg;
     }
-    j = propsKeys.count();
-    for (int i=0; i<propsCustomKeys.count(); i++)
-    {
-        QStandardItem *keyname = new QStandardItem(QString(propsCustomKeys.at(i)).remove(0,1));
-        keyname->setFlags(keyname->flags()^Qt::ItemIsEditable);
-        QFont keyfont = keyname->font();
-        keyfont.setItalic(true);
-        keyfont.setUnderline(true);
-        keyname->setFont(keyfont);
-        QStandardItem *value = new QStandardItem(propsCustom[propsCustomKeys.at(i)]);
-        value->setFlags(value->flags()^Qt::ItemIsEditable);
-        modelPropsHeader->setItem(i+j,0,keyname);
-        modelPropsHeader->setItem(i+j,1,value);
-    }
-    //tableViewProps->resizeColumnsToContents();
-    tableViewProps->resizeColumnToContents(0);
-    tableViewProps->horizontalHeader()->setStretchLastSection(true);
-    tableViewProps->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
-    tableViewProps->verticalHeader()->hide();
-    tableViewProps->setSelectionBehavior(QAbstractItemView::SelectRows);
-    tableViewProps->setSelectionMode(QAbstractItemView::SingleSelection);
-    
-    
-    QTableView *tableViewMeta = metaDlg->tableViewMeta();
-    QStandardItemModel *modelMetaHeader = new QStandardItemModel(0,2,metaDlg);
-    modelMetaHeader->setHorizontalHeaderItem(0, new QStandardItem(QLatin1String("")));
-    modelMetaHeader->setHorizontalHeaderItem(1, new QStandardItem(tr("Key")));
-    modelMetaHeader->setHorizontalHeaderItem(2, new QStandardItem(tr("Value")));
-    tableViewMeta->setModel(modelMetaHeader);
-    //write metadata to table
-    for (int i=0; i<metaDataKeys.count(); i++)
-    {
-        QStandardItem *key = new QStandardItem(metaDataKeys.at(i));
-        key->setFlags(key->flags()^Qt::ItemIsEditable);
-        QStandardItem *keyname = new QStandardItem(metaDataNames[metaDataKeys.at(i)]);
-        keyname->setFlags(keyname->flags()^Qt::ItemIsEditable);
-        QStandardItem *value = new QStandardItem(metaDataStd[metaDataKeys.at(i)]);
-        //value->setFlags(value->flags()^Qt::ItemIsEditable);
-        modelMetaHeader->setItem(i,0,key);
-        modelMetaHeader->setItem(i,1,keyname);
-        modelMetaHeader->setItem(i,2,value);
-    }
-    j = metaDataKeys.count();
-    for (int i=0; i<metaDataCustomKeys.count(); i++)
-    {
-        QStandardItem *key = new QStandardItem(metaDataCustomKeys.at(i));
-        key->setFlags(key->flags()^Qt::ItemIsEditable);
-        key->setData(true);
-        QStandardItem *keyname = new QStandardItem(metaDataCustomKeys.at(i));
-        keyname->setFlags(keyname->flags()^Qt::ItemIsEditable);
-        QFont keyfont = keyname->font();
-        keyfont.setItalic(true);
-        keyfont.setUnderline(true);
-        keyname->setFont(keyfont);
-        QString valueStr = QString(metaDataCustom[metaDataCustomKeys.at(i)]);
-        QStandardItem *value;
-        if (valueStr.contains(QChar(10)))
-        {
-            value = new QStandardItem(valueStr.split(QChar(10))[0] + QString("(...)"));
-            value->setData(valueStr);
-            value->setFlags(value->flags()^Qt::ItemIsEditable);
-        }
-        else
-            value = new QStandardItem(valueStr);
-        //value->setFlags(value->flags()^Qt::ItemIsEditable);
-        modelMetaHeader->setItem(i+j,0,key);
-        modelMetaHeader->setItem(i+j,1,keyname);
-        modelMetaHeader->setItem(i+j,2,value);
-    }
-    
-    tableViewMeta->setColumnHidden(0, true);
-    //tableViewMeta->resizeColumnsToContents();
-    tableViewMeta->resizeColumnToContents(1);
-    tableViewMeta->horizontalHeader()->setStretchLastSection(true);
-    tableViewMeta->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
-    tableViewMeta->verticalHeader()->hide();
-    tableViewMeta->setSelectionBehavior(QAbstractItemView::SelectRows);
-    tableViewMeta->setSelectionMode(QAbstractItemView::SingleSelection);
-    
-    metaDlg->exec();
-    //delete metaDlg;
 }
 
 void PlayListModel::reloadMetadata(const QModelIndexList &tracks) {
@@ -310,6 +140,7 @@ void PlayListModel::reloadMetadata(const QModelIndexList &tracks) {
         //qDebug() << DBAPI->pl_is_selected(it);
         int match = DBAPI->is_local_file(DBAPI->pl_find_meta(it, ":URI")) && !decoder_id.isEmpty();
         DBAPI->pl_unlock();
+        DBAPI->pl_item_ref(it);
         if (match) {
             uint32_t f = DBAPI->pl_get_item_flags(it);
             if (!(f & DDB_IS_SUBTRACK)) {
@@ -328,7 +159,7 @@ void PlayListModel::reloadMetadata(const QModelIndexList &tracks) {
                 }
             }
         }
-        //DBAPI->pl_item_unref(it);
+        DBAPI->pl_item_unref(it);
     }
     DBAPI->pl_save_current();
     DBAPI->sendmessage(DB_EV_PLAYLISTCHANGED, 0, DDB_PLAYLIST_CHANGE_CONTENT, 0);

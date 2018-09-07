@@ -33,7 +33,7 @@
     </message>
     <message>
         <location filename="preferencesWidgets/InterfacePreferencesWidget.ui" line="41"/>
-        <source>Interface refresh rate (times per second):</source>
+        <source>Interface refresh rate (times per sec.):</source>
         <translation>界面刷新速率(每秒次数)</translation>
     </message>
     <message>

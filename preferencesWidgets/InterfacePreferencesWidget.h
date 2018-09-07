@@ -27,6 +27,10 @@ private Q_SLOTS:
     void saveTrayMessageFormat();
     void saveGuiPlugin(const QString &);
     void saveTrayIconTheme(const QString &);
+    
+    void saveDetectCP1251(bool);
+    void saveDetectCP936(bool);
+    void saveDetectShiftJIS(bool);
 Q_SIGNALS:
     void setTrayIconHidden(bool);
     void setTrayIconTheme(const QString &);

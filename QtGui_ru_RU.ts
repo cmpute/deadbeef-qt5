@@ -33,7 +33,7 @@
     </message>
     <message>
         <location filename="preferencesWidgets/InterfacePreferencesWidget.ui" line="41"/>
-        <source>Interface refresh rate (times per second):</source>
+        <source>Interface refresh rate (times per sec.):</source>
         <translation>Частота обновления интерфейса (раз в сек):</translation>
     </message>
     <message>

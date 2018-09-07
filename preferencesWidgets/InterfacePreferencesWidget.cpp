@@ -26,6 +26,10 @@ void InterfacePreferencesWidget::loadSettings() {
     QString messageFormat = SETTINGS->getMessageFormat();
     QString TrayIconTheme = SETTINGS->getTrayIconTheme();
     
+    ui->DetectCP1251CheckBox->setChecked(DBAPI->conf_get_int("junk.enable_cp1251_detection", 0));
+    ui->DetectCP936CheckBox->setChecked(DBAPI->conf_get_int("junk.enable_cp936_detection", 0));
+    ui->DetectShiftJISCheckBox->setChecked(DBAPI->conf_get_int("junk.enable_shift_jis_detection", 0));
+    
     ui->minimizeCheckBox->setChecked(minimizeOnClose);
     ui->hideTrayCheckBox->setChecked(trayIconIsHidden);
     ui->switchTrackInfoCheckBox->setChecked(showTrayTips);
@@ -77,6 +81,22 @@ void InterfacePreferencesWidget::createConnections() {
     connect(ui->guiPluginComboBox, SIGNAL(currentIndexChanged(QString)), SLOT(saveGuiPlugin(QString)));
     connect(this, SIGNAL(refreshRateChanged(const QString &)), ui->refreshRateValueLabel, SLOT(setText(const QString &)));
     
+    
+    connect(ui->DetectCP1251CheckBox, SIGNAL(toggled(bool)), SLOT(saveDetectCP1251(bool)));
+    connect(ui->DetectCP936CheckBox, SIGNAL(toggled(bool)), SLOT(saveDetectCP936(bool)));
+    connect(ui->DetectShiftJISCheckBox, SIGNAL(toggled(bool)), SLOT(saveDetectShiftJIS(bool)));
+}
+
+void InterfacePreferencesWidget::saveDetectCP1251(bool enabled) {
+    DBAPI->conf_set_int("junk.enable_cp1251_detection", enabled);
+}
+
+void InterfacePreferencesWidget::saveDetectCP936(bool enabled) {
+    DBAPI->conf_set_int("junk.enable_cp936_detection", enabled);
+}
+
+void InterfacePreferencesWidget::saveDetectShiftJIS(bool enabled) {
+    DBAPI->conf_set_int("junk.enable_shift_jis_detection", enabled);
 }
 
 void InterfacePreferencesWidget::saveTrayIconHidden(bool hidden) {

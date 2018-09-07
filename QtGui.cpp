@@ -39,7 +39,7 @@ extern "C" {
         plugin.plugin.name = "Qt user interface";
         plugin.plugin.descr = "Qt user interface";
         plugin.plugin.copyright = "Anton Novikov <tonn.post@gmail.com>\nSemen Minyushov <semikmsv@gmail.com>\nRoman Karjavin<redpunk231@gmail.com>\nZiyun Ling<ohmygod19993@gmail.com>";
-        plugin.plugin.website = "https://github.com/redpunk231/deadbeef-qt";
+        plugin.plugin.website = "https://github.com/maz-1/deadbeef-qt";
         plugin.plugin.start = pluginStart;
         plugin.plugin.stop = pluginStop;
         plugin.plugin.connect = pluginConnect;

@@ -10,7 +10,7 @@ VolumeSlider::VolumeSlider(QWidget *parent) : QSlider(parent) {
     setValue(DBAPI->volume_get_db());
     //setTickPosition(QSlider::TicksBothSides);
     //setTickInterval(5);
-    tickColor = this->palette().color(QPalette::Mid);
+    tickColor = this->palette().color(QPalette::Highlight);
     //connect(this, SIGNAL(valueChanged(int)), this, SLOT(setVolumeText()));
 }
 

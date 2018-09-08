@@ -5,7 +5,7 @@
 
 QDoubleSlider::QDoubleSlider(Qt::Orientation orientation, QWidget* pParent /*= NULL*/) :
 QSlider(pParent),
-m_Multiplier(10000.0)
+m_Multiplier(1000000.0)
 {
     connect(this, SIGNAL(valueChanged(int)), this, SLOT(setValue(int)));
 

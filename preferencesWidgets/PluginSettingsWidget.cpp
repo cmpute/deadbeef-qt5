@@ -92,8 +92,8 @@ void PluginSettingsWidget::configureWidgets(ddb_dialog_t *settingsDialog) {
                     if (HLayout)
                     {
                         spacing = atoi (param+8);
-                        layout->setContentsMargins(0, 0, 0, 0);
-                        layout->setSpacing(spacing+10);
+                        layout->setContentsMargins(5, 0, 0, 0);
+                        //layout->setSpacing(spacing+15);
                     }
                 }
                 else if (!strncmp (param, "height=", 7)) {
@@ -214,6 +214,8 @@ void PluginSettingsWidget::configureWidgets(ddb_dialog_t *settingsDialog) {
                 prop = type[0] == 'h' ? new QDoubleSlider(Qt::Horizontal, this) : new QDoubleSlider(Qt::Vertical, this);
                 QDoubleSlider *slider = qobject_cast<QDoubleSlider *>(prop);
                 //slider->setInvertedAppearance(invert);
+                slider->setTickPosition(QSlider::TicksBelow);
+                slider->setTickInterval(max*1000000/10);
                 slider->setMaximum(max);
                 slider->setMinimum(min);
                 slider->setSingleStep(step);
@@ -222,7 +224,7 @@ void PluginSettingsWidget::configureWidgets(ddb_dialog_t *settingsDialog) {
             }
             label = new QLabel(tr(labeltext), this);
             if (HLayout)
-                label->setMinimumWidth(40+spacing);
+                label->setMinimumWidth(50+spacing);
             addEntryWithLabel(layout, label, prop, HLayout);
             //if (vertical)
         }

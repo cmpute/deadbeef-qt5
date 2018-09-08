@@ -11,6 +11,7 @@
 
 #include "preferencesWidgets/InterfacePreferencesWidget.h"
 #include "preferencesWidgets/SoundPreferencesWidget.h"
+#include "preferencesWidgets/DspPreferencesWidget.h"
 #include "preferencesWidgets/NetworkPreferencesWidget.h"
 #include "preferencesWidgets/PluginsPreferencesWidget.h"
 
@@ -34,6 +35,7 @@ private:
 
     InterfacePreferencesWidget interfaceWidget;
     SoundPreferencesWidget soundWidget;
+    DspPreferencesWidget dspWidget;
     NetworkPreferencesWidget networkWidget;
     PluginsPreferencesWidget pluginsWidget;
 #ifdef HOTKEYS_ENABLED

@@ -2,6 +2,7 @@
 #define CALLBACKS_H
 
 #include "config.h"
+#include "DBApiWrapper.h"
 #include <QIcon>
 
 #ifdef ARTWORK_ENABLED
@@ -16,6 +17,7 @@ extern void cover_avail_callback(const char *fname, const char *artist, const ch
 #endif
 
 void conf_get_str(const char *key, char *value, int len, const char *def);
+void dsp_conf_get_str(const char *key, char *value, int len, const char *def);
 
 QIcon getStockIcon(QWidget *widget, const QString &freedesktop_name, int fallback);
 

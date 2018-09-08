@@ -4,7 +4,9 @@
 #include <QStyle>
 
 #include "QtGui.h"
-#include "DBApiWrapper.h"
+
+ddb_dsp_context_t *current_dsp_context = NULL;
+ddb_dsp_context_t *dsp_chain = NULL;
 
 #ifdef ARTWORK_ENABLED
 #include <plugins/CoverArt/CoverArtWrapper.h>
@@ -38,6 +40,10 @@ QImage *scale(const char *fname) {
 
 void conf_get_str(const char *key, char *value, int len, const char *def) {
     DBAPI->conf_get_str(key, def, value, len);
+}
+
+void dsp_conf_get_str(const char *key, char *value, int len, const char *def) {
+    current_dsp_context->plugin->get_param(current_dsp_context, atoi (key), value, len);
 }
 
 QIcon getStockIcon(QWidget *widget, const QString &freedesktop_name, int fallback) {

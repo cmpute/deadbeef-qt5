@@ -96,7 +96,7 @@ void MainWindow::loadIcons() {
     ui->actionAddURL->setIcon(getStockIcon(this, "folder-remote", QStyle::SP_DriveNetIcon));
     ui->actionAddAudioCD->setIcon(getStockIcon(this, "media-optical-audio", QStyle::SP_DriveCDIcon));
     ui->actionNewPlaylist->setIcon(getStockIcon(this, "document-new", QStyle::SP_FileDialogNewFolder));
-    ui->actionPreferences->setIcon(getStockIcon(this, "preferences-system", QStyle::SP_CustomBase));
+    ui->actionPreferences->setIcon(getStockIcon(this, "settings-configure", QStyle::SP_CustomBase));
     ui->actionAbout->setIcon(getStockIcon(this, "help-about", QStyle::SP_DialogHelpButton));
 }
 
@@ -129,6 +129,7 @@ void MainWindow::createTray() {
     trayMenu->addAction(ui->actionNext);
     trayMenu->addAction(ui->actionPrev);
     trayMenu->addSeparator();
+    trayMenu->addAction(ui->actionPreferences);
     trayMenu->addAction(ui->actionExit);
     trayIcon->setContextMenu(trayMenu);
     trayIcon->show();

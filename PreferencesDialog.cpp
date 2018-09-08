@@ -9,6 +9,7 @@ PreferencesDialog::PreferencesDialog(QWidget *parent) :
         buttonBox(this),
         interfaceWidget(this),
         soundWidget(this),
+        dspWidget(this),
         networkWidget(this),
 #ifdef HOTKEYS_ENABLED
         hotkeysWidget(this),
@@ -28,6 +29,7 @@ PreferencesDialog::PreferencesDialog(QWidget *parent) :
 void PreferencesDialog::configureTabs() {
     tabWidget.addTab(&interfaceWidget, tr("Interface"));
     tabWidget.addTab(&soundWidget, tr("Sound"));
+    tabWidget.addTab(&dspWidget, tr("DSP"));
     tabWidget.addTab(&networkWidget, tr("Network"));
     tabWidget.addTab(&pluginsWidget, tr("Plugins"));
 #ifdef HOTKEYS_ENABLED

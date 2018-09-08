@@ -40,7 +40,9 @@ set(SOURCES
     preferencesWidgets/PluginsPreferencesWidget.cpp
     preferencesWidgets/PluginSettingsWidget.cpp
     preferencesWidgets/SoundPreferencesWidget.cpp
+    preferencesWidgets/DspPreferencesWidget.cpp
     preferencesWidgets/QFileRequester.cpp
+    preferencesWidgets/QDoubleSlider.cpp
     
     AboutDialog.cpp
     DBApiWrapper.cpp
@@ -68,7 +70,9 @@ set(QT_HEADERS
     preferencesWidgets/PluginsPreferencesWidget.h
     preferencesWidgets/PluginSettingsWidget.h
     preferencesWidgets/SoundPreferencesWidget.h
+    preferencesWidgets/DspPreferencesWidget.h
     preferencesWidgets/QFileRequester.h
+    preferencesWidgets/QDoubleSlider.h
     
     AboutDialog.h
     DBApiWrapper.h
@@ -100,6 +104,7 @@ set(FORMS
     preferencesWidgets/NetworkPreferencesWidget.ui
     preferencesWidgets/PluginsPreferencesWidget.ui
     preferencesWidgets/SoundPreferencesWidget.ui
+    preferencesWidgets/DspPreferencesWidget.ui
     
     AboutDialog.ui
     MainWindow.ui

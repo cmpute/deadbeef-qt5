@@ -7,7 +7,7 @@ class QDoubleSlider : public QSlider
     Q_OBJECT
 
 public:
-    QDoubleSlider(Qt::Orientation orientation, QWidget* pParent = NULL);
+    QDoubleSlider(Qt::Orientation orientation, double multiplier, QWidget* pParent = NULL);
 
     void setRange(double Min, double Max);
     void setMinimum(double Min);

@@ -3,9 +3,9 @@
 #include <QToolTip>
 #include <QStyle>
 
-QDoubleSlider::QDoubleSlider(Qt::Orientation orientation, QWidget* pParent /*= NULL*/) :
+QDoubleSlider::QDoubleSlider(Qt::Orientation orientation, double multiplier, QWidget* pParent /*= NULL*/) :
 QSlider(pParent),
-m_Multiplier(1000000.0)
+m_Multiplier(multiplier)
 {
     connect(this, SIGNAL(valueChanged(int)), this, SLOT(setValue(int)));
 

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QHash>
+#include <QIntValidator>
 
 namespace Ui {
     class SoundPreferencesWidget;
@@ -36,6 +37,13 @@ private Q_SLOTS:
     void saveDefaultPlaylistName();
     void saveDontAddArchives(bool);
     void saveResumeOnStartup(bool);
+    void save8to16(bool enabled);
+    void save16to24(bool enabled);
+    void saveOverrideSR(bool enabled);
+    void saveTargetSR();
+    void saveDependentSR(bool enabled);
+    void saveSRMulti48();
+    void saveSRMulti44();
 };
 
 #endif // SOUNDPREFERENCESWIDGET_H

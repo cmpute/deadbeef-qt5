@@ -975,62 +975,97 @@
         <translation>Звук</translation>
     </message>
     <message>
-        <location filename="preferencesWidgets/SoundPreferencesWidget.ui" line="38"/>
+        <location filename="preferencesWidgets/SoundPreferencesWidget.ui" line="40"/>
         <source>Output plugin:</source>
         <translation>Модуль вывода:</translation>
     </message>
     <message>
-        <location filename="preferencesWidgets/SoundPreferencesWidget.ui" line="61"/>
+        <location filename="preferencesWidgets/SoundPreferencesWidget.ui" line="67"/>
         <source>Output device:</source>
         <translation>Устройство вывода:</translation>
     </message>
     <message>
-        <location filename="preferencesWidgets/SoundPreferencesWidget.ui" line="99"/>
+        <location filename="preferencesWidgets/SoundPreferencesWidget.ui" line="98"/>
+        <source>Always convert 8 bit audio to 16 bit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="preferencesWidgets/SoundPreferencesWidget.ui" line="105"/>
+        <source>Always convert 16 bit audio to 24 bit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="preferencesWidgets/SoundPreferencesWidget.ui" line="112"/>
+        <source>Override Samplerate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="preferencesWidgets/SoundPreferencesWidget.ui" line="154"/>
+        <source>Target Samplerate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="preferencesWidgets/SoundPreferencesWidget.ui" line="170"/>
+        <source>Based on input samplerate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="preferencesWidgets/SoundPreferencesWidget.ui" line="204"/>
+        <source>For multiples of 44.1KHz (88.2K, 176.4K, ...):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="preferencesWidgets/SoundPreferencesWidget.ui" line="211"/>
+        <source>For multiples of 48KHz (96K, 192K, ...):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="preferencesWidgets/SoundPreferencesWidget.ui" line="247"/>
         <source>Playback</source>
         <translation>Воспроизведение</translation>
     </message>
     <message>
-        <location filename="preferencesWidgets/SoundPreferencesWidget.ui" line="107"/>
+        <location filename="preferencesWidgets/SoundPreferencesWidget.ui" line="255"/>
         <source>Replaygain mode:</source>
         <translation>Режим автовыравнивания громкости:</translation>
     </message>
     <message>
-        <location filename="preferencesWidgets/SoundPreferencesWidget.ui" line="115"/>
+        <location filename="preferencesWidgets/SoundPreferencesWidget.ui" line="263"/>
         <source>Disable</source>
         <translation>Отключён</translation>
     </message>
     <message>
-        <location filename="preferencesWidgets/SoundPreferencesWidget.ui" line="120"/>
+        <location filename="preferencesWidgets/SoundPreferencesWidget.ui" line="268"/>
         <source>Track</source>
         <translation>Дорожка</translation>
     </message>
     <message>
-        <location filename="preferencesWidgets/SoundPreferencesWidget.ui" line="125"/>
+        <location filename="preferencesWidgets/SoundPreferencesWidget.ui" line="273"/>
         <source>Album</source>
         <translation>Альбом</translation>
     </message>
     <message>
-        <location filename="preferencesWidgets/SoundPreferencesWidget.ui" line="135"/>
+        <location filename="preferencesWidgets/SoundPreferencesWidget.ui" line="283"/>
         <source>Replaygain peak scale</source>
         <translation>Использовать пиковое значение</translation>
     </message>
     <message>
-        <location filename="preferencesWidgets/SoundPreferencesWidget.ui" line="144"/>
+        <location filename="preferencesWidgets/SoundPreferencesWidget.ui" line="292"/>
         <source>Replaygain preamp:</source>
         <translation>Предусиление автовыравнивания громкости:</translation>
     </message>
     <message>
-        <location filename="preferencesWidgets/SoundPreferencesWidget.ui" line="206"/>
+        <location filename="preferencesWidgets/SoundPreferencesWidget.ui" line="354"/>
         <source>Add files to this playlist by default:</source>
         <translation>Добавлять файлы по умолчанию в этот плейлист:</translation>
     </message>
     <message>
-        <location filename="preferencesWidgets/SoundPreferencesWidget.ui" line="222"/>
+        <location filename="preferencesWidgets/SoundPreferencesWidget.ui" line="370"/>
         <source>Resume previous session on startup</source>
         <translation>Восстанавливать предыдущую сессию при запуске</translation>
     </message>
     <message>
-        <location filename="preferencesWidgets/SoundPreferencesWidget.ui" line="229"/>
+        <location filename="preferencesWidgets/SoundPreferencesWidget.ui" line="377"/>
         <source>Don&apos;t add files from archives</source>
         <translation>Не добавлять файлы из архивов</translation>
     </message>

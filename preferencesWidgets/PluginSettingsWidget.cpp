@@ -39,7 +39,8 @@ PluginSettingsWidget::PluginSettingsWidget(ddb_dsp_context_t *dsp, QWidget *pare
 
 PluginSettingsWidget::~PluginSettingsWidget() {
     current_dsp_context = NULL;
-    DBAPI->streamer_set_dsp_chain(dsp_chain);
+    if (dsp_chain)
+        DBAPI->streamer_set_dsp_chain(dsp_chain);
     DBAPI->sendmessage(DB_EV_DSPCHAINCHANGED, 0, 0, 0);
 }
 
@@ -50,6 +51,7 @@ void PluginSettingsWidget::configureWidgets(ddb_dialog_t *settingsDialog) {
     
     char token[MAX_TOKEN];
     const char *script = settingsDialog->layout;
+    //qDebug() << script;
     while ((script = gettoken(script, token))) {
         if (strcmp(token, "property")) {
             qDebug() << "invalid token while loading plugin " << settingsDialog->title << " config dialog: " << token << " at line " << parser_line;
@@ -211,11 +213,11 @@ void PluginSettingsWidget::configureWidgets(ddb_dialog_t *settingsDialog) {
                 spinBox->setValue(atof(value));
                 connect(spinBox, SIGNAL(editingFinished()), SLOT(saveProperty()));
             } else {
-                prop = type[0] == 'h' ? new QDoubleSlider(Qt::Horizontal, this) : new QDoubleSlider(Qt::Vertical, this);
+                prop = type[0] == 'h' ? new QDoubleSlider(Qt::Horizontal, 1/step, this) : new QDoubleSlider(Qt::Vertical, 1/step, this);
                 QDoubleSlider *slider = qobject_cast<QDoubleSlider *>(prop);
                 //slider->setInvertedAppearance(invert);
                 slider->setTickPosition(QSlider::TicksBelow);
-                slider->setTickInterval(max*1000000/10);
+                slider->setTickInterval(std::max(max/10, step)/step);
                 slider->setMaximum(max);
                 slider->setMinimum(min);
                 slider->setSingleStep(step);
@@ -295,7 +297,7 @@ void PluginSettingsWidget::saveProperty() {
         else if (QFileRequester *fileRequester = qobject_cast<QFileRequester *>(widget))
             val = QString("%1").arg(fileRequester->text());
         
-        if (isDsp && current_dsp_context && dsp_chain)
+        if (isDsp && current_dsp_context)
         {
             if (!val.isEmpty())
                 current_dsp_context->plugin->set_param(current_dsp_context, keys.value(widget).toInt(), val.toUtf8().constData());

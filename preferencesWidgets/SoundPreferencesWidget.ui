@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>514</width>
-    <height>599</height>
+    <width>576</width>
+    <height>628</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -43,6 +43,12 @@
         </item>
         <item>
          <widget class="QComboBox" name="outputPluginComboBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -51,10 +57,6 @@
           </property>
          </widget>
         </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
          <widget class="QLabel" name="outputDeviceLabel">
           <property name="minimumSize">
@@ -70,6 +72,12 @@
         </item>
         <item>
          <widget class="QComboBox" name="outputDeviceComboBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -93,18 +101,22 @@
        </layout>
       </item>
       <item>
-       <widget class="QCheckBox" name="checkBox8to16">
-        <property name="text">
-         <string>Always convert 8 bit audio to 16 bit</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="checkBox16to24">
-        <property name="text">
-         <string>Always convert 16 bit audio to 24 bit</string>
-        </property>
-       </widget>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QCheckBox" name="checkBox8to16">
+          <property name="text">
+           <string>Always convert 8 bit audio to 16 bit</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkBox16to24">
+          <property name="text">
+           <string>Always convert 16 bit audio to 24 bit</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
       <item>
        <widget class="QCheckBox" name="checkBoxOverrideSR">
@@ -236,6 +248,248 @@
     </widget>
    </item>
    <item>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Replaygain</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_4">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_7">
+        <item>
+         <widget class="QLabel" name="label_4">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Processing: </string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="replaygainFlagsComboBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <item>
+           <property name="text">
+            <string>None</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Apply gain</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Apply gain and prevent clipping according to peak</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Only prevent clipping</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QFrame" name="frameReplayGain">
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="lineWidth">
+         <number>0</number>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_6">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_4">
+           <item>
+            <widget class="QLabel" name="replaygainModeLabel">
+             <property name="text">
+              <string>Replaygain mode:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="replaygainModeComboBox">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <item>
+              <property name="text">
+               <string>By playback order</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Track</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Album</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="peakScaleCheckBox">
+           <property name="text">
+            <string>Replaygain peak scale</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QGridLayout" name="gridLayout">
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_5">
+             <property name="text">
+              <string>Preamp without RG info:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QSlider" name="preampSlider">
+             <property name="minimum">
+              <number>-12</number>
+             </property>
+             <property name="maximum">
+              <number>12</number>
+             </property>
+             <property name="tracking">
+              <bool>true</bool>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="invertedAppearance">
+              <bool>false</bool>
+             </property>
+             <property name="invertedControls">
+              <bool>false</bool>
+             </property>
+             <property name="tickPosition">
+              <enum>QSlider::TicksBelow</enum>
+             </property>
+             <property name="tickInterval">
+              <number>1</number>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QLabel" name="preampValueLabel">
+             <property name="minimumSize">
+              <size>
+               <width>20</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string notr="true">0</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="preampLabel">
+             <property name="text">
+              <string>Preamp with RG info:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QSlider" name="preampGlobalSlider">
+             <property name="minimum">
+              <number>-12</number>
+             </property>
+             <property name="maximum">
+              <number>12</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="tickPosition">
+              <enum>QSlider::TicksBelow</enum>
+             </property>
+             <property name="tickInterval">
+              <number>1</number>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="QLabel" name="preampGlobalLabel">
+             <property name="minimumSize">
+              <size>
+               <width>20</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>0</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Expanding</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <widget class="QGroupBox" name="playbackGroupBox">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
@@ -247,105 +501,6 @@
       <string>Playback</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_4">
-        <item>
-         <widget class="QLabel" name="replaygainModeLabel">
-          <property name="text">
-           <string>Replaygain mode:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="replaygainModeComboBox">
-          <item>
-           <property name="text">
-            <string>Disable</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Track</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Album</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="peakScaleCheckBox">
-        <property name="text">
-         <string>Replaygain peak scale</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_6">
-        <item>
-         <widget class="QLabel" name="preampLabel">
-          <property name="text">
-           <string>Replaygain preamp:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <property name="sizeConstraint">
-           <enum>QLayout::SetDefaultConstraint</enum>
-          </property>
-          <item>
-           <widget class="QSlider" name="preampSlider">
-            <property name="minimum">
-             <number>-12</number>
-            </property>
-            <property name="maximum">
-             <number>12</number>
-            </property>
-            <property name="tracking">
-             <bool>true</bool>
-            </property>
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="invertedAppearance">
-             <bool>false</bool>
-            </property>
-            <property name="invertedControls">
-             <bool>false</bool>
-            </property>
-            <property name="tickPosition">
-             <enum>QSlider::TicksBelow</enum>
-            </property>
-            <property name="tickInterval">
-             <number>1</number>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="preampValueLabel">
-            <property name="minimumSize">
-             <size>
-              <width>20</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="text">
-             <string notr="true">0</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_5">
         <item>

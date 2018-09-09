@@ -31,8 +31,10 @@ private Q_SLOTS:
     void changeOutputDevice(int);
     void changeOutputPlugin(int);
     void changeReplaygainMode(int);
+    void changeReplaygainFlags(int);
     void saveReplaygainScale(bool);
     void saveReplaygainPreamp();
+    void saveReplaygainGlobalPreamp();
     void saveAddToDefaultPlaylist(bool);
     void saveDefaultPlaylistName();
     void saveDontAddArchives(bool);
@@ -44,6 +46,8 @@ private Q_SLOTS:
     void saveDependentSR(bool enabled);
     void saveSRMulti48();
     void saveSRMulti44();
+//Q_SIGNALS:
+    
 };
 
 #endif // SOUNDPREFERENCESWIDGET_H

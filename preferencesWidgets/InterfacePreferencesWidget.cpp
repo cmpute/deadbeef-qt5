@@ -77,9 +77,10 @@ void InterfacePreferencesWidget::createConnections() {
     connect(ui->titlebarStoppedLineEdit, SIGNAL(editingFinished()), SLOT(saveTitleStopped()));
     connect(ui->trayIconMsgFormatLineEdit, SIGNAL(editingFinished()), SLOT(saveTrayMessageFormat()));
     connect(ui->refreshRateSlider, SIGNAL(valueChanged(int)), SLOT(saveRefreshRate(int)));
+    connect(ui->refreshRateSlider, &QSlider::valueChanged, [=]() { ui->refreshRateValueLabel->setText(QString::number(ui->refreshRateSlider->value())); });
     connect(ui->TrayIconThemeComboBox, SIGNAL(currentIndexChanged(QString)), SLOT(saveTrayIconTheme(QString)));
     connect(ui->guiPluginComboBox, SIGNAL(currentIndexChanged(QString)), SLOT(saveGuiPlugin(QString)));
-    connect(this, SIGNAL(refreshRateChanged(const QString &)), ui->refreshRateValueLabel, SLOT(setText(const QString &)));
+    
     
     
     connect(ui->DetectCP1251CheckBox, SIGNAL(toggled(bool)), SLOT(saveDetectCP1251(bool)));
@@ -142,7 +143,6 @@ void InterfacePreferencesWidget::saveTrayMessageFormat() {
 void InterfacePreferencesWidget::saveRefreshRate(int refreshRate) {
     SETTINGS->setRefreshRate(refreshRate);
     GuiUpdater::Instance()->resetTimer(refreshRate);
-    emit refreshRateChanged(QString::number(refreshRate));
 }
 
 void InterfacePreferencesWidget::saveGuiPlugin(const QString &plugin) {

@@ -29,7 +29,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-include_directories(${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
+include_directories(${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/widgets)
 
 set(SOURCES
     include/callbacks.cpp
@@ -41,8 +41,9 @@ set(SOURCES
     preferencesWidgets/PluginSettingsWidget.cpp
     preferencesWidgets/SoundPreferencesWidget.cpp
     preferencesWidgets/DspPreferencesWidget.cpp
-    preferencesWidgets/QFileRequester.cpp
-    preferencesWidgets/QDoubleSlider.cpp
+    
+    widgets/QFileRequester.cpp
+    widgets/QDoubleSlider.cpp
     
     AboutDialog.cpp
     DBApiWrapper.cpp
@@ -71,8 +72,9 @@ set(QT_HEADERS
     preferencesWidgets/PluginSettingsWidget.h
     preferencesWidgets/SoundPreferencesWidget.h
     preferencesWidgets/DspPreferencesWidget.h
-    preferencesWidgets/QFileRequester.h
-    preferencesWidgets/QDoubleSlider.h
+    
+    widgets/QFileRequester.h
+    widgets/QDoubleSlider.h
     
     AboutDialog.h
     DBApiWrapper.h

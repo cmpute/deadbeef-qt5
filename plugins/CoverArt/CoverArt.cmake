@@ -16,13 +16,13 @@ if (ARTWORK_ENABLED)
         plugins/CoverArt/CoverArtWidget.cpp
         plugins/CoverArt/CoverArtWrapper.cpp
         plugins/CoverArt/CoverArtCache.cpp
-        plugins/CoverArt/QPictureLabel.cpp
+        widgets/QPictureLabel.cpp
         )
     set(QT_HEADERS ${QT_HEADERS}
         plugins/CoverArt/CoverArtWrapper.h
         plugins/CoverArt/CoverArtWidget.h
         plugins/CoverArt/CoverArtCache.h
-        plugins/CoverArt/QPictureLabel.h
+        widgets/QPictureLabel.h
         )
     set(HEADERS ${HEADERS}
         plugins/CoverArt/include/artwork.h

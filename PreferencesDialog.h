@@ -37,10 +37,10 @@ private:
     SoundPreferencesWidget soundWidget;
     DspPreferencesWidget dspWidget;
     NetworkPreferencesWidget networkWidget;
-    PluginsPreferencesWidget pluginsWidget;
 #ifdef HOTKEYS_ENABLED
     HotkeysWidget hotkeysWidget;
 #endif
+    PluginsPreferencesWidget pluginsWidget;
 
     void configureTabs();
     void configureLayout();

@@ -95,6 +95,7 @@ set(QT_HEADERS
 set(HEADERS
     include/callbacks.h
     include/parser.h
+    include/strlcpy.h
     
     QtGui.h
     )

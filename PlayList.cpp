@@ -217,14 +217,17 @@ void PlayList::createHeaderContextMenu() {
     foreach (QString name, playListModel.columnNames.values()) {
         QAction *action = new QAction(name, &headerContextMenu);
         action->setCheckable(true);
+        //FIXME
         for (int i = 0; i < header()->count(); i++)
+        {
             if (playListModel.headerData(i, Qt::Horizontal, Qt::DisplayRole).toString() == name ||
                 (playListModel.headerData(i, Qt::Horizontal, Qt::DisplayRole).toString() == "" && name == tr("Status"))
             ) {
                 action->setChecked(!isColumnHidden(i));
                 break;
             }
-            connect(action, SIGNAL(toggled(bool)), SLOT(setColumnHidden(bool)));
+        }
+        connect(action, SIGNAL(toggled(bool)), SLOT(setColumnHidden(bool)));
         columnsMenu->addAction(action);
     }
     headerContextMenu.addMenu(columnsMenu);

@@ -9,6 +9,8 @@
 #include <QVariant>
 #include <QMessageBox>
 
+#include "include/strlcpy.h"
+
 MetadataDialog::MetadataDialog(DB_playItem_t *it, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::MetadataDialog)
@@ -270,7 +272,7 @@ void MetadataDialog::on_btnApply_clicked()
     const char *dec = DBAPI->pl_find_meta_raw (DBItem, ":DECODER");
     char decoder_id[100];
     if (dec)
-        strncpy (decoder_id, dec, sizeof (decoder_id));
+        strlcpy(decoder_id, dec, sizeof(decoder_id));
     
     DBAPI->pl_unlock();
     

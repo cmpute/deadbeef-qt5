@@ -57,6 +57,9 @@ public Q_SLOTS:
     void delSelectedTracks();
     void delSelectedFiles();
     void viewTrackProps();
+    //void cutSelectedItems();
+    //void copySelectedItems();
+    //void pasteClipboardItems();
     void refresh();
 
 private Q_SLOTS:

@@ -73,6 +73,7 @@ void PlayList::createConnections() {
 
 void PlayList::refresh() {
     setModel(NULL);
+    playListModel.sortCount = 0;
     setModel(&playListModel);
     goToLastSelection();
     header()->restoreState(headerState);
@@ -179,10 +180,31 @@ void PlayList::createContextMenu() {
     QAction *reloadMeta = new QAction(tr("Reload Metadata"), this);
     connect(reloadMeta, SIGNAL(triggered()), this, SLOT(reloadMetadata()));
     addAction(reloadMeta);
+    /*
     //separator
     QAction *separator1 = new QAction(this);
     separator1->setSeparator(true);
     addAction(separator1);
+    //cut
+    QAction *cutItems = new QAction(tr("Cut"), this);
+    cutItems->setShortcut(Qt::Key_Cut);
+    connect(cutItems, SIGNAL(triggered()), this, SLOT(cutSelectedItems()));
+    addAction(cutItems);
+    //copy
+    QAction *copyItems = new QAction(tr("Copy"), this);
+    copyItems->setShortcut(Qt::Key_Copy);
+    connect(copyItems, SIGNAL(triggered()), this, SLOT(copySelectedItems()));
+    addAction(copyItems);
+    //paste
+    QAction *pasteItems = new QAction(tr("Paste"), this);
+    pasteItems->setShortcut(Qt::Key_Paste);
+    connect(pasteItems, SIGNAL(triggered()), this, SLOT(pasteClipboardItems()));
+    addAction(pasteItems);
+    */
+    //separator
+    QAction *separator3 = new QAction(this);
+    separator3->setSeparator(true);
+    addAction(separator3);
     //delete tracks
     QAction *delTrack = new QAction(tr("Remove track(s)"), this);
     delTrack->setShortcut(Qt::Key_Delete);
@@ -269,7 +291,19 @@ void PlayList::reloadMetadata() {
 void PlayList::delSelectedTracks() {
     playListModel.deleteTracks(selectionModel()->selectedRows(), false);
 }
+/*
+void PlayList::cutSelectedItems() {
+    
+}
 
+void PlayList::copySelectedItems() {
+    
+}
+
+void PlayList::pasteClipboardItems() {
+    
+}
+*/
 void PlayList::delSelectedFiles() {
     playListModel.deleteTracks(selectionModel()->selectedRows(), true);
 }

@@ -213,6 +213,11 @@ void PlayListModel::deleteTracks(const QModelIndexList &tracks, bool delFile) {
 }
 
 void PlayListModel::sort(int column, Qt::SortOrder order) {
+    if (sortCount<2)
+    {
+        sortCount++;
+        return;
+    }
     if (column == status_column)
         return;
     DBPltRef plt;
@@ -228,41 +233,34 @@ void PlayListModel::clearPlayList() {
     endRemoveRows();
 }
 
-static int addTracksByUrl(const QUrl &url, int position) {
+void PlayListModel::insertByURLAtPosition(const QUrl &url, int position) {
     DBPltRef plt;
     int prev_track_count = plt.itemCount();
     DBApiWrapper::Instance()->addTracksByUrl(url, position);
-    return plt.itemCount() - prev_track_count;
-}
-
-void PlayListModel::insertByURLAtPosition(const QUrl &url, int position) {
-    int count = addTracksByUrl(url, position);
+    int count = plt.itemCount() - prev_track_count;
     beginInsertRows(QModelIndex(), position, position + count - 1);
     endInsertRows();
 }
 
-static int moveItems(const QList<int> &indices, int before) {
+void PlayListModel::moveItems(QList<int> indices, int before) {
     uint32_t inds[indices.length()];
     for (int i = 0; i < indices.length(); i++) {
         inds[i] = indices[i];
     }
 
+    DBAPI->pl_lock();
     DBPltRef plt;
     int lastItem = plt.itemCount() - 1;
     DBItemRef bef(before > lastItem
                   ? plt.at(lastItem).next()
                   : plt.at(before));
-
-    DBAPI->pl_lock();
+    
     DBAPI->plt_move_items(plt, PL_MAIN, plt, bef, inds, indices.length());
+    //DBAPI->plt_save_config(plt);
     DBAPI->pl_unlock();
-
-    return lastItem;
-}
-
-void PlayListModel::moveItems(QList<int> indices, int before) {
-    int lastItem = ::moveItems(indices, before);
-
+    
+    //DBAPI->sendmessage(DB_EV_PLAYLISTCHANGED, 0, DDB_PLAYLIST_CHANGE_CONTENT, 0);
+    
     beginRemoveRows(QModelIndex(), 0, lastItem);
     endRemoveRows();
     beginInsertRows(QModelIndex(), 0, lastItem);

@@ -32,6 +32,7 @@ public:
 
     QStringList columns;
     QHash<QString, QString> columnNames;
+    int sortCount = 0;
 
 private:
     QVariant data(const QModelIndex &index, int role) const;

@@ -816,38 +816,38 @@
 <context>
     <name>PlayList</name>
     <message>
-        <location filename="PlayList.cpp" line="179"/>
+        <location filename="PlayList.cpp" line="180"/>
         <source>Reload Metadata</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="PlayList.cpp" line="192"/>
+        <location filename="PlayList.cpp" line="214"/>
         <source>Remove track(s) from disk</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="PlayList.cpp" line="200"/>
+        <location filename="PlayList.cpp" line="222"/>
         <source>View track properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="PlayList.cpp" line="209"/>
+        <location filename="PlayList.cpp" line="231"/>
         <source>Lock columns</source>
         <translation>Заблокировать столбцы</translation>
     </message>
     <message>
-        <location filename="PlayList.cpp" line="216"/>
+        <location filename="PlayList.cpp" line="238"/>
         <source>Columns</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="PlayList.cpp" line="224"/>
-        <location filename="PlayList.cpp" line="297"/>
+        <location filename="PlayList.cpp" line="246"/>
+        <location filename="PlayList.cpp" line="331"/>
         <source>Status</source>
         <translation type="unfinished">Статус</translation>
     </message>
     <message>
-        <location filename="PlayList.cpp" line="187"/>
+        <location filename="PlayList.cpp" line="209"/>
         <source>Remove track(s)</source>
         <translation>Удалить трек(и)</translation>
     </message>

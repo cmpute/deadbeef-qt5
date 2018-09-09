@@ -128,6 +128,11 @@ include(${CMAKE_SOURCE_DIR}/plugins/CoverArt/CoverArt.cmake)
 include(${CMAKE_SOURCE_DIR}/plugins/Hotkeys/Hotkeys.cmake)
 configure_file(${CMAKE_SOURCE_DIR}/config.h.cmake ${CMAKE_SOURCE_DIR}/config.h)
 
+qt5_create_translation(QM_FILES
+    ${PROJECT_SOURCE_DIR}
+    ${TRANSLATIONS}
+    OPTIONS -source-language en_US -no-obsolete)
+
 qt5_add_translation(COMPILED_TRANSLATIONS ${TRANSLATIONS})
 
 add_library(Qt SHARED ${SOURCES} ${QT_HEADERS} ${HEADERS} ${FORMS} ${RESOURCES} ${COMPILED_TRANSLATIONS})

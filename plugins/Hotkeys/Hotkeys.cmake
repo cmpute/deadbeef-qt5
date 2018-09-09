@@ -25,7 +25,7 @@ if (HOTKEYS_ENABLED)
         plugins/Hotkeys/HotkeyReadDialog.cpp
         plugins/Hotkeys/HotkeysWidget.cpp
         )
-    set(TRANSLATIONS ${TRANSLATIONS}
-        plugins/Hotkeys/HotkeysPlugin_ru_RU.ts
-        )
+    #set(TRANSLATIONS ${TRANSLATIONS}
+    #    plugins/Hotkeys/HotkeysPlugin_ru_RU.ts
+    #    )
 endif (HOTKEYS_ENABLED)

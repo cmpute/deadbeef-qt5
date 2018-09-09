@@ -43,9 +43,9 @@ void InterfacePreferencesWidget::loadSettings() {
     ui->TrayIconThemeComboBox->setVisible(!trayIconIsHidden);
     QStringList trayIconTheme = MainWindow::Instance()->trayIconTheme.keys();
     trayIconTheme.sort();
-    if (trayIconTheme.contains(tr("Default")))
+    if (trayIconTheme.contains(QString("Default")))
     {
-        trayIconTheme.move(trayIconTheme.indexOf(tr("Default")), 0);
+        trayIconTheme.move(trayIconTheme.indexOf(QString("Default")), 0);
     }
     ui->TrayIconThemeComboBox->addItems(trayIconTheme);
     int trayIconThemeIndex = ui->TrayIconThemeComboBox->findText(TrayIconTheme);

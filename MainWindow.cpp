@@ -41,9 +41,9 @@ MainWindow::MainWindow(QWidget *parent) :
         loopingGroup(this)
 {
     defaultTrayIcon = QIcon(":/root/images/bitmap.png");
-    trayIconTheme[tr("Default")] = defaultTrayIcon;
-    trayIconTheme[tr("Dark")] = QIcon(":/root/images/tray_dark.png");
-    trayIconTheme[tr("Light")] = QIcon(":/root/images/tray_light.png");
+    trayIconTheme[QString("Default")] = defaultTrayIcon;
+    trayIconTheme[QString("Dark")] = QIcon(":/root/images/tray_dark.png");
+    trayIconTheme[QString("Light")] = QIcon(":/root/images/tray_light.png");
     
     ui->setupUi(this);
     

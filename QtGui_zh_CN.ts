@@ -459,53 +459,53 @@
         <translation type="unfinished">偏好设置</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="363"/>
+        <location filename="MainWindow.cpp" line="369"/>
         <source>Enter URL...</source>
         <translation type="unfinished">输入URL...</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="363"/>
+        <location filename="MainWindow.cpp" line="369"/>
         <source>URL: </source>
         <translation type="unfinished">URL: </translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="415"/>
-        <location filename="MainWindow.cpp" line="431"/>
+        <location filename="MainWindow.cpp" line="421"/>
+        <location filename="MainWindow.cpp" line="437"/>
         <source>Save playlist as...</source>
         <translation type="unfinished">保存播放列表为...</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="404"/>
+        <location filename="MainWindow.cpp" line="410"/>
         <source>DeaDBeeF playlist files (*.dbpl)</source>
         <translation type="unfinished">DeaDBeeF播放列表(*.dbpl)</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="202"/>
+        <location filename="MainWindow.cpp" line="201"/>
         <source>Add folder(s) to playlist...</source>
         <translation type="unfinished">添加文件夹到播放列表...</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="343"/>
+        <location filename="MainWindow.cpp" line="349"/>
         <source>Add file(s) to playlist...</source>
         <translation type="unfinished">添加文件到播放列表...</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="432"/>
+        <location filename="MainWindow.cpp" line="438"/>
         <source>Failed to save playlist to %1: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="440"/>
+        <location filename="MainWindow.cpp" line="446"/>
         <source>Load playlist</source>
         <translation type="unfinished">加载播放列表</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="437"/>
+        <location filename="MainWindow.cpp" line="443"/>
         <source>Supported playlist formats (*.dbpl)</source>
         <translation type="unfinished">支持的播放列表格式 (*.dbpl)</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="438"/>
+        <location filename="MainWindow.cpp" line="444"/>
         <source>Other files (*)</source>
         <translation type="unfinished">其他文件 (*)</translation>
     </message>

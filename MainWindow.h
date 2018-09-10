@@ -9,6 +9,7 @@
 #include "SystemTrayIcon.h"
 #include "VolumeSlider.h"
 #include "SeekSlider.h"
+#include "PreferencesDialog.h"
 
 #ifdef ARTWORK_ENABLED
 #include <plugins/CoverArt/CoverArtWidget.h>
@@ -34,6 +35,7 @@ protected:
     void loadIcons();
 
 private:
+    PreferencesDialog *prefDialog = nullptr;
     static MainWindow *instance;
     enum ActionOnClose {
         Exit = 0,

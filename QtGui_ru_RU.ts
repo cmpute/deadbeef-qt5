@@ -459,53 +459,53 @@
         <translation>Параметры</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="363"/>
+        <location filename="MainWindow.cpp" line="369"/>
         <source>Enter URL...</source>
         <translation>Ввыдите URL...</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="363"/>
+        <location filename="MainWindow.cpp" line="369"/>
         <source>URL: </source>
         <translation>URL: </translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="415"/>
-        <location filename="MainWindow.cpp" line="431"/>
+        <location filename="MainWindow.cpp" line="421"/>
+        <location filename="MainWindow.cpp" line="437"/>
         <source>Save playlist as...</source>
         <translation>Сохранить плейлист как...</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="404"/>
+        <location filename="MainWindow.cpp" line="410"/>
         <source>DeaDBeeF playlist files (*.dbpl)</source>
         <translation>Плейлисты DeaDBeeF (*.dbpl)</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="202"/>
+        <location filename="MainWindow.cpp" line="201"/>
         <source>Add folder(s) to playlist...</source>
         <translation>Добавить папку(и) в плейлист...</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="343"/>
+        <location filename="MainWindow.cpp" line="349"/>
         <source>Add file(s) to playlist...</source>
         <translation>Добавить файл(ы) в плейлист...</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="432"/>
+        <location filename="MainWindow.cpp" line="438"/>
         <source>Failed to save playlist to %1: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="440"/>
+        <location filename="MainWindow.cpp" line="446"/>
         <source>Load playlist</source>
         <translation>Открыть плейлист</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="437"/>
+        <location filename="MainWindow.cpp" line="443"/>
         <source>Supported playlist formats (*.dbpl)</source>
         <translation>Поддерживаемые форматы плейлистов (*.dbpl)</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="438"/>
+        <location filename="MainWindow.cpp" line="444"/>
         <source>Other files (*)</source>
         <translation>Другие файлы (*)</translation>
     </message>

@@ -126,7 +126,7 @@ set(TRANSLATIONS
 
 include(${CMAKE_SOURCE_DIR}/plugins/CoverArt/CoverArt.cmake)
 include(${CMAKE_SOURCE_DIR}/plugins/Hotkeys/Hotkeys.cmake)
-configure_file(${CMAKE_SOURCE_DIR}/config.h.cmake ${CMAKE_SOURCE_DIR}/config.h)
+configure_file(${CMAKE_SOURCE_DIR}/config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 
 qt5_create_translation(QM_FILES
     ${PROJECT_SOURCE_DIR}

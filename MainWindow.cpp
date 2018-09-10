@@ -13,7 +13,6 @@
 #include "DBApiWrapper.h"
 #include "AboutDialog.h"
 #include "PlayList.h"
-#include "PreferencesDialog.h"
 
 #include <include/callbacks.h>
 #include <QtConcurrent/QtConcurrentRun>
@@ -316,14 +315,21 @@ void MainWindow::on_actionAboutQt_triggered() {
 }
 
 void MainWindow::on_actionPreferences_triggered() {
-    PreferencesDialog *prefDialog = new PreferencesDialog(this);
-    connect(prefDialog, SIGNAL(setCloseOnMinimize(bool)), this, SLOT(setCloseOnMinimized(bool)));
-    connect(prefDialog, SIGNAL(setTrayIconHidden(bool)), this, SLOT(setTrayIconHidden(bool)));
-    connect(prefDialog, SIGNAL(setTrayIconTheme(const QString &)), this, SLOT(setTrayIconTheme(const QString &)));
-    connect(prefDialog, SIGNAL(titlePlayingChanged()), this, SLOT(titleSettingChanged()));
-    connect(prefDialog, SIGNAL(titleStoppedChanged()), this, SLOT(titleSettingChanged()));
-    prefDialog->exec();
-    delete prefDialog;
+    //PreferencesDialog *prefDialog = new PreferencesDialog(this);
+    if (!prefDialog)
+    {
+        prefDialog = new PreferencesDialog(this);
+        connect(prefDialog, SIGNAL(setCloseOnMinimize(bool)), this, SLOT(setCloseOnMinimized(bool)));
+        connect(prefDialog, SIGNAL(setTrayIconHidden(bool)), this, SLOT(setTrayIconHidden(bool)));
+        connect(prefDialog, SIGNAL(setTrayIconTheme(const QString &)), this, SLOT(setTrayIconTheme(const QString &)));
+        connect(prefDialog, SIGNAL(titlePlayingChanged()), this, SLOT(titleSettingChanged()));
+        connect(prefDialog, SIGNAL(titleStoppedChanged()), this, SLOT(titleSettingChanged()));
+        prefDialog->exec();
+        delete prefDialog;
+        prefDialog = nullptr;
+    }
+    else
+        prefDialog->activateWindow();
 }
 
 void MainWindow::on_actionSelectAll_triggered() {

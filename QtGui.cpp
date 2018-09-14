@@ -132,4 +132,5 @@ void MainThreadRun(void *) {
     //qDebug() << MainWindow::Instance();
     MainWindow::Instance()->show();
     app.exec();
+    MainWindow::Destroy();
 }

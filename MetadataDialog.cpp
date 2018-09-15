@@ -13,7 +13,8 @@
 
 MetadataDialog::MetadataDialog(DB_playItem_t *it, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::MetadataDialog)
+    ui(new Ui::MetadataDialog),
+    metadataWatcher(this)
 {
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
     this->setAttribute(Qt::WA_DeleteOnClose);
@@ -220,6 +221,26 @@ void MetadataDialog::on_btnClose_clicked()
 
 void MetadataDialog::on_btnApply_clicked()
 {
+    //QProgressDialog *
+    metaUpdateProgress = new QProgressDialog(tr("Updating metadata..."), "", 0, 0, this);
+    metaUpdateProgress->setCancelButton(0);
+    metaUpdateProgress->setWindowModality(Qt::WindowModal);
+    //metaUpdateProgress->setAttribute(Qt::WA_DeleteOnClose);
+    metaUpdateProgress->setWindowFlags(Qt::Dialog|Qt::WindowTitleHint|Qt::CustomizeWindowHint);
+    connect(&metadataWatcher, &QFutureWatcher<void>::finished, [=](){
+        if (metaUpdateProgress)
+        {
+            metaUpdateProgress->close();
+            delete metaUpdateProgress;
+            metaUpdateProgress = nullptr;
+        }
+    });
+    metadataWatcher.setFuture(QtConcurrent::run(this, &MetadataDialog::writeMetadata));
+    metaUpdateProgress->show();
+}
+
+void MetadataDialog::writeMetadata()
+{
     this->ui->btnApply->setEnabled(false);
     int row = modelMetaHeader->rowCount();
     DBAPI->pl_lock();
@@ -287,15 +308,12 @@ void MetadataDialog::on_btnApply_clicked()
             if (!strcmp (decoders[i]->plugin.id, decoder_id)) {
                 dec = decoders[i];
                 if (dec->write_metadata) {
-                    dec->write_metadata (DBItem);
+                    dec->write_metadata(DBItem);
                 }
                 break;
             }
         }
     }
-    
-    
-    
 }
 
 void MetadataDialog::metaDataMenuRequested(QPoint p)

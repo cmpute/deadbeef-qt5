@@ -1,6 +1,9 @@
 #ifndef METADATADIALOG_H
 #define METADATADIALOG_H
 
+#include <QtConcurrent/QtConcurrentRun>
+#include <QFutureWatcher>
+
 #include <QMenu>
 #include <QFont>
 #include <QDialog>
@@ -9,6 +12,7 @@
 #include <QHeaderView>
 #include <QStandardItem>
 #include <QStandardItemModel>
+#include <QProgressDialog>
 #include "QtGui.h"
 #include "DBApiWrapper.h"
 
@@ -30,6 +34,7 @@ private slots:
     void on_btnSettings_clicked();
     
     void on_btnApply_clicked();
+    void writeMetadata();
     
     void Metadata_doubleClicked(const QModelIndex &index);
     
@@ -48,6 +53,9 @@ private:
     
     QStringList propsKeys;
     QHash<QString, QString> propsNames;
+    
+    QFutureWatcher<void> metadataWatcher;
+    QProgressDialog *metaUpdateProgress = nullptr;
     
     DB_playItem_t *DBItem;
 };

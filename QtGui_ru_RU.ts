@@ -548,139 +548,144 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="28"/>
+        <location filename="MetadataDialog.cpp" line="29"/>
         <source>Artist</source>
         <translation type="unfinished">Артист</translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="29"/>
+        <location filename="MetadataDialog.cpp" line="30"/>
         <source>Title</source>
         <translation type="unfinished">Название</translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="30"/>
+        <location filename="MetadataDialog.cpp" line="31"/>
         <source>Album</source>
         <translation type="unfinished">Альбом</translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="31"/>
+        <location filename="MetadataDialog.cpp" line="32"/>
         <source>Year</source>
         <translation type="unfinished">Год</translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="32"/>
+        <location filename="MetadataDialog.cpp" line="33"/>
         <source>Genre</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="33"/>
+        <location filename="MetadataDialog.cpp" line="34"/>
         <source>Composer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="34"/>
+        <location filename="MetadataDialog.cpp" line="35"/>
         <source>Album Artist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="35"/>
+        <location filename="MetadataDialog.cpp" line="36"/>
         <source>Track</source>
         <translation type="unfinished">Дорожка</translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="36"/>
+        <location filename="MetadataDialog.cpp" line="37"/>
         <source>Total Tracks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="37"/>
+        <location filename="MetadataDialog.cpp" line="38"/>
         <source>Disc Number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="38"/>
+        <location filename="MetadataDialog.cpp" line="39"/>
         <source>Total Discs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="39"/>
+        <location filename="MetadataDialog.cpp" line="40"/>
         <source>Comment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="42"/>
+        <location filename="MetadataDialog.cpp" line="43"/>
         <source>Location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="43"/>
+        <location filename="MetadataDialog.cpp" line="44"/>
         <source>Subtrack Index</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="44"/>
+        <location filename="MetadataDialog.cpp" line="45"/>
         <source>Duration</source>
         <translation type="unfinished">Продолжительность</translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="45"/>
+        <location filename="MetadataDialog.cpp" line="46"/>
         <source>Tag Type(s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="46"/>
+        <location filename="MetadataDialog.cpp" line="47"/>
         <source>Embedded Cuesheet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="47"/>
+        <location filename="MetadataDialog.cpp" line="48"/>
         <source>Codec</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="MetadataDialog.cpp" line="98"/>
-        <location filename="MetadataDialog.cpp" line="137"/>
-        <source>Key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="MetadataDialog.cpp" line="99"/>
         <location filename="MetadataDialog.cpp" line="138"/>
+        <source>Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="MetadataDialog.cpp" line="100"/>
+        <location filename="MetadataDialog.cpp" line="139"/>
         <source>Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="204"/>
+        <location filename="MetadataDialog.cpp" line="205"/>
         <source>Track metadata modified, do you want to save?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="309"/>
+        <location filename="MetadataDialog.cpp" line="225"/>
+        <source>Updating metadata...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="MetadataDialog.cpp" line="327"/>
         <source>Edit</source>
         <translation type="unfinished">Правка</translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="311"/>
+        <location filename="MetadataDialog.cpp" line="329"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="318"/>
+        <location filename="MetadataDialog.cpp" line="336"/>
         <source>Add</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="321"/>
+        <location filename="MetadataDialog.cpp" line="339"/>
         <source>New metadata entry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="322"/>
+        <location filename="MetadataDialog.cpp" line="340"/>
         <source>Input key name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="369"/>
+        <location filename="MetadataDialog.cpp" line="387"/>
         <source>Edit Metadata: </source>
         <translation type="unfinished"></translation>
     </message>

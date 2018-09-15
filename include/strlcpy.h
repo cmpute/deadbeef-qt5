@@ -3,7 +3,7 @@
  * '_cups_strlcat()' - Safely concatenate two strings.
  */
 
-size_t /* O - Length of string */ strlcat(char *dst,	/* O - Destination string */
+static inline size_t /* O - Length of string */ strlcat(char *dst,	/* O - Destination string */
 					  const char *src,	/* I - Source string */
 					  size_t size)
 {				/* I - Size of destination string buffer */
@@ -46,7 +46,7 @@ size_t /* O - Length of string */ strlcat(char *dst,	/* O - Destination string *
  * '_cups_strlcpy()' - Safely copy two strings.
  */
 
-size_t /* O - Length of string */ strlcpy(char *dst,	/* O - Destination string */
+static inline size_t /* O - Length of string */ strlcpy(char *dst,	/* O - Destination string */
 					  const char *src,	/* I - Source string */
 					  size_t size)
 {				/* I - Size of destination string buffer */

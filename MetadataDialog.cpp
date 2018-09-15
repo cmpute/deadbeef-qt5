@@ -8,6 +8,7 @@
 #include <QInputDialog>
 #include <QVariant>
 #include <QMessageBox>
+#include <QClipboard>
 
 #include "include/strlcpy.h"
 
@@ -22,6 +23,8 @@ MetadataDialog::MetadataDialog(DB_playItem_t *it, QWidget *parent) :
     connect(ui->tableViewMeta, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(Metadata_doubleClicked(const QModelIndex &)));
     ui->tableViewMeta->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->tableViewMeta, SIGNAL(customContextMenuRequested(QPoint)), SLOT(metaDataMenuRequested(QPoint)));
+    ui->tableViewProps->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->tableViewProps, SIGNAL(customContextMenuRequested(QPoint)), SLOT(propsMenuRequested(QPoint)));
     
     //fill standart metadata keys
     metaDataKeys << "artist" << "title" << "album" << "year" << "genre" << "composer" \
@@ -124,6 +127,8 @@ MetadataDialog::MetadataDialog(DB_playItem_t *it, QWidget *parent) :
         modelPropsHeader->setItem(i+j,1,value);
     }
     //tableViewProps->resizeColumnsToContents();
+    tableViewProps->setShowGrid(false);
+    tableViewProps->setColumnWidth(1, 200);
     tableViewProps->resizeColumnToContents(0);
     tableViewProps->horizontalHeader()->setStretchLastSection(true);
     tableViewProps->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
@@ -179,9 +184,9 @@ MetadataDialog::MetadataDialog(DB_playItem_t *it, QWidget *parent) :
         modelMetaHeader->setItem(i+j,2,value);
     }
     
+    tableViewMeta->setShowGrid(false);
     tableViewMeta->setColumnHidden(0, true);
-    //tableViewMeta->resizeColumnsToContents();
-    tableViewMeta->resizeColumnToContents(1);
+    resizeMetaColumns();
     tableViewMeta->horizontalHeader()->setStretchLastSection(true);
     tableViewMeta->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
     tableViewMeta->verticalHeader()->hide();
@@ -189,7 +194,9 @@ MetadataDialog::MetadataDialog(DB_playItem_t *it, QWidget *parent) :
     tableViewMeta->setSelectionMode(QAbstractItemView::SingleSelection);
     
     this->ui->btnApply->setEnabled(false);
-    connect(modelMetaHeader, &QStandardItemModel::itemChanged, [=](){this->ui->btnApply->setEnabled(true);});
+    connect(modelMetaHeader, &QStandardItemModel::itemChanged, [=](){
+        this->ui->btnApply->setEnabled(true);
+    });
 }
 
 MetadataDialog::~MetadataDialog()
@@ -316,6 +323,22 @@ void MetadataDialog::writeMetadata()
     }
 }
 
+void MetadataDialog::propsMenuRequested(QPoint p)
+{
+    QModelIndex index = ui->tableViewProps->indexAt(p);
+    QModelIndex value_index = modelPropsHeader->index(index.row(), 1);
+    QStandardItem *item = modelPropsHeader->itemFromIndex(value_index);
+    QAction *copyAction = new QAction(tr("Copy"), this);
+    //copyAction->setShortcut(Qt::Key_Copy);
+    connect(copyAction, &QAction::triggered, [=]() { 
+        QApplication::clipboard()->setText(item->text());
+    });
+    QMenu *propsContextMenu = new QMenu(this);
+    propsContextMenu->addAction(copyAction);
+    propsContextMenu->move(ui->tableViewProps->viewport()->mapToGlobal(p));
+    propsContextMenu->show();
+}
+
 void MetadataDialog::metaDataMenuRequested(QPoint p)
 {
     QModelIndex index = ui->tableViewMeta->indexAt(p);
@@ -331,7 +354,10 @@ void MetadataDialog::metaDataMenuRequested(QPoint p)
         item->setText("");
         item->setData(QVariant());
         if (key->data().toBool() == true)
+        {
             modelMetaHeader->removeRow(index.row());
+            resizeMetaColumns();
+        }
     });
     QAction *addAction = new QAction(tr("Add"), this);
     connect(addAction, &QAction::triggered, [=]() { 
@@ -353,6 +379,7 @@ void MetadataDialog::metaDataMenuRequested(QPoint p)
             keyname->setFont(keyfont);
             modelMetaHeader->setItem(i,0,key);
             modelMetaHeader->setItem(i,1,keyname);
+            resizeMetaColumns();
         }
     });
     
@@ -362,6 +389,14 @@ void MetadataDialog::metaDataMenuRequested(QPoint p)
     metaContextMenu->addAction(deleteAction);
     metaContextMenu->move(ui->tableViewMeta->viewport()->mapToGlobal(p));
     metaContextMenu->show();
+}
+
+void MetadataDialog::resizeMetaColumns()
+{
+    //this->ui->tableViewMeta->resizeColumnsToContents();
+    this->ui->tableViewMeta->setColumnWidth(2, 200);
+    this->ui->tableViewMeta->resizeColumnToContents(1);
+    //this->ui->tableViewMeta->horizontalHeader()->setStretchLastSection(true);
 }
 
 void MetadataDialog::editValueInDialog(QStandardItem *item)

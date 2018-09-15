@@ -40,6 +40,8 @@ private slots:
     
     void metaDataMenuRequested(QPoint p);
     
+    void propsMenuRequested(QPoint p);
+    
     void editValueInDialog(QStandardItem *item);
     
 private:
@@ -58,6 +60,8 @@ private:
     QProgressDialog *metaUpdateProgress = nullptr;
     
     DB_playItem_t *DBItem;
+    
+    void resizeMetaColumns();
 };
 
 #endif // METADATADIALOG_H

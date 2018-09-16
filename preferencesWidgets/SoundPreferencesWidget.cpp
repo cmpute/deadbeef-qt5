@@ -106,7 +106,7 @@ void SoundPreferencesWidget::createConnections() {
     connect(ui->outputDeviceComboBox, SIGNAL(currentIndexChanged(int)), SLOT(changeOutputDevice(int)));
     connect(ui->outputPluginComboBox, SIGNAL(currentIndexChanged(int)), SLOT(changeOutputPlugin(int)));
     connect(ui->replaygainModeComboBox, SIGNAL(currentIndexChanged(int)), SLOT(changeReplaygainMode(int)));
-    connect(ui->replaygainFlagsComboBox, &QComboBox::currentTextChanged, [=]() {
+    connect(ui->replaygainFlagsComboBox, &QComboBox::currentTextChanged, [this]() {
         if (ui->replaygainFlagsComboBox->currentIndex() == 0)
             ui->frameReplayGain->setVisible(false);
         else
@@ -117,9 +117,9 @@ void SoundPreferencesWidget::createConnections() {
     
     connect(ui->peakScaleCheckBox, SIGNAL(toggled(bool)), SLOT(saveReplaygainScale(bool)));
     connect(ui->preampSlider, SIGNAL(sliderReleased()), SLOT(saveReplaygainPreamp()));
-    connect(ui->preampSlider, &QSlider::valueChanged, [=]() { ui->preampValueLabel->setText(QString::number(ui->preampSlider->value())); });
+    connect(ui->preampSlider, &QSlider::valueChanged, [this]() { ui->preampValueLabel->setText(QString::number(ui->preampSlider->value())); });
     connect(ui->preampGlobalSlider, SIGNAL(sliderReleased()), SLOT(saveReplaygainGlobalPreamp()));
-    connect(ui->preampGlobalSlider, &QSlider::valueChanged, [=]() { ui->preampGlobalLabel->setText(QString::number(ui->preampGlobalSlider->value())); });
+    connect(ui->preampGlobalSlider, &QSlider::valueChanged, [this]() { ui->preampGlobalLabel->setText(QString::number(ui->preampGlobalSlider->value())); });
     connect(ui->addToPlaylistCheckBox, SIGNAL(toggled(bool)), SLOT(saveAddToDefaultPlaylist(bool)));
     connect(ui->addToPlaylistLineEdit, SIGNAL(editingFinished()), SLOT(saveDefaultPlaylistName()));
     connect(ui->dontAddFromArchCheckBox, SIGNAL(toggled(bool)), SLOT(saveDontAddArchives(bool)));

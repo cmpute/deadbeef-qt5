@@ -77,7 +77,7 @@ void InterfacePreferencesWidget::createConnections() {
     connect(ui->titlebarStoppedLineEdit, SIGNAL(editingFinished()), SLOT(saveTitleStopped()));
     connect(ui->trayIconMsgFormatLineEdit, SIGNAL(editingFinished()), SLOT(saveTrayMessageFormat()));
     connect(ui->refreshRateSlider, SIGNAL(valueChanged(int)), SLOT(saveRefreshRate(int)));
-    connect(ui->refreshRateSlider, &QSlider::valueChanged, [=]() { ui->refreshRateValueLabel->setText(QString::number(ui->refreshRateSlider->value())); });
+    connect(ui->refreshRateSlider, &QSlider::valueChanged, [this]() { ui->refreshRateValueLabel->setText(QString::number(ui->refreshRateSlider->value())); });
     connect(ui->TrayIconThemeComboBox, SIGNAL(currentIndexChanged(QString)), SLOT(saveTrayIconTheme(QString)));
     connect(ui->guiPluginComboBox, SIGNAL(currentIndexChanged(QString)), SLOT(saveGuiPlugin(QString)));
     

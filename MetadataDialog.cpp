@@ -193,7 +193,7 @@ MetadataDialog::MetadataDialog(DB_playItem_t *it, QWidget *parent) :
     tableViewMeta->setSelectionMode(QAbstractItemView::SingleSelection);
     
     this->ui->btnApply->setEnabled(false);
-    connect(modelMetaHeader, &QStandardItemModel::itemChanged, [=](){
+    connect(modelMetaHeader, &QStandardItemModel::itemChanged, [this](){
         this->ui->btnApply->setEnabled(true);
     });
 }
@@ -233,7 +233,7 @@ void MetadataDialog::on_btnApply_clicked()
     metaUpdateProgress->setWindowModality(Qt::WindowModal);
     //metaUpdateProgress->setAttribute(Qt::WA_DeleteOnClose);
     metaUpdateProgress->setWindowFlags(Qt::Dialog|Qt::WindowTitleHint|Qt::CustomizeWindowHint);
-    connect(&metadataWatcher, &QFutureWatcher<void>::finished, [=](){
+    connect(&metadataWatcher, &QFutureWatcher<void>::finished, [this](){
         if (metaUpdateProgress)
         {
             metaUpdateProgress->close();
@@ -329,7 +329,7 @@ void MetadataDialog::propsMenuRequested(QPoint p)
     QStandardItem *item = modelPropsHeader->itemFromIndex(value_index);
     QAction *copyAction = new QAction(tr("Copy"), this);
     //copyAction->setShortcut(Qt::Key_Copy);
-    connect(copyAction, &QAction::triggered, [=]() { 
+    connect(copyAction, &QAction::triggered, [this, item]() { 
         QApplication::clipboard()->setText(item->text());
     });
     QMenu *propsContextMenu = new QMenu(this);
@@ -347,9 +347,9 @@ void MetadataDialog::metaDataMenuRequested(QPoint p)
     QStandardItem *item = modelMetaHeader->itemFromIndex(value_index);
     //qDebug() << key->data().toBool();
     QAction *editInDlgAction = new QAction(tr("Edit"), this);
-    connect(editInDlgAction, &QAction::triggered, [=]() { this->editValueInDialog(item); });
+    connect(editInDlgAction, &QAction::triggered, [this, item]() { this->editValueInDialog(item); });
     QAction *deleteAction = new QAction(tr("Delete"), this);
-    connect(deleteAction, &QAction::triggered, [=]() { 
+    connect(deleteAction, &QAction::triggered, [this, item, key, index]() { 
         item->setText("");
         item->setData(QVariant());
         if (key->data().toBool() == true)
@@ -359,7 +359,7 @@ void MetadataDialog::metaDataMenuRequested(QPoint p)
         }
     });
     QAction *addAction = new QAction(tr("Add"), this);
-    connect(addAction, &QAction::triggered, [=]() { 
+    connect(addAction, &QAction::triggered, [this]() { 
         bool ok;
         QString text = QInputDialog::getText(this, tr("New metadata entry"),
                                          tr("Input key name:"), QLineEdit::Normal,

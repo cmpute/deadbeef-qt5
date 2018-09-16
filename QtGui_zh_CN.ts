@@ -826,38 +826,48 @@
 <context>
     <name>PlayList</name>
     <message>
-        <location filename="PlayList.cpp" line="179"/>
+        <location filename="PlayList.cpp" line="182"/>
         <source>Reload Metadata</source>
         <translation type="unfinished">重载元数据</translation>
     </message>
     <message>
-        <location filename="PlayList.cpp" line="213"/>
+        <location filename="PlayList.cpp" line="211"/>
+        <source>View track(s) in folder</source>
+        <translation type="unfinished">在文件夹中显示音轨</translation>
+    </message>
+    <message>
+        <location filename="PlayList.cpp" line="220"/>
         <source>Remove track(s) from disk</source>
         <translation type="unfinished">从磁盘移除音轨</translation>
     </message>
     <message>
-        <location filename="PlayList.cpp" line="221"/>
+        <location filename="PlayList.cpp" line="228"/>
         <source>View track properties</source>
         <translation type="unfinished">查看音轨属性</translation>
     </message>
     <message>
-        <location filename="PlayList.cpp" line="230"/>
+        <location filename="PlayList.cpp" line="237"/>
         <source>Lock columns</source>
         <translation type="unfinished">锁定列</translation>
     </message>
     <message>
-        <location filename="PlayList.cpp" line="237"/>
+        <location filename="PlayList.cpp" line="244"/>
         <source>Columns</source>
         <translation type="unfinished">列</translation>
     </message>
     <message>
-        <location filename="PlayList.cpp" line="245"/>
-        <location filename="PlayList.cpp" line="330"/>
+        <location filename="PlayList.cpp" line="252"/>
+        <location filename="PlayList.cpp" line="406"/>
         <source>Status</source>
         <translation type="unfinished">状态</translation>
     </message>
     <message>
-        <location filename="PlayList.cpp" line="208"/>
+        <location filename="PlayList.cpp" line="317"/>
+        <source>More than 5 folders will be opened, proceed?</source>
+        <translation type="unfinished">将打开5个以上的文件夹，是否继续？</translation>
+    </message>
+    <message>
+        <location filename="PlayList.cpp" line="215"/>
         <source>Remove track(s)</source>
         <translation type="unfinished">删除音轨</translation>
     </message>

@@ -826,38 +826,48 @@
 <context>
     <name>PlayList</name>
     <message>
-        <location filename="PlayList.cpp" line="179"/>
+        <location filename="PlayList.cpp" line="182"/>
         <source>Reload Metadata</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="PlayList.cpp" line="213"/>
+        <location filename="PlayList.cpp" line="211"/>
+        <source>View track(s) in folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="PlayList.cpp" line="220"/>
         <source>Remove track(s) from disk</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="PlayList.cpp" line="221"/>
+        <location filename="PlayList.cpp" line="228"/>
         <source>View track properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="PlayList.cpp" line="230"/>
+        <location filename="PlayList.cpp" line="237"/>
         <source>Lock columns</source>
         <translation>Заблокировать столбцы</translation>
     </message>
     <message>
-        <location filename="PlayList.cpp" line="237"/>
+        <location filename="PlayList.cpp" line="244"/>
         <source>Columns</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="PlayList.cpp" line="245"/>
-        <location filename="PlayList.cpp" line="330"/>
+        <location filename="PlayList.cpp" line="252"/>
+        <location filename="PlayList.cpp" line="406"/>
         <source>Status</source>
         <translation type="unfinished">Статус</translation>
     </message>
     <message>
-        <location filename="PlayList.cpp" line="208"/>
+        <location filename="PlayList.cpp" line="317"/>
+        <source>More than 5 folders will be opened, proceed?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="PlayList.cpp" line="215"/>
         <source>Remove track(s)</source>
         <translation>Удалить трек(и)</translation>
     </message>

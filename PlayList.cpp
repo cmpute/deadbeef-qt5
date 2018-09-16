@@ -9,6 +9,9 @@
 #include <QtGuiSettings.h>
 #include <TabBar.h>
 
+#include <QProcess>
+#include <QDir>
+
 PlayList::PlayList(QWidget *parent) : QTreeView(parent), playListModel(this) {
     setAutoFillBackground(false);
     setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -204,6 +207,10 @@ void PlayList::createContextMenu() {
     QAction *separator3 = new QAction(this);
     separator3->setSeparator(true);
     addAction(separator3);
+    //open in folder
+    QAction *openFolder = new QAction(tr("View track(s) in folder"), this);
+    connect(openFolder, SIGNAL(triggered()), this, SLOT(openFilesInFolder()));
+    addAction(openFolder);
     //delete tracks
     QAction *delTrack = new QAction(tr("Remove track(s)"), this);
     delTrack->setShortcut(Qt::Key_Delete);
@@ -285,6 +292,75 @@ void PlayList::onTrackChanged(DB_playItem_t *from, DB_playItem_t *to) {
 
 void PlayList::reloadMetadata() {
     playListModel.reloadMetadata(selectionModel()->selectedRows());
+}
+
+void PlayList::openFilesInFolder() {
+    QModelIndexList tracks = selectionModel()->selectedRows();
+    QStringList fileList;
+    DBPltRef plt;
+    DB_playItem_t *it;
+    QModelIndex index;
+    foreach(index, tracks) {
+        it = plt.at(index.row());
+        DBAPI->pl_lock();
+        QString decoder_id(DBAPI->pl_find_meta(it, ":DECODER"));
+        const char *filePath = DBAPI->pl_find_meta(it, ":URI");
+        int match = DBAPI->is_local_file(filePath) && !decoder_id.isEmpty();
+        DBAPI->pl_unlock();
+        if (match && !fileList.contains(QString(filePath))) {
+            fileList << filePath;
+        }
+    }
+    if (fileList.count() > 5)
+    {
+        if (QMessageBox::question(this, "DeaDBeeF",
+        tr("More than 5 folders will be opened, proceed?"),
+        QMessageBox::Ok|QMessageBox::Cancel,
+        QMessageBox::Cancel) == QMessageBox::Cancel)
+            return;
+    }
+    QString filePath;
+    foreach(filePath, fileList) {
+        showInGraphicalShell(filePath);
+    }
+}
+
+void PlayList::showInGraphicalShell(const QString &pathIn)
+{
+    QStringList args;
+#ifdef Q_OS_MACOS
+    args << "-e";
+    args << "tell application \"Finder\"";
+    args << "-e";
+    args << "activate";
+    args << "-e";
+    args << "select POSIX file \""+pathIn+"\"";
+    args << "-e";
+    args << "end tell";
+    QProcess::startDetached("osascript", args);
+#elif defined Q_OS_WIN
+    args << "/select," << QDir::toNativeSeparators(pathIn);
+    QProcess::startDetached("explorer", args);
+#elif defined Q_OS_UNIX
+    QStringList fileManagers = { "dolphin", "konqueror", "nautilus" };
+    QString fileManager("");
+    QString Exe;
+    foreach(Exe, fileManagers) {
+        fileManager = Exe;
+        Exe.append(" -v >/dev/null 2>&1");
+        int result = system(Exe.toUtf8().constData());
+        if (!result)
+            break;
+        else
+            fileManager.clear();
+    }
+    if (!fileManager.isEmpty())
+    {
+        args << "--select" << pathIn;
+        qDebug() << fileManager << args;
+        QProcess::startDetached(fileManager, args);
+    }
+#endif
 }
 
 void PlayList::delSelectedTracks() {

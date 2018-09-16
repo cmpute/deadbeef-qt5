@@ -56,6 +56,7 @@ public Q_SLOTS:
     void reloadMetadata();
     void delSelectedTracks();
     void delSelectedFiles();
+    void openFilesInFolder();
     void viewTrackProps();
     //void cutSelectedItems();
     //void copySelectedItems();
@@ -70,6 +71,7 @@ private Q_SLOTS:
     void showContextMenu(QPoint);
     void setColumnHidden(bool);
     void saveHeaderState();
+    void showInGraphicalShell(const QString &pathIn);
 };
 
 #endif // PLAYLIST_H

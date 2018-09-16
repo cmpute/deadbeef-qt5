@@ -90,7 +90,6 @@ MetadataDialog::MetadataDialog(DB_playItem_t *it, QWidget *parent) :
         meta = next;
     }
     DBAPI->pl_unlock();
-    //TODO: metadata editor
     int j;
     char fPath[PATH_MAX];
     DBAPI->pl_format_title(it, -1, fPath, sizeof (fPath), -1, "%F");

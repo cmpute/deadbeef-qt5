@@ -638,59 +638,59 @@
         <translation type="unfinished">编码</translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="102"/>
-        <location filename="MetadataDialog.cpp" line="143"/>
+        <location filename="MetadataDialog.cpp" line="101"/>
+        <location filename="MetadataDialog.cpp" line="142"/>
         <source>Key</source>
         <translation type="unfinished">键</translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="103"/>
-        <location filename="MetadataDialog.cpp" line="144"/>
+        <location filename="MetadataDialog.cpp" line="102"/>
+        <location filename="MetadataDialog.cpp" line="143"/>
         <source>Value</source>
         <translation type="unfinished">值</translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="212"/>
+        <location filename="MetadataDialog.cpp" line="211"/>
         <source>Track metadata modified, do you want to save?</source>
         <translation type="unfinished">音轨元数据已修改，要保存吗？</translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="232"/>
+        <location filename="MetadataDialog.cpp" line="231"/>
         <source>Updating metadata...</source>
         <translation type="unfinished">更新元数据...</translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="331"/>
+        <location filename="MetadataDialog.cpp" line="330"/>
         <source>Copy</source>
         <translation type="unfinished">复制</translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="350"/>
+        <location filename="MetadataDialog.cpp" line="349"/>
         <source>Edit</source>
         <translation type="unfinished">编辑</translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="352"/>
+        <location filename="MetadataDialog.cpp" line="351"/>
         <source>Delete</source>
         <translation type="unfinished">删除</translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="362"/>
+        <location filename="MetadataDialog.cpp" line="361"/>
         <source>Add</source>
         <translation type="unfinished">添加</translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="365"/>
+        <location filename="MetadataDialog.cpp" line="364"/>
         <source>New metadata entry</source>
         <translation type="unfinished">新的元数据项目</translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="366"/>
+        <location filename="MetadataDialog.cpp" line="365"/>
         <source>Input key name:</source>
         <translation type="unfinished">输入键名:</translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="422"/>
+        <location filename="MetadataDialog.cpp" line="421"/>
         <source>Edit Metadata: </source>
         <translation type="unfinished">编辑元数据: </translation>
     </message>
@@ -826,38 +826,38 @@
 <context>
     <name>PlayList</name>
     <message>
-        <location filename="PlayList.cpp" line="180"/>
+        <location filename="PlayList.cpp" line="179"/>
         <source>Reload Metadata</source>
         <translation type="unfinished">重载元数据</translation>
     </message>
     <message>
-        <location filename="PlayList.cpp" line="214"/>
+        <location filename="PlayList.cpp" line="213"/>
         <source>Remove track(s) from disk</source>
         <translation type="unfinished">从磁盘移除音轨</translation>
     </message>
     <message>
-        <location filename="PlayList.cpp" line="222"/>
+        <location filename="PlayList.cpp" line="221"/>
         <source>View track properties</source>
         <translation type="unfinished">查看音轨属性</translation>
     </message>
     <message>
-        <location filename="PlayList.cpp" line="231"/>
+        <location filename="PlayList.cpp" line="230"/>
         <source>Lock columns</source>
         <translation type="unfinished">锁定列</translation>
     </message>
     <message>
-        <location filename="PlayList.cpp" line="238"/>
+        <location filename="PlayList.cpp" line="237"/>
         <source>Columns</source>
         <translation type="unfinished">列</translation>
     </message>
     <message>
-        <location filename="PlayList.cpp" line="246"/>
-        <location filename="PlayList.cpp" line="331"/>
+        <location filename="PlayList.cpp" line="245"/>
+        <location filename="PlayList.cpp" line="330"/>
         <source>Status</source>
         <translation type="unfinished">状态</translation>
     </message>
     <message>
-        <location filename="PlayList.cpp" line="209"/>
+        <location filename="PlayList.cpp" line="208"/>
         <source>Remove track(s)</source>
         <translation type="unfinished">删除音轨</translation>
     </message>

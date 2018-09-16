@@ -75,8 +75,8 @@ void PlayList::refresh() {
     setModel(NULL);
     playListModel.sortCount = 0;
     setModel(&playListModel);
-    goToLastSelection();
     header()->restoreState(headerState);
+    goToLastSelection();
 }
 
 void PlayList::goToLastSelection() {
@@ -166,7 +166,6 @@ void PlayList::selectionChanged(const QItemSelection &selected, const QItemSelec
 
     DBAPI->plt_set_cursor(DBPltRef(), PL_MAIN, selected.indexes().count() == 0 ? -1 : selected.indexes().last().row());
     storeCursor();
-
     QTreeView::selectionChanged(selected, deselected);
 }
 

@@ -934,17 +934,33 @@
 <context>
     <name>PluginsPreferencesWidget</name>
     <message>
-        <location filename="preferencesWidgets/PluginsPreferencesWidget.ui" line="71"/>
+        <location filename="preferencesWidgets/PluginsPreferencesWidget.ui" line="41"/>
+        <source>Blacklist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="preferencesWidgets/PluginsPreferencesWidget.ui" line="101"/>
         <source>Description</source>
         <translation>Описание</translation>
     </message>
     <message>
-        <location filename="preferencesWidgets/PluginsPreferencesWidget.ui" line="77"/>
+        <location filename="preferencesWidgets/PluginsPreferencesWidget.ui" line="107"/>
         <source>Plugin description</source>
         <translation>Описание плагина</translation>
     </message>
     <message>
-        <location filename="preferencesWidgets/PluginsPreferencesWidget.cpp" line="50"/>
+        <location filename="preferencesWidgets/PluginsPreferencesWidget.cpp" line="51"/>
+        <source>Plugin blacklist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="preferencesWidgets/PluginsPreferencesWidget.cpp" line="52"/>
+        <source>Type in the plugin file names without extension, split multiple names by space:</source>
+        <oldsource>Type in the plugin file names without extension, split by space:</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="preferencesWidgets/PluginsPreferencesWidget.cpp" line="64"/>
         <source>No description</source>
         <translation>Нет описания</translation>
     </message>

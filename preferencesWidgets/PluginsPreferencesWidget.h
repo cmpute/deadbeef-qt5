@@ -48,6 +48,7 @@ protected:
 private Q_SLOTS:
     void loadPluginInfo(int);
     void openUrl();
+    void manageBlacklist();
 };
 
 

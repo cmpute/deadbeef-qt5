@@ -4,7 +4,7 @@
 #include <QUrl>
 #include <QDesktopServices>
 #include <QTextEdit>
-
+#include <QInputDialog>
 #include <include/callbacks.h>
 
 PluginsPreferencesWidget::PluginsPreferencesWidget(QWidget *parent, Qt::WindowFlags f):
@@ -32,6 +32,7 @@ void PluginsPreferencesWidget::createPluginsSettings() {
     connect(ui->pluginsList, SIGNAL(currentRowChanged(int)), SLOT(loadPluginInfo(int)));
     connect(ui->linkButton, SIGNAL(pressed()), SLOT(openUrl()));
     connect(ui->copyrightButton, SIGNAL(pressed()), &copyrightDialog, SLOT(exec()));
+    connect(ui->btnBlacklist, SIGNAL(pressed()), SLOT(manageBlacklist()));
     
     plugins = DBAPI->plug_get_list();
     for (int i = 0; plugins[i]; i++) {
@@ -40,6 +41,19 @@ void PluginsPreferencesWidget::createPluginsSettings() {
     }
     
     ui->pluginsList->setCurrentRow(0);
+}
+
+void PluginsPreferencesWidget::manageBlacklist() {
+    DBAPI->conf_lock();
+    bool ok;
+    QString blackList = QString::fromUtf8(DBAPI->conf_get_str_fast("blacklist_plugins", ""));
+    DBAPI->conf_unlock();
+    blackList = QInputDialog::getText(this, tr("Plugin blacklist"),
+            tr("Type in the plugin file names without extension, split multiple names by space:"), QLineEdit::Normal, blackList, &ok);
+    if (ok)
+    {
+        DBAPI->conf_set_str("blacklist_plugins", blackList.toUtf8().constData());
+    }
 }
 
 void PluginsPreferencesWidget::loadPluginInfo(int item) {

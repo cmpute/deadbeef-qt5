@@ -6,7 +6,7 @@ For installation requires Qt 5 and DeaDBeeF 0.5.6.
 
 Get deadbeef-qt sources from repository:
 ```bash
-$ git clone git://github.com/redpunk231/deadbeef-qt.git
+$ git clone git://github.com/maz-1/deadbeef-qt.git
 ```
 Create temporary directory (for example </path/to/sources>/build) and change into it:
 ```bash
@@ -28,4 +28,4 @@ $ make
 Then choose the QT gui plugin in the preference and restart DeaDBeeF.
 
 ##Arch Linux
-PKGBUILD from [AUR](https://aur.archlinux.org/packages/deadbeef-qt-git/)
+PKGBUILD from [AUR](https://aur.archlinux.org/packages/deadbeef-qt5-git/)

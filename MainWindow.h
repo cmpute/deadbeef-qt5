@@ -55,6 +55,7 @@ private:
     QMenu *trayMenu;
     VolumeSlider volumeSlider;
     SeekSlider progressBar;
+    QLabel status;
 
 #ifdef ARTWORK_ENABLED
     CoverArtWidget coverArtWidget;
@@ -124,6 +125,7 @@ private slots:
     void on_actionHideTabBar_triggered();
     
     void on_deadbeefActivated();
+    void updateStatusBar(DB_playItem_t *it);
 };
 
 #endif // MAINWINDOW_H

@@ -162,6 +162,7 @@
    <addaction name="actionPrev"/>
    <addaction name="actionNext"/>
   </widget>
+  <widget class="QStatusBar" name="statusBar"/>
   <action name="actionAddFolder">
    <property name="text">
     <string>Add Folder(s)...</string>

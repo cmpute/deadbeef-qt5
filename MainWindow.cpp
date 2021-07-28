@@ -6,6 +6,7 @@
 #include <QMessageBox>
 #include <QInputDialog>
 #include <QFileDialog>
+#include <QDateTime>
 
 #include "QtGuiSettings.h"
 
@@ -33,6 +34,7 @@ MainWindow::MainWindow(QWidget *parent) :
         trayMenu(nullptr),
         volumeSlider(this),
         progressBar(this),
+        status(this),
 #ifdef ARTWORK_ENABLED
         coverArtWidget(this),
 #endif
@@ -55,6 +57,7 @@ MainWindow::MainWindow(QWidget *parent) :
     updateTitle();
     
     ui->PlayBackToolBar->show();
+    ui->statusBar->addWidget(&status);
 }
 
 void MainWindow::Destroy() {
@@ -80,6 +83,10 @@ void MainWindow::createConnections() {
     connect(DBApiWrapper::Instance(), SIGNAL(trackChanged(DB_playItem_t*,DB_playItem_t*)), this, SLOT(trackChanged(DB_playItem_t *, DB_playItem_t *)));
     connect(ui->actionNewPlaylist, SIGNAL(triggered()), ui->playList, SIGNAL(newPlaylist()));
     connect(DBApiWrapper::Instance(), SIGNAL(deadbeefActivated()), this, SLOT(on_deadbeefActivated()));
+    connect(&progressBar, &SeekSlider::valueChanged, [this](){
+        DB_playItem_s *it = DBAPI->streamer_get_playing_track();
+        updateStatusBar(it);
+    });
 }
 
 void MainWindow::loadIcons() {
@@ -262,6 +269,21 @@ void MainWindow::on_actionExit_triggered() {
 
 void MainWindow::trayIcon_wheeled(int delta) {
     volumeSlider.setValue(volumeSlider.value() + signum(delta));
+}
+
+void MainWindow::updateStatusBar(DB_playItem_t *it)
+{
+    if (it)
+    {
+        QString type = QString::fromLatin1(DBAPI->pl_find_meta(it, ":FILETYPE"));
+        QString duration = DBAPI->pl_find_meta(it, ":DURATION");
+
+        int all = (duration.split(":")[0].toInt() * 60000) + (duration.split(":")[1].toInt() * 1000);
+
+        QDateTime msec;
+        msec.setMSecsSinceEpoch(all * DBAPI->playback_get_pos() / 100);
+        status.setText(type + " | " + msec.toString("mm:ss") + " / " + duration);
+    }
 }
 
 void MainWindow::trackChanged(DB_playItem_t *from, DB_playItem_t *to) {

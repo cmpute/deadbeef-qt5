@@ -48,6 +48,7 @@ private:
     
 private Q_SLOTS:
     void on_buttonBox_accepted();
+    void on_buttonBox_rejected();
 
 Q_SIGNALS:
     void setTrayIconHidden(bool);

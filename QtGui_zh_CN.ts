@@ -165,7 +165,7 @@
     <message>
         <location filename="preferencesWidgets/InterfacePreferencesWidget.ui" line="162"/>
         <source>Interface refresh rate (times per sec.):</source>
-        <translation>界面刷新速率(每秒次数)</translation>
+        <translation>界面刷新速率(每秒次数):</translation>
     </message>
     <message>
         <location filename="preferencesWidgets/InterfacePreferencesWidget.ui" line="32"/>
@@ -216,7 +216,7 @@
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="167"/>
+        <location filename="MainWindow.ui" line="168"/>
         <source>Add Folder(s)...</source>
         <translation>添加文件夹...</translation>
     </message>
@@ -236,276 +236,276 @@
         <translation>回放控制</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="175"/>
-        <location filename="MainWindow.ui" line="178"/>
+        <location filename="MainWindow.ui" line="176"/>
+        <location filename="MainWindow.ui" line="179"/>
         <source>Play</source>
         <translation>播放</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="186"/>
-        <location filename="MainWindow.ui" line="189"/>
+        <location filename="MainWindow.ui" line="187"/>
+        <location filename="MainWindow.ui" line="190"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="197"/>
+        <location filename="MainWindow.ui" line="198"/>
         <source>Next</source>
         <translation>下</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="200"/>
+        <location filename="MainWindow.ui" line="201"/>
         <source>Next track</source>
         <translation>下一曲</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="208"/>
+        <location filename="MainWindow.ui" line="209"/>
         <source>Previous</source>
         <translation>上</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="211"/>
+        <location filename="MainWindow.ui" line="212"/>
         <source>Previous track</source>
         <translation>上一曲</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="219"/>
-        <location filename="MainWindow.ui" line="222"/>
+        <location filename="MainWindow.ui" line="220"/>
+        <location filename="MainWindow.ui" line="223"/>
         <source>Pause</source>
         <translation>暂停</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="230"/>
+        <location filename="MainWindow.ui" line="231"/>
         <source>Exit</source>
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="304"/>
+        <location filename="MainWindow.ui" line="305"/>
         <source>Add File(s)...</source>
         <translation>添加文件...</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="307"/>
+        <location filename="MainWindow.ui" line="308"/>
         <source>Ctrl+O</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="312"/>
+        <location filename="MainWindow.ui" line="313"/>
         <source>Add Audio CD</source>
         <translation>添加音频CD</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="320"/>
+        <location filename="MainWindow.ui" line="321"/>
         <source>Add URL...</source>
         <translation>添加URL...</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="331"/>
+        <location filename="MainWindow.ui" line="332"/>
         <source>Save Playlist as...</source>
         <translation>保存播放列表为...</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="342"/>
+        <location filename="MainWindow.ui" line="343"/>
         <source>Load Playlist...</source>
         <translation>加载播放列表...</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="499"/>
+        <location filename="MainWindow.ui" line="500"/>
         <source>PlayList Header</source>
         <translation>播放列表表头</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="507"/>
+        <location filename="MainWindow.ui" line="508"/>
         <source>Tab bar</source>
         <translation>标签栏</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="510"/>
+        <location filename="MainWindow.ui" line="511"/>
         <source>Shou/hide tabbar</source>
         <translation>显示/隐藏标签栏</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="350"/>
+        <location filename="MainWindow.ui" line="351"/>
         <source>New Playlist</source>
         <translation>新播放列表</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="364"/>
+        <location filename="MainWindow.ui" line="365"/>
         <source>Main menu</source>
         <translation>主菜单</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="367"/>
+        <location filename="MainWindow.ui" line="368"/>
         <source>Show/hide main menu</source>
         <translation>显示/隐藏主菜单</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="378"/>
+        <location filename="MainWindow.ui" line="379"/>
         <source>Block toolbar changes</source>
         <translation>禁止改变工具栏</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="386"/>
+        <location filename="MainWindow.ui" line="387"/>
         <source>Statusbar</source>
         <translation>状态栏</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="389"/>
+        <location filename="MainWindow.ui" line="390"/>
         <source>Show/hide statusbar</source>
         <translation>显示/隐藏状态栏</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="488"/>
+        <location filename="MainWindow.ui" line="489"/>
         <source>Cover Art</source>
         <translation>封面</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="394"/>
+        <location filename="MainWindow.ui" line="395"/>
         <source>Clear</source>
         <translation>清空</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="170"/>
+        <location filename="MainWindow.ui" line="171"/>
         <source>Ctrl+Shift+O</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="370"/>
+        <location filename="MainWindow.ui" line="371"/>
         <source>Ctrl+M</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="405"/>
+        <location filename="MainWindow.ui" line="406"/>
         <source>Select all</source>
         <translation>全选</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="416"/>
+        <location filename="MainWindow.ui" line="417"/>
         <source>Deselect all</source>
         <translation>全部反选</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="427"/>
+        <location filename="MainWindow.ui" line="428"/>
         <source>Find</source>
         <translation>查找</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="430"/>
+        <location filename="MainWindow.ui" line="431"/>
         <source>Ctrl+F</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="444"/>
+        <location filename="MainWindow.ui" line="445"/>
         <source>Cursor follows playback</source>
         <translation>指针跟随播放</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="452"/>
+        <location filename="MainWindow.ui" line="453"/>
         <source>Jump to current track</source>
         <translation>跳转到当前音轨</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="466"/>
+        <location filename="MainWindow.ui" line="467"/>
         <source>Scroll follows playback</source>
         <translation>滚动条跟随播放</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="474"/>
+        <location filename="MainWindow.ui" line="475"/>
         <source>Remove</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="238"/>
+        <location filename="MainWindow.ui" line="239"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="246"/>
+        <location filename="MainWindow.ui" line="247"/>
         <source>Linear</source>
         <translation>线性</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="254"/>
+        <location filename="MainWindow.ui" line="255"/>
         <source>Random</source>
         <translation>随机</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="262"/>
+        <location filename="MainWindow.ui" line="263"/>
         <source>Shuffle</source>
         <translation>打乱</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="270"/>
+        <location filename="MainWindow.ui" line="271"/>
         <source>Repeat all</source>
         <translation>全部重复</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="278"/>
+        <location filename="MainWindow.ui" line="279"/>
         <source>Repeat track</source>
         <translation>重复音轨</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="286"/>
+        <location filename="MainWindow.ui" line="287"/>
         <source>Don&apos;t repeat</source>
         <translation>不重复</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="291"/>
+        <location filename="MainWindow.ui" line="292"/>
         <source>About Qt</source>
         <translation>关于Qt</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="296"/>
+        <location filename="MainWindow.ui" line="297"/>
         <source>Preferences</source>
         <translation>偏好设置</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="369"/>
+        <location filename="MainWindow.cpp" line="391"/>
         <source>Enter URL...</source>
         <translation>输入URL...</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="369"/>
+        <location filename="MainWindow.cpp" line="391"/>
         <source>URL: </source>
         <translation>URL: </translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="421"/>
-        <location filename="MainWindow.cpp" line="437"/>
+        <location filename="MainWindow.cpp" line="443"/>
+        <location filename="MainWindow.cpp" line="459"/>
         <source>Save playlist as...</source>
         <translation>保存播放列表为...</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="410"/>
+        <location filename="MainWindow.cpp" line="432"/>
         <source>DeaDBeeF playlist files (*.dbpl)</source>
         <translation>DeaDBeeF播放列表(*.dbpl)</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="201"/>
+        <location filename="MainWindow.cpp" line="208"/>
         <source>Add folder(s) to playlist...</source>
         <translation>添加文件夹到播放列表...</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="349"/>
+        <location filename="MainWindow.cpp" line="371"/>
         <source>Add file(s) to playlist...</source>
         <translation>添加文件到播放列表...</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="438"/>
+        <location filename="MainWindow.cpp" line="460"/>
         <source>Failed to save playlist to %1: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>无法保存播放列表到%1: %2</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="446"/>
+        <location filename="MainWindow.cpp" line="468"/>
         <source>Load playlist</source>
         <translation>加载播放列表</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="443"/>
+        <location filename="MainWindow.cpp" line="465"/>
         <source>Supported playlist formats (*.dbpl)</source>
         <translation>支持的播放列表格式 (*.dbpl)</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="444"/>
+        <location filename="MainWindow.cpp" line="466"/>
         <source>Other files (*)</source>
         <translation>其他文件 (*)</translation>
     </message>
@@ -705,7 +705,7 @@
     <message>
         <location filename="MetadataPrefsDialog.ui" line="35"/>
         <source>MP3</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="MetadataPrefsDialog.ui" line="43"/>
@@ -757,7 +757,7 @@
     <message>
         <location filename="MetadataPrefsDialog.ui" line="131"/>
         <source>APE</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="MetadataPrefsDialog.ui" line="137"/>
@@ -767,7 +767,7 @@
     <message>
         <location filename="MetadataPrefsDialog.ui" line="168"/>
         <source>WavPack</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="MetadataPrefsDialog.cpp" line="36"/>
@@ -777,7 +777,7 @@
     <message>
         <location filename="MetadataPrefsDialog.cpp" line="37"/>
         <source>2.4</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="MetadataPrefsDialog.cpp" line="86"/>
@@ -883,7 +883,7 @@
     <message>
         <location filename="PlayListModel.cpp" line="14"/>
         <source>№</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="PlayListModel.cpp" line="15"/>
@@ -975,7 +975,7 @@
     <message>
         <location filename="PreferencesDialog.cpp" line="32"/>
         <source>DSP</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="PreferencesDialog.cpp" line="33"/>

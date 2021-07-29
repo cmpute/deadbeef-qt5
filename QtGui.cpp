@@ -110,21 +110,19 @@ void MainThreadRun(void *) {
         QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 
     QString locale = QLocale::system().name();
-    /*
-#ifdef ARTWORK_ENABLED
-    QTranslator coverartTranslator;
-    coverartTranslator.load(QString::fromUtf8(DEADBEEF_PREFIX) + QString("/share/deadbeef/translations/CoverArtPlugin_") + locale);
-    app.installTranslator(&coverartTranslator);
-#endif
-#ifdef HOTKEYS_ENABLED
-    QTranslator hotkeysTranslator;
-    hotkeysTranslator.load(QString::fromUtf8(DEADBEEF_PREFIX) + QString("/share/deadbeef/translations/HotkeysPlugin_") + locale);
-    app.installTranslator(&hotkeysTranslator);
-#endif
-*/
     QTranslator translator;
-    translator.load(QString::fromUtf8(DEADBEEF_PREFIX) + QString("/share/deadbeef/translations/QtGui_") + locale);
-    app.installTranslator(&translator);
+    QString qmFile = QString::fromUtf8(DEADBEEF_PREFIX) + QString("/share/deadbeef/translations/QtGui_") + locale;
+    if (!translator.load(qmFile))
+    {
+        qDebug() << "Failed to load " << qmFile;
+    }
+    else
+    {
+        if (!app.installTranslator(&translator))
+        {
+            qDebug()<< "Failed to install translator";
+        }
+    }
 
     //MainWindow w;
     //w.show();

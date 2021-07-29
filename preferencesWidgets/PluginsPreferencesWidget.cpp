@@ -10,7 +10,7 @@
 PluginsPreferencesWidget::PluginsPreferencesWidget(QWidget *parent, Qt::WindowFlags f):
         QWidget(parent, f),
         ui(new Ui::PluginsPreferencesWidget),
-        copyrightDialog(this)
+        copyrightDialog(this, Qt::WindowCloseButtonHint)
 {
     ui->setupUi(this);
     ui->copyrightButton->setIcon(getStockIcon(ui->copyrightButton, "user-identity", QStyle::SP_MessageBoxInformation));
